@@ -1,0 +1,27 @@
+# The N=23 cross-section from the 6 Nov note (not the full H3 universe).
+# Layer labels are judgment-coded.
+
+names:
+  - { ticker: MSFT, layer: builders, ai_chain: 1 }
+  - { ticker: AMZN, layer: builders, ai_chain: 1 }
+  - { ticker: GOOGL, layer: builders, ai_chain: 1 }
+  - { ticker: META, layer: builders, ai_chain: 1 }
+  - { ticker: NVDA, layer: compute_semis, ai_chain: 1 }
+  - { ticker: AMD, layer: compute_semis, ai_chain: 1 }
+  - { ticker: AVGO, layer: compute_semis, ai_chain: 1 }
+  - { ticker: MRVL, layer: compute_semis, ai_chain: 1 }
+  - { ticker: TSM, layer: compute_semis, ai_chain: 1 }
+  - { ticker: MU, layer: memory_storage, ai_chain: 1 }
+  - { ticker: LRCX, layer: semicap, ai_chain: 1 }
+  - { ticker: LITE, layer: optics_networking, ai_chain: 1 }
+  - { ticker: COHR, layer: optics_networking, ai_chain: 1 }
+  - { ticker: ANET, layer: optics_networking, ai_chain: 1 }
+  - { ticker: GLW, layer: optics_networking, ai_chain: 1 }
+  - { ticker: VRT, layer: power_cooling, ai_chain: 1 }
+  - { ticker: ETN, layer: power_cooling, ai_chain: 1 }
+  - { ticker: CRWV, layer: neoclouds, ai_chain: 1 }
+  - { ticker: NBIS, layer: neoclouds, ai_chain: 1 }
+  - { ticker: IREN, layer: neoclouds, ai_chain: 1 }
+  - { ticker: CRWD, layer: non_ai_control, ai_chain: 0 }
+  - { ticker: NOW, layer: non_ai_control, ai_chain: 0 }
+  - { ticker: HOOD, layer: non_ai_control, ai_chain: 0 }
