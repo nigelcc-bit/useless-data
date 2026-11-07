@@ -1,0 +1,45 @@
+# Pre-registered episode windows. Do not optimise after seeing results.
+# E1–E4 = out-of-sample for anything fitted on E5–E7.
+
+episodes:
+  E1:
+    window: ["2018-10-01", "2018-12-24"]
+    character: Semis bear, Fed tightening
+    why: Prior tightening-cycle analogue
+    role: oos
+  E2:
+    window: ["2020-02-19", "2020-03-23"]
+    character: COVID crash
+    why: Exogenous shock, out-of-sample for the 1928-2019 study
+    role: oos
+  E3:
+    window: ["2022-01-03", "2022-10-14"]
+    character: Rate-driven de-rating
+    why: The valuation-led counterexample
+    role: oos
+  E4:
+    window: ["2025-04-03", "2025-04-08"]
+    character: Tariff shock
+    why: Policy shock analogue, recent
+    role: oos
+  E5:
+    window: ["2026-07-15", "2026-07-25"]  # confirm exact dates before P4
+    character: AI flush #1
+    why: "rho -0.64 on run-up"
+    role: fit
+    note: Exact window TBD — mark exploratory if changed after first look
+  E6:
+    window: ["2026-09-30", "2026-10-19"]
+    character: AI flush #2, funding-led
+    why: "rho -0.56; CRWV beta dominant"
+    role: fit
+  E7:
+    window: ["2026-10-28", "2026-11-05"]
+    character: The subject episode
+    why: The one to explain
+    role: fit
+
+rules:
+  - Do not fit and test on the same episodes.
+  - Do not pool E6 and E7 before H4 adjudicates coefficient stability.
+  - Changing a window after seeing results requires logging the original and marking revision exploratory.
