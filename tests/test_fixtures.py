@@ -1,7 +1,7 @@
-"""§6.3 data-quality gates. Fail the build if fixtures do not reproduce.
+"""§6.3 data-quality gates for SPEC_LITERAL ETF fixtures.
 
-Spearman gates that depended on back-solved YTD / prior5 inputs are skipped
-(D5) until P1 ingests real closes. Fixture *targets* are unchanged.
+Name-level and Spearman gates are skipped (D5/D7) until P1 writes RAW_FILE
+closes. Fixture *targets* in config/fixtures.yaml are unchanged.
 """
 
 from __future__ import annotations
@@ -9,13 +9,10 @@ from __future__ import annotations
 import pytest
 
 from src.config_io import fixtures
-from src.studies.reproduce_nov5 import (
-    cross_section_stats,
-    etf_returns_from_closes,
-    load_panel,
-)
+from src.studies.reproduce_nov5 import etf_returns_from_closes
 
-D5 = "D5: name-level YTD and prior-5d inputs unverified (circular reconstruction)"
+D5 = "D5: name-level YTD and prior-5d inputs unverified (circular reconstruction); panel quarantined"
+D7 = "D7: name-level aggregate lacks RAW_FILE source under data/raw/"
 
 
 @pytest.fixture(scope="module")
@@ -26,11 +23,6 @@ def fx():
 @pytest.fixture(scope="module")
 def rets():
     return etf_returns_from_closes()
-
-
-@pytest.fixture(scope="module")
-def xs():
-    return cross_section_stats(load_panel())
 
 
 def test_soxx_nov5_return(fx, rets):
@@ -58,48 +50,29 @@ def test_log_decline_share_before_nov5(fx, rets):
     assert abs(rets["soxx_log_decline_share_before_nov5"] - target) < 0.02
 
 
-def test_hyperscaler_and_supplier_ew(fx, xs):
-    t = fx["cross_section_targets"]
-    assert abs(xs["hyperscaler_ew_nov5_pct"] - t["hyperscaler_ew_nov5_pct"]) < 0.05
-    assert abs(xs["supplier_ew_nov5_pct"] - t["supplier_ew_nov5_pct"]) < 0.15
+@pytest.mark.skip(reason=D7)
+def test_hyperscaler_and_supplier_ew():
+    raise AssertionError("unreachable — requires RAW_FILE name panel")
 
 
 @pytest.mark.skip(reason=D5)
-def test_spearman_ytd_gate(fx, xs):
-    assert xs["spearman_nov5_vs_ytd"] < fx["gates"]["spearman_ytd_max"]
-    assert abs(xs["spearman_nov5_vs_ytd"] - fx["cross_section_targets"]["spearman_nov5_vs_ytd"]) < 0.05
+def test_spearman_ytd_gate():
+    raise AssertionError("unreachable — CALIBRATED panel quarantined")
 
 
 @pytest.mark.skip(reason=D5)
-def test_spearman_prior5(fx, xs):
-    t = fx["cross_section_targets"]
-    assert abs(xs["spearman_nov5_vs_prior5"] - t["spearman_nov5_vs_prior5"]) < 0.05
-    assert xs["spearman_nov5_vs_prior5_p"] < 0.01
+def test_spearman_prior5():
+    raise AssertionError("unreachable — CALIBRATED panel quarantined")
 
 
 @pytest.mark.skip(reason=D5)
-def test_ai_only_spearmans(fx, xs):
-    t = fx["cross_section_targets"]
-    assert abs(xs["spearman_nov5_vs_ytd_ai_only"] - t["spearman_nov5_vs_ytd_ai_only"]) < 0.05
-    assert abs(xs["spearman_nov5_vs_prior5_ai_only"] - t["spearman_nov5_vs_prior5_ai_only"]) < 0.05
+def test_ai_only_spearmans():
+    raise AssertionError("unreachable — CALIBRATED panel quarantined")
 
 
-def test_distance_from_high_count(fx, xs):
-    assert xs["names_gt20pct_below_52w"] == fx["cross_section_targets"]["names_gt20pct_below_52w"]
-
-
-def test_panel_n_and_verified_missingness():
-    """Missingness gate on verified columns only — not circular YTD/prior5."""
-    df = load_panel()
-    assert len(df) == 23
-    assert df[["ret_nov5_pct", "dist_52w_high_pct"]].isna().mean().max() < 0.15
-
-
-def test_ytd_prior5_marked_unverified():
-    df = load_panel()
-    assert "ytd_source" in df.columns and "prior5_source" in df.columns
-    assert (df["ytd_source"] == "CALIBRATED_CIRCULAR").all()
-    assert (df["prior5_source"] == "CALIBRATED_CIRCULAR").all()
+@pytest.mark.skip(reason=D7)
+def test_distance_from_high_count():
+    raise AssertionError("unreachable — requires RAW_FILE name panel")
 
 
 def test_sp500_event_study_fixture_counts(fx):
@@ -123,3 +96,10 @@ def test_fixture_spearman_targets_unchanged(fx):
     assert t["spearman_nov5_vs_prior5"] == 0.59
     assert t["spearman_nov5_vs_ytd_ai_only"] == -0.76
     assert t["spearman_nov5_vs_prior5_ai_only"] == 0.73
+
+
+def test_name_level_cross_section_targets_unchanged(fx):
+    t = fx["cross_section_targets"]
+    assert t["hyperscaler_ew_nov5_pct"] == -3.0
+    assert t["supplier_ew_nov5_pct"] == -12.9
+    assert t["names_gt20pct_below_52w"] == 21

@@ -20,8 +20,8 @@ PYTHONPATH=. python -m src.monitor.leadership
 
 | Phase | Work | Gate |
 |---|---|---|
-| **P0** | Repo, fixtures, quality gates | ETF/EW gates green; Spearman gates **BLOCKED (D5)** |
-| P1 | Ingest + `prices.parquet` 2015–2026 | **Runs locally** (not Cloud) — Yahoo/Stooq/FRED |
+| **P0** | Repo, fixtures, quality gates | SPEC_LITERAL ETF gates green; name-level **BLOCKED (D5/D7)**; calibrated panel quarantined |
+| P1 | Ingest + `prices.parquet` 2015–2026 | **Local only** — must pass `p1_spec_literal` gate |
 | P2 | H1 sector base rate | Power check N before returns |
 | P3 | Feature blocks; `panel.parquet` | Look-ahead audit |
 | P4 | H3 then H4 | VIFs; no pooling before H4 |

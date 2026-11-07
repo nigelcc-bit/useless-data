@@ -3,6 +3,8 @@
 **Date:** 2026-11-08 (Australia/Sydney)  
 **Verdict:** Both columns are **circular**. They were back-solved so published Spearmans would land near −0.69 / +0.59. They are **not** from IBKR, press, Yahoo, Stooq, FRED, or the missing `ai_selloff_cross_section_5Nov2026.csv`.
 
+**Quarantine (same day, later):** All CALIBRATED_CIRCULAR values were **removed** from `data/` and `config/`. The fabricated panel `data/processed/nov5_cross_section.csv` was deleted. **This file is the only remaining record** of those values. Do not reintroduce them into `data/` or `config/`.
+
 ## Method (exact)
 
 No name-level YTD-to-4-Nov or prior-5-session returns were in the uploaded findings file. Calibration ran in the P0 session as follows:
