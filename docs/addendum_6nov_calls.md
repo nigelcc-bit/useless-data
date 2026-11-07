@@ -14,7 +14,7 @@ Status after P0 only. Update when H1–H5 complete.
 
 ## Monitoring flips (desk)
 
-From the 6 Nov note — operational, not yet H5-validated:
+From the 6 Nov note — operational, not yet H5-validated. H5 trough rule now fixed (Pre-P1): 63d low confirmed by next close up; L(k) after confirmation; signal uses prior close only.
 
 - Suppliers >2× builders over first five up days → flush; builders lead → thesis
 - Supplier–hyperscaler 21d corr >0.8 rising together vs <0.4

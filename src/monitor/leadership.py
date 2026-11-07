@@ -1,10 +1,17 @@
 """H5 leadership statistic — closes only, available before next US open.
 
-L(k) = [cum EW supplier − cum EW builder] over k sessions after a local trough,
-divided by the trailing supplier/builder beta ratio.
+Trough rule (fixed Pre-P1, replaces vague "local trough"):
+  trough day τ = close[τ] is the lowest close of the prior 63 sessions
+  (window [τ-62, τ], inclusive), confirmed by close[τ+1] > close[τ].
+  L(k) starts counting *after* the confirmation close: cumulative return
+  from close[τ+1] to close[τ+1+k].
 
-Implementability gate: computable from previous US close; executable as a
-single pre-order before 5pm HKT. No intraday inputs.
+Convention asserted in tests:
+  - trough flag for day τ uses closes through τ+1 only (needs confirmation).
+  - signal L dated at asof uses closes through asof−1 only (APAC pre-order).
+  - a trough enters the signal set only once its confirmation date ≤ asof−1.
+
+Implementability gate: no intraday; single pre-order before 5pm HKT.
 """
 
 from __future__ import annotations
@@ -16,12 +23,13 @@ import numpy as np
 import pandas as pd
 
 HKT = ZoneInfo("Asia/Hong_Kong")
+TROUGH_LOOKBACK = 63
 
 
 def _beta_ratio(suppliers: pd.Series, builders: pd.Series, window: int = 63) -> float:
     s = suppliers.pct_change().dropna()
     b = builders.pct_change().dropna()
-    aligned = pd.concat([s, b], axis=1).dropna().iloc[-window:]
+    aligned = pd.concat([s, b], axis=1, sort=False).dropna().iloc[-window:]
     if len(aligned) < max(20, window // 2):
         return np.nan
     cov = np.cov(aligned.iloc[:, 0], aligned.iloc[:, 1])
@@ -29,10 +37,77 @@ def _beta_ratio(suppliers: pd.Series, builders: pd.Series, window: int = 63) -> 
     if var_b <= 0:
         return np.nan
     beta_s = cov[0, 1] / var_b
-    beta_b = 1.0
-    if abs(beta_b) < 1e-8:
-        return np.nan
-    return float(beta_s / beta_b)
+    return float(beta_s / 1.0)
+
+
+def confirmed_trough_flags(
+    prices: pd.Series,
+    lookback: int = TROUGH_LOOKBACK,
+) -> pd.Series:
+    """Boolean Series indexed by trough day τ (the low day).
+
+    Flag at τ is True only when:
+      1) close[τ] == min(close[τ-lookback+1 : τ])  (lookback sessions incl. τ)
+      2) close[τ+1] > close[τ]  (confirmation)
+
+    Computing the flag for τ requires closes through τ+1.
+    """
+    px = prices.astype(float).dropna()
+    flags = pd.Series(False, index=px.index, dtype=bool)
+    if len(px) < lookback + 1:
+        return flags
+    roll_min = px.rolling(lookback, min_periods=lookback).min()
+    is_low = px == roll_min
+    # confirmation: next close higher — known only at τ+1
+    nxt = px.shift(-1)
+    confirmed = is_low & nxt.notna() & (nxt > px)
+    flags.loc[confirmed.fillna(False)] = True
+    return flags
+
+
+def trough_flag_at(
+    prices: pd.Series,
+    trough_day: pd.Timestamp,
+    lookback: int = TROUGH_LOOKBACK,
+) -> bool:
+    """Compute trough flag for `trough_day` using only closes through trough_day+1."""
+    if trough_day not in prices.index:
+        return False
+    loc = prices.index.get_loc(trough_day)
+    if isinstance(loc, slice) or loc + 1 >= len(prices.index):
+        return False
+    cutoff = prices.index[loc + 1]
+    truncated = prices.loc[:cutoff]
+    return bool(confirmed_trough_flags(truncated, lookback=lookback).get(trough_day, False))
+
+
+def leadership_after_trough(
+    suppliers: pd.Series,
+    builders: pd.Series,
+    trough_day: pd.Timestamp,
+    k: int = 5,
+    beta_window: int = 63,
+) -> float:
+    """L(k) for one confirmed trough: cum relative return after confirmation close.
+
+    confirmation = trough_day + 1 business day in the index.
+    Window: close[confirmation] → close[confirmation + k].
+    """
+    if trough_day not in suppliers.index or trough_day not in builders.index:
+        return float("nan")
+    s_idx = suppliers.index
+    loc = s_idx.get_loc(trough_day)
+    if isinstance(loc, slice) or loc + 1 + k >= len(s_idx):
+        return float("nan")
+    conf = s_idx[loc + 1]
+    end = s_idx[loc + 1 + k]
+    s_cum = suppliers.loc[end] / suppliers.loc[conf] - 1.0
+    b_cum = builders.loc[end] / builders.loc[conf] - 1.0
+    # beta ratio through confirmation (no peek past end of L window for beta? use through end)
+    br = _beta_ratio(suppliers.loc[:end], builders.loc[:end], window=beta_window)
+    if not np.isfinite(br) or br == 0:
+        return float("nan")
+    return float((s_cum - b_cum) / br)
 
 
 def leadership_stat(
@@ -41,27 +116,39 @@ def leadership_stat(
     k: int = 5,
     asof: pd.Timestamp | None = None,
     beta_window: int = 63,
+    lookback: int = TROUGH_LOOKBACK,
 ) -> float:
-    """Compute L(k) using closes through asof−1 when asof is provided.
+    """Desk signal: most recent eligible trough's L(k), APAC-safe.
 
-    When asof is None, uses the full series end (monitoring mode on last close).
+    When `asof` is set, uses closes through asof−1 only. A trough is eligible
+    only if its confirmation date ≤ asof−1 (so the trough flag is knowable
+    without peeking past the signal cutoff).
     """
     if asof is not None:
-        # Hard APAC constraint: signal at date t uses closes up to t−1 only.
         cutoff = asof - pd.tseries.offsets.BDay(1)
         suppliers = suppliers.loc[:cutoff]
         builders = builders.loc[:cutoff]
 
-    if len(suppliers) < k + 2 or len(builders) < k + 2:
+    if len(suppliers) < lookback + k + 2:
         return float("nan")
 
-    s_cum = suppliers.iloc[-1] / suppliers.iloc[-1 - k] - 1.0
-    b_cum = builders.iloc[-1] / builders.iloc[-1 - k] - 1.0
-    spread = s_cum - b_cum
-    br = _beta_ratio(suppliers, builders, window=beta_window)
-    if br is None or not np.isfinite(br) or br == 0:
+    flags = confirmed_trough_flags(suppliers, lookback=lookback)
+    # confirmation must already be in the truncated series
+    eligible = []
+    for τ in flags.index[flags]:
+        loc = suppliers.index.get_loc(τ)
+        if isinstance(loc, slice):
+            continue
+        if loc + 1 + k >= len(suppliers.index):
+            continue
+        # confirmation close is inside series by construction of flags on truncated data
+        eligible.append(τ)
+    if not eligible:
         return float("nan")
-    return float(spread / br)
+    τ = eligible[-1]
+    return leadership_after_trough(
+        suppliers, builders, τ, k=k, beta_window=beta_window
+    )
 
 
 def interpret(L5: float, L10: float) -> str:
@@ -76,13 +163,13 @@ def interpret(L5: float, L10: float) -> str:
 
 
 def main() -> None:
-    # Placeholder series until prices.parquet is built (P1).
-    # Prints the contract the desk will read before 5pm HKT.
     now_hkt = datetime.now(tz=timezone.utc).astimezone(HKT)
     print(f"asof_hkt={now_hkt.strftime('%Y-%m-%d %H:%M %Z')}")
     print("status=WAITING_FOR_prices.parquet")
     print("L5=nan L10=nan readout=INSUFFICIENT_DATA")
-    print("rule=computable from prior US close only; no intraday")
+    print("trough_rule=63d_low_confirmed_by_next_close_up")
+    print("L_window=after_confirmation_close")
+    print("signal_cutoff=prior_US_close_only")
 
 
 if __name__ == "__main__":
