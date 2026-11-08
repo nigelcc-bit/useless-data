@@ -242,3 +242,14 @@ Attempt FINRA equity short interest history. If not available back through 2018 
 
 ### Status at freeze
 P3 coverage skeleton exists (`panel.parquet` price blocks only). Fundamentals ingest and updated coverage follow this freeze commit.
+
+
+## H3 P3 ingest notes (post-freeze)
+
+**Run:** 2026-11-08 (Australia/Sydney). Design block above unchanged.
+
+- **Ffill audit:** every universe name has holes on **2026-05-25** and **2026-09-07** only (US Memorial Day / Labor Day placeholder rows). `non_us_calendar_cause=0`. Returns computed on each name’s native `dropna` calendar; ffill capped at 1 session and not used in feature math.
+- **EDGAR:** all 45 seed names have 10-K/10-Q or 20-F in companyfacts → `h3_exclusions: []`.
+- **Short interest:** FINRA biweekly CDN available from **2018-01-12** → **KEPT** (covers E1). Crowding = mom/dist/vol/SI.
+- **AI exposure:** proposed in `config/ai_exposure.yaml`, tag `JUDGMENT_CODED_POST_OUTCOME`, status `PROPOSED_AWAITING_SIGNOFF`.
+- Coverage exhibits: `h3_feature_coverage.csv`, `h3_feature_coverage_summary.csv`, `edgar_coverage_by_name.csv`, `ffill_audit_*.csv`.

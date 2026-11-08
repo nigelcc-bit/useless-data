@@ -1,14 +1,15 @@
-"""Layer / exposure judgment block (H3 regressors 7–8).
+"""Layer / exposure judgment block (H3).
 
-Layer assignment is judgment-coded from config/universe.yaml — flag in every output.
-AI revenue exposure 0–3 is judgment; missing until explicitly coded in config.
+Layer assignment is judgment-coded from config/universe.yaml.
+AI revenue exposure 0–3 from config/ai_exposure.yaml — tag JUDGMENT_CODED_POST_OUTCOME.
 """
 
 from __future__ import annotations
 
+import yaml
 import pandas as pd
 
-from src.config_io import universe
+from src.config_io import ROOT, universe
 
 
 def layer_assignments() -> pd.DataFrame:
@@ -37,8 +38,31 @@ def layer_assignments() -> pd.DataFrame:
 
 
 def ai_revenue_exposure() -> pd.Series:
-    """Judgment 0–3. Empty until config/ai_exposure.yaml is filled."""
-    path_keys = universe()  # noqa: F841 — reserved for future config join
-    # No coded exposure file yet → all missing (shows in coverage)
+    """Judgment 0–3 from config/ai_exposure.yaml (PROPOSED until human sign-off)."""
+    path = ROOT / "config" / "ai_exposure.yaml"
+    if not path.exists():
+        tickers = layer_assignments()["ticker"]
+        return pd.Series(
+            index=tickers, dtype="float64", name="ai_revenue_exposure_0_3_JUDGMENT"
+        )
+    data = yaml.safe_load(path.read_text())
+    names = data.get("names") or {}
+    s = pd.Series(
+        {t: (meta or {}).get("score") for t, meta in names.items()},
+        dtype="float64",
+        name="ai_revenue_exposure_0_3_JUDGMENT",
+    )
+    # align to universe
     tickers = layer_assignments()["ticker"]
-    return pd.Series(index=tickers, dtype="float64", name="ai_revenue_exposure_0_3_JUDGMENT")
+    return s.reindex(tickers)
+
+
+def ai_exposure_meta() -> dict:
+    path = ROOT / "config" / "ai_exposure.yaml"
+    if not path.exists():
+        return {"status": "MISSING", "tag": "JUDGMENT_CODED_POST_OUTCOME"}
+    data = yaml.safe_load(path.read_text())
+    return {
+        "status": data.get("status"),
+        "tag": data.get("tag", "JUDGMENT_CODED_POST_OUTCOME"),
+    }

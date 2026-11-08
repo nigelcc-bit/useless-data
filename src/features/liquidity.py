@@ -1,7 +1,7 @@
-"""Liquidity controls (H3 regressor 9): log market cap, ADV.
+"""Liquidity controls (H3): log market cap, ADV.
 
-ADV = trailing 21d mean dollar volume (close × volume), using prices/volume ≤ t.
-log_mkt_cap requires shares outstanding — not ingested yet → NaN (coverage gap).
+ADV = trailing 21d mean dollar volume on each name's native calendar.
+log_mkt_cap from EDGAR shares outstanding × close (filing-lagged shares).
 """
 
 from __future__ import annotations
@@ -47,17 +47,35 @@ def adv_dollar(
     volume: pd.DataFrame,
     window: int = 21,
 ) -> pd.DataFrame:
-    """Trailing mean of close×volume over `window` sessions (no look-ahead)."""
-    common = close.columns.intersection(volume.columns)
-    if len(common) == 0:
+    """Trailing mean of close×volume on each name's native calendar (no ffill)."""
+    common = list(close.columns.intersection(volume.columns))
+    if not common:
         return pd.DataFrame(index=close.index)
-    # Causal ffill on both legs so a single missing bar does not zero the window
-    c = close[common].ffill()
-    v = volume[common].reindex(close.index).ffill()
-    dollar = c * v
-    return dollar.rolling(window, min_periods=window).mean()
+    out = {}
+    for t in common:
+        c = close[t].dropna()
+        v = volume[t].reindex(c.index)
+        # drop days with missing volume rather than ffill across calendars
+        ok = c.notna() & v.notna()
+        c, v = c[ok], v[ok]
+        if len(c) < window:
+            out[t] = pd.Series(dtype="float64")
+            continue
+        dollar = c * v
+        out[t] = dollar.rolling(window, min_periods=window).mean()
+    return pd.DataFrame(out).reindex(close.index)
+
+
+def log_mkt_cap_from_shares(
+    close: pd.Series,
+    shares: float | None,
+) -> float:
+    if shares is None or not np.isfinite(shares) or shares <= 0:
+        return float("nan")
+    if close is None or not np.isfinite(close) or close <= 0:
+        return float("nan")
+    return float(np.log(close * shares))
 
 
 def log_mkt_cap_placeholder(tickers: list[str]) -> pd.Series:
-    """Shares outstanding not loaded — explicit NaN column for coverage."""
     return pd.Series(index=tickers, dtype="float64", name="log_mkt_cap")

@@ -1,0 +1,43 @@
+{
+  "include_si": true,
+  "si_status": "KEPT",
+  "si_diag": {
+    "n_files_ok": 211,
+    "n_files_fail_or_empty": 849,
+    "first_settlement": "2018-01-12",
+    "last_settlement": "2026-10-15",
+    "covers_e1_2018": true,
+    "n_rows": 8022,
+    "n_tickers": 45
+  },
+  "ai_exposure": {
+    "status": "PROPOSED_AWAITING_SIGNOFF",
+    "tag": "JUDGMENT_CODED_POST_OUTCOME"
+  },
+  "block_cols": {
+    "crowding": [
+      "prior_63d_return",
+      "dist_252d_high",
+      "realised_vol_21d",
+      "short_interest_pct_float"
+    ],
+    "valuation": [
+      "trailing_ps_filing_lag",
+      "trailing_pe_filing_lag",
+      "ev_ebitda_filing_lag"
+    ],
+    "funding": [
+      "net_debt_ebitda",
+      "interest_coverage",
+      "lease_liab_assets"
+    ],
+    "layer": [
+      "layer",
+      "ai_revenue_exposure_0_3_JUDGMENT"
+    ],
+    "liquidity": [
+      "log_mkt_cap",
+      "adv"
+    ]
+  }
+}

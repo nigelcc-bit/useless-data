@@ -1,0 +1,54 @@
+# AI revenue exposure 0–3. Cursor proposal — human must sign off.
+# Tag in every output: JUDGMENT_CODED_POST_OUTCOME
+# H3 must be run WITH and WITHOUT this regressor.
+
+status: PROPOSED_AWAITING_SIGNOFF
+tag: JUDGMENT_CODED_POST_OUTCOME
+scale: "0=none, 1=low/indirect, 2=material AI revenue or AI-linked capex, 3=AI-core"
+
+names:
+  MSFT: { score: 2, note: "Azure OpenAI / AI cloud mix rising; still diversified" }
+  AMZN: { score: 2, note: "AWS AI infra; retail dilutes share" }
+  GOOGL: { score: 2, note: "Search+Cloud AI; core ad franchise remains" }
+  META: { score: 2, note: "AI ads + infra spend; consumer apps dominate revenue" }
+  AAPL: { score: 1, note: "On-device AI narrative; AI revenue share still low" }
+  ORCL: { score: 2, note: "OCI AI / multi-cloud; database franchise still large" }
+  NVDA: { score: 3, note: "AI GPU/core" }
+  AMD: { score: 3, note: "AI GPU/CPU challenger" }
+  AVGO: { score: 3, note: "Custom AI ASICs / networking silicon" }
+  MRVL: { score: 3, note: "Custom silicon / AI networking" }
+  TSM: { score: 3, note: "Foundry for AI GPUs/ASICs" }
+  INTC: { score: 2, note: "Foundry/AI CPU ambitions; legacy PC/server mix" }
+  MU: { score: 3, note: "HBM for AI" }
+  SNDK: { score: 2, note: "NAND/storage; AI-adjacent not core GPU" }
+  WDC: { score: 1, note: "HDD/storage; weak AI-specific mix" }
+  STX: { score: 1, note: "HDD; weak AI-specific mix" }
+  LRCX: { score: 3, note: "Semicap for advanced nodes / HBM" }
+  AMAT: { score: 3, note: "Semicap broad AI-node exposure" }
+  KLAC: { score: 3, note: "Process control for advanced nodes" }
+  ASML: { score: 3, note: "EUV bottleneck for AI silicon" }
+  TER: { score: 2, note: "Test; AI-node leverage but not exclusive" }
+  LITE: { score: 3, note: "Optical for AI clusters" }
+  COHR: { score: 2, note: "Lasers/optics; AI networking mix growing" }
+  ANET: { score: 3, note: "AI data-center switching" }
+  GLW: { score: 2, note: "Fibre / optical materials" }
+  ALAB: { score: 3, note: "Connectivity silicon for AI racks" }
+  CIEN: { score: 2, note: "Optical networking; AI traffic leverage" }
+  FN: { score: 3, note: "Optical interconnect for AI" }
+  APH: { score: 2, note: "Connectors; AI rack content rising" }
+  GEV: { score: 2, note: "Power equipment for data-center load" }
+  VRT: { score: 3, note: "Thermal/power for AI data centers" }
+  ETN: { score: 2, note: "Electrical infra; data-center share rising" }
+  PWR: { score: 2, note: "Electrical construction; data-center projects" }
+  NVT: { score: 2, note: "Electrical/connectivity for data centers" }
+  CRWV: { score: 3, note: "Neocloud GPU rental" }
+  NBIS: { score: 3, note: "AI cloud / GPU infra" }
+  IREN: { score: 3, note: "HPC/AI hosting conversion" }
+  APLD: { score: 3, note: "AI data-center hosting" }
+  CORZ: { score: 3, note: "HPC/AI hosting" }
+  CRWD: { score: 0, note: "Cyber control — no AI-capex link" }
+  NOW: { score: 1, note: "Software platform; AI features but not AI-capex chain" }
+  HOOD: { score: 0, note: "Fintech control" }
+  PANW: { score: 0, note: "Cyber control" }
+  SNOW: { score: 1, note: "Data platform; AI narrative, not GPU chain" }
+  DDOG: { score: 1, note: "Observability; AI ops narrative, not GPU chain" }

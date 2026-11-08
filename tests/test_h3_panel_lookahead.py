@@ -7,47 +7,57 @@ import pandas as pd
 import pytest
 
 from src.config_io import ROOT, episodes
-from src.features.build_panel import asof_loc, features_through, universe_tickers
-from src.features.liquidity import load_volume_panel
+from src.features.crowding import distance_from_high, prior_return, realised_vol
+from src.features.layer import layer_assignments
+from src.features.liquidity import adv_dollar, load_volume_panel
+
+
+def _tickers():
+    return sorted(layer_assignments()["ticker"].tolist())
 
 
 @pytest.fixture(scope="module")
 def close_volume():
     prices = pd.read_parquet(ROOT / "data" / "processed" / "prices.parquet")
     prices.index = pd.to_datetime(prices.index).tz_localize(None).normalize()
-    tickers = [t for t in universe_tickers() if t in prices.columns]
+    tickers = [t for t in _tickers() if t in prices.columns]
     close = prices[tickers]
     volume = load_volume_panel(ROOT / "data" / "raw" / "2026-11-07", tickers)
     return close, volume
 
 
-def test_features_through_matches_full_vs_truncated(close_volume):
+def _feature_pack(close: pd.DataFrame, volume: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    return {
+        "prior_63d_return": prior_return(close, 63),
+        "dist_252d_high": distance_from_high(close, 252),
+        "realised_vol_21d": realised_vol(close, 21),
+        "adv": adv_dollar(close, volume, 21) if len(volume) else pd.DataFrame(),
+    }
+
+
+def test_truncation_matches_full_at_episode_starts(close_volume):
     close, volume = close_volume
+    full = _feature_pack(close, volume)
     eps = episodes()["episodes"]
-    # Test every episode start + two mid-sample dates
     dates = [pd.Timestamp(meta["window"][0]) for meta in eps.values()]
-    mid = close.index[len(close) // 2]
-    dates.append(mid)
-    price_cols = [
-        "prior_63d_return",
-        "dist_252d_high",
-        "realised_vol_21d",
-        "adv",
-    ]
+    dates.append(close.index[len(close) // 2])
     for dt in dates:
-        asof = asof_loc(close.index, dt)
-        if asof is None:
+        # asof = last available index ≤ dt
+        pos = close.index.searchsorted(dt, side="right") - 1
+        if pos < 0:
             continue
-        full = features_through(close, volume, asof)
-        trunc = features_through(close.loc[:asof], volume.loc[:asof] if len(volume) else volume, asof)
-        for col in price_cols:
-            if col not in full.columns:
+        asof = close.index[pos]
+        trunc = _feature_pack(close.loc[:asof], volume.loc[:asof] if len(volume) else volume)
+        for name, fdf in full.items():
+            if fdf.empty or name not in trunc or trunc[name].empty:
                 continue
-            a = full[col].astype(float)
-            b = trunc[col].astype(float)
+            if asof not in fdf.index or asof not in trunc[name].index:
+                continue
+            a = fdf.loc[asof].astype(float)
+            b = trunc[name].loc[asof].astype(float)
             both_nan = a.isna() & b.isna()
             either_nan = a.isna() | b.isna()
-            assert (either_nan == both_nan).all(), f"NaN mismatch {col} @ {asof.date()}"
+            assert (either_nan == both_nan).all(), f"NaN mismatch {name} @ {asof.date()}"
             valid = ~either_nan
             if valid.any():
                 np.testing.assert_allclose(
@@ -56,21 +66,28 @@ def test_features_through_matches_full_vs_truncated(close_volume):
                     rtol=0,
                     atol=0,
                     equal_nan=True,
-                    err_msg=f"{col} mismatch at {asof.date()}",
+                    err_msg=f"{name} mismatch at {asof.date()}",
                 )
 
 
-def test_features_change_when_future_stripped_changes_history(close_volume):
-    """Sanity: truncating *before* a date must not equal features at a later asof
-    for names with data in between (prior_63d uses the window ending at asof)."""
+def test_features_differ_across_episode_starts(close_volume):
     close, volume = close_volume
-    t1 = asof_loc(close.index, pd.Timestamp("2022-01-03"))
-    t2 = asof_loc(close.index, pd.Timestamp("2022-10-14"))
-    assert t1 is not None and t2 is not None and t2 > t1
-    f1 = features_through(close.loc[:t1], volume.loc[:t1] if len(volume) else volume, t1)
-    f2 = features_through(close.loc[:t2], volume.loc[:t2] if len(volume) else volume, t2)
-    # NVDA should have different prior_63d at the two dates
-    if "NVDA" in f1.index and "NVDA" in f2.index:
-        a, b = f1.loc["NVDA", "prior_63d_return"], f2.loc["NVDA", "prior_63d_return"]
-        if pd.notna(a) and pd.notna(b):
-            assert a != b
+    t1 = pd.Timestamp("2022-01-03")
+    t2 = pd.Timestamp("2022-10-14")
+    p1 = close.index.searchsorted(t1, side="right") - 1
+    p2 = close.index.searchsorted(t2, side="right") - 1
+    a1, a2 = close.index[p1], close.index[p2]
+    f1 = prior_return(close.loc[:a1], 63)
+    f2 = prior_return(close.loc[:a2], 63)
+    if "NVDA" in f1.columns:
+        v1, v2 = f1.loc[a1, "NVDA"], f2.loc[a2, "NVDA"]
+        if pd.notna(v1) and pd.notna(v2):
+            assert v1 != v2
+
+
+def test_no_unlimited_ffill_in_crowding_source():
+    from src.features import crowding
+
+    src = open(crowding.__file__).read()
+    assert "ffill()" not in src.replace("ffill(limit=1)", "")
+    assert "dropna()" in src
