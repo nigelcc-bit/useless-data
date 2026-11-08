@@ -11,6 +11,9 @@ dependencies = [
     "statsmodels>=0.14",
     "pyyaml>=6.0",
     "matplotlib>=3.9",
+    "requests>=2.32",
+    "pyarrow>=17.0",
+    "yfinance>=0.2.40",
 ]
 
 [project.optional-dependencies]

@@ -1,19 +1,29 @@
 test_id,hypothesis,description,status,raw_p,bh_p,effect,n,notes
-T000,meta,SPEC_LITERAL ETF fixture arithmetic,PASS,,,,,"YAML close vectors only; P1 must re-verify via prices.parquet"
-T000b,meta,Spearman YTD/prior5 fixture gates,BLOCKED,,,,,"D5; calibrated panel quarantined from data/"
-T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,BLOCKED,,,,,"D7; no RAW_FILE under data/raw/"
+T000,meta,SPEC_LITERAL ETF fixture arithmetic,PASS,,,,,YAML close vectors only; P1 must re-verify via prices.parquet
+T000b,meta,Spearman YTD/prior5 fixture gates,BLOCKED,,,,,D5; calibrated panel quarantined from data/
+T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,BLOCKED,,,,,D7; no RAW_FILE under data/raw/
 T000d,meta,quarantine: no CALIBRATED under data/config/src reads,PASS,,,,,test_quarantine_calibrated.py
-T000e,meta,P1 SPEC_LITERAL gate registry,PASS,,,,,"runs against prices.parquet when present; else skip"
+T000e,meta,P1 SPEC_LITERAL gate registry,PASS,,,,,runs against prices.parquet when present; else skip
 T001,H1,power check SOX/SMH/IXIC first-shock cells,NOT_RUN,,,,,requires prices.parquet (local P1)
 T002,H1,Fisher exact further-10pct DD semis vs SPX,NOT_RUN,,,,,blocked on T001 N>=8
-T003,H2,variance ratio beta-neutral spread,NOT_RUN,,,,,"regime=HY OAS BAMLH0A0HYM2 for 2023-2024"
+T003,H2,variance ratio beta-neutral spread,NOT_RUN,,,,,regime=HY OAS BAMLH0A0HYM2 for 2023-2024
 T004,H2,event study -2.5σ spread days fwd 5/21/63,NOT_RUN,,,,,
-T005,H3,crowding vs valuation horse race 7 episodes,NOT_RUN,,,,,"includes layer dummy block"
-T005b,H3,trailing multiples filing-lag fallback vs crowding,NOT_RUN,,,,,"D6 DEVIATION_FROM_SPEC; separate FDR row"
+T005,H3,crowding vs valuation horse race 7 episodes,NOT_RUN,,,,,includes layer dummy block
+T005b,H3,trailing multiples filing-lag fallback vs crowding,NOT_RUN,,,,,D6 DEVIATION_FROM_SPEC; separate FDR row
 T006,H3,Romano-Wolf stepdown on regressor blocks,NOT_RUN,,,,,
-T007,H4,SUR/Wald Oct vs Nov coefficient equality,NOT_RUN,,,,,"vector includes layer dummies from H3"
-T008,H5,L5/L10 vs fwd 63d walk-forward OOS,NOT_RUN,,,,,"trough=63d low + next close up; L after confirmation"
+T007,H4,SUR/Wald Oct vs Nov coefficient equality,NOT_RUN,,,,,vector includes layer dummies from H3
+T008,H5,L5/L10 vs fwd 63d walk-forward OOS,NOT_RUN,,,,,trough=63d low + next close up; L after confirmation
 T009,D1,SOXX IBKR -12.1% vs press -12.8%,OPEN,,,,,discrepancy flagged; not papered over
 T010,D5,name-level YTD and prior-5d unverified,OPEN,,,,,values removed from data/; audit doc only
 T011,D6,PIT forward multiples unavailable,OPEN,,,,,fallback pre-registered as T005b
 T012,D7,name-level EW / 52w counts lack RAW_FILE,OPEN,,,,,BLOCKED until data/raw name closes
+P1_FRED,meta,FRED BAMLH0A0HYM2 DGS10 FEDFUNDS VIXCLS,PASS,,,,17242.0,"['BAMLH0A0HYM2', 'DGS10', 'FEDFUNDS', 'VIXCLS']"
+P1_SPLIT_AUDIT,meta,Yahoo splits matched corporate_actions; gaps logged,PASS,,,,22.0,yahoo_splits=22; market_gaps_gt25pct=59
+P1_D4_MERGER,meta,MRVL/LITE all-stock deal ~4 Nov 2026,CONFIRMED — merger dummy written,,,,,RSS hit for Marvell/Lumentum acquisition language; see merger_search_raw.xml
+P1_SPEC_LITERAL,meta,SPEC_LITERAL fixtures vs prices.parquet,PASS,,,,,all SPEC_LITERAL within tol
+P1_LITE_SENSITIVITY,meta,Spearman YTD/prior5 excluding LITE (merger ~2 Nov),DIAGNOSTIC,0.021783087892448556,,-0.4861660079051384,22.0,with_LITE ytd_rho=-0.5296; without_LITE ytd_rho=-0.4862; ai_with=-0.5910; ai_without=-0.5351
+P1_D5_D7,meta,name-level EW/Spearman/52w from ingested closes,SUPERSEDED_TARGETS,0.009344661031627151,,-0.5296442687747036,23.0,note magnitudes SUPERSEDED; Yahoo active; see docs/gap_diagnosis.md; Call 3 magnitude revised
+P1_FRED_NASDAQCOM,meta,FRED NASDAQCOM vs Yahoo ^IXIC vs note -5.52%,PASS,,,-0.055233,,FRED and Yahoo both -5.5233%; Stooq still blocked
+P1_IBKR_NEOCLOUD,meta,IBKR confirms Yahoo neocloud 5 Nov EW -13.91%,PASS,,,-13.91,3.0,CRWV -9.83 IREN -16.95 NBIS -14.94; third-source confirmation
+P1_GAP_DIAGNOSIS,meta,supplier NOTE ERROR; YTD Spearman UNRECONCILED,SUPERSEDED,,,-0.53,23.0,YTD label UNRECONCILED; neocloud NOTE ERROR IBKR+Yahoo; Call 3 magnitude revised
+P1_REDERIVE_XS,meta,re-derive six-session/layer/worst7/52w from prices.parquet,PASS,,,-27.89,23.0,SUPERSEDED supplier six-session -26.5->-27.89; neocloud; worst7+IREN; book UNRECONCILED

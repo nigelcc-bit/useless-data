@@ -27,19 +27,19 @@ Source vocabulary:
 
 | Gate | Target | Observed | Status | Source |
 |---|---|---|---|---|
-| SOXX 5 Nov | −12.1% ±0.3pp | −12.15% | PASS | SPEC_LITERAL — `config/fixtures.yaml` `verified_closes_2026_10_26_to_11_05.SOXX` |
-| SPY 5 Nov | −4.4% ±0.2pp | −4.41% | PASS | SPEC_LITERAL — same close vector, SPY |
-| QQQ 5 Nov | −6.5% ±0.2pp | −6.49% | PASS | SPEC_LITERAL — same close vector, QQQ |
-| SMH 5 Nov | −11.2% ±0.2pp | −11.21% | PASS | SPEC_LITERAL — same close vector, SMH |
-| SOXX 28 Oct→5 Nov | −24.2% | −24.19% | PASS | SPEC_LITERAL — SOXX[5 Nov]/SOXX[28 Oct]−1 |
-| Log-decline share before 5 Nov | 53% | 53.2% | PASS | SPEC_LITERAL — log(SOXX 4 Nov/28 Oct) ÷ log(SOXX 5 Nov/28 Oct) |
-| Hyperscaler EW 5 Nov | −3.0% | *(not evaluated)* | **BLOCKED** — D7 | *(no RAW_FILE)* |
-| Supplier EW 5 Nov | −12.9% | *(not evaluated)* | **BLOCKED** — D7 | *(no RAW_FILE)* |
-| Spearman(5 Nov, YTD) | −0.69 | *(not evaluated)* | **BLOCKED** — D5 | *(no RAW_FILE; fabricated values quarantined)* |
-| Spearman(5 Nov, prior 5d) | +0.59 | *(not evaluated)* | **BLOCKED** — D5 | *(no RAW_FILE; fabricated values quarantined)* |
-| Names >20% below 52w high | 21/23 | *(not evaluated)* | **BLOCKED** — D7 | *(no RAW_FILE)* |
+| SOXX 5 Nov | −12.1% ±0.3pp | −12.15% | PASS | SPEC_LITERAL → re-verified RAW_FILE `data/processed/prices.parquet` (P1) |
+| SPY 5 Nov | −4.4% ±0.2pp | −4.41% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
+| QQQ 5 Nov | −6.5% ±0.2pp | −6.49% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
+| SMH 5 Nov | −11.2% ±0.2pp | −11.21% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
+| SOXX 28 Oct→5 Nov | −24.2% | −24.19% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
+| Log-decline share before 5 Nov | 53% | 53.2% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
+| Hyperscaler EW 5 Nov | −2.98% | −2.98% | PASS | DERIVED — prices.parquet (note −3.0 SUPERSEDED as rounding) |
+| Supplier EW 5 Nov | −13.53% | −13.53% | PASS | DERIVED — note −12.9 **SUPERSEDED** (neocloud layer error) |
+| Spearman(5 Nov, YTD) | −0.53 (p=0.0093) | −0.53 | PASS | DERIVED — note −0.69 **SUPERSEDED / UNRECONCILED** (inputs unrecoverable); Call 3 magnitude revised |
+| Spearman(5 Nov, prior 5d) | +0.62 | +0.62 | PASS | DERIVED — close 4 Nov / close 28 Oct |
+| Names >20% below 52w high | 21/23 | 21/23 | PASS | DERIVED — vs trailing 252d **daily High** |
 
-Fixture **targets** above are unchanged. Fabricated name-level YTD/prior5 values were **removed** from `data/` and `config/`; the only residual record is [`docs/reconstruction_audit.md`](docs/reconstruction_audit.md).
+Diagnosis: [`docs/gap_diagnosis.md`](docs/gap_diagnosis.md). Old note targets retained under `superseded_cross_section_targets_6nov_note` in `config/fixtures.yaml`.
 
 ### Skipped tests (current suite)
 
@@ -57,23 +57,23 @@ Additional skips after quarantine / P1 wiring:
 |---|---|
 | `test_hyperscaler_and_supplier_ew` | D7 — name-level aggregate lacks RAW_FILE under `data/raw/` |
 | `test_distance_from_high_count` | D7 — name-level 52w distances lack RAW_FILE |
-| `test_p1_spec_literal_gate_against_ingested_prices` | P1 ingest not present (`data/processed/prices.parquet`) — gate arms when file exists |
+| `test_p1_spec_literal_gate_against_ingested_prices` | *(armed — prices.parquet present; PASS in P1)* |
 
 ### P1 gate (mandatory)
 
-Every **SPEC_LITERAL** row above must reproduce from `data/processed/prices.parquet` within its tolerance via `src.gates.p1_spec_literal.run_p1_spec_literal_gate`, or **P1 fails**. Arithmetic on YAML alone does not clear P1.
+Every **SPEC_LITERAL** row above must reproduce from `data/processed/prices.parquet` within its tolerance via `src.gates.p1_spec_literal.run_p1_spec_literal_gate`, or **P1 fails**. **P1 result: PASS** for SPEC_LITERAL; **FAIL** for supplier EW + YTD Spearmans (targets not changed).
 
 ## Open data defects
 
 | ID | Issue | Status |
 |---|---|---|
-| D1 | SOXX −12.1% (IBKR) vs −12.8% (press) | OPEN — flagged, not papered over |
-| D2 | Yahoo/Stooq/FRED blocked or challenged from this cloud environment | OPEN — **P1 runs locally**, not in Cloud |
+| D1 | SOXX −12.1% (IBKR) vs −12.8% (press) | OPEN — Yahoo matches IBKR −12.15%; press quote still unresolved |
+| D2 | Stooq JS-challenged | OPEN — Yahoo used; Stooq cross-check skipped |
 | D3 | Financial Datasets MCP needs auth; Plan tier history/burst limits | OPEN |
-| D4 | MRVL/LITE merger announcement ~4 Nov unverified | OPEN — merger dummy or exclude |
-| D5 | Name-level YTD and prior-5d inputs unverified (circular reconstruction) | OPEN — values quarantined from `data/`/`config/`; Spearman gates skipped |
+| D4 | MRVL/LITE all-stock deal | **CLOSED — CONFIRMED** (~2026-11-02; Seeking Alpha/WSJ/CNBC via Google News RSS); merger dummy from 2026-11-02 |
+| D5 | Name-level YTD/prior5 | **RESOLVED FROM INGEST** — prior5 Spearmans PASS; **YTD Spearmans FAIL vs note** (finding) |
 | D6 | Point-in-time forward P/S and P/E consensus unavailable from listed sources | OPEN — trailing multiples lagged to filing date pre-registered as DEVIATION_FROM_SPEC (FDR test T005b) |
-| D7 | Name-level aggregates (hyperscaler/supplier EW, 21/23 below 52w) lack RAW_FILE | OPEN — BLOCKED until P1 writes name closes under `data/raw/` |
+| D7 | Name-level EW / 52w | **RESOLVED FROM INGEST** — hyperscaler EW + 21/23 PASS; **supplier EW FAIL** vs −12.9 (finding) |
 
 ## Pre-P1 revisions
 

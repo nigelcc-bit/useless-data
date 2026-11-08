@@ -7,9 +7,9 @@ __pycache__/
 venv/
 dist/
 *.egg-info/
-data/raw/**
-!data/raw/.gitkeep
 data/interim/**
 !data/interim/.gitkeep
+# raw pulls are committed under data/raw/<date>/ for reproducibility
+
 .DS_Store
 .ipynb_checkpoints/

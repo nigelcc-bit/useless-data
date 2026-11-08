@@ -1,12 +1,13 @@
 # Addendum to the 6 Nov note — which of seven calls survive?
 
-Status after P0 only. Update when H1–H5 complete.
+Updated **2026-11-08 (Australia/Sydney)** after P1 ingest + gap diagnosis.
+Full magnitude table: `docs/gap_diagnosis.md` §6.
 
 | Call | Claim | Dependent tests | Survived? |
 |---|---|---|---|
 | 1 | Election = accelerant not origin | Narrative / timing (out of scope of H1–H5) | Untested |
-| 2 | Builder–supplier seesaw returned (unlike October) | H2, H4 | Pending |
-| 3 | Sort on crowding, not valuation | H3 | Pending |
+| 2 | Builder–supplier seesaw returned (unlike October) | H2, H4 | **Direction intact; magnitudes corrected.** 5 Nov EW: builders **−2.98%**, suppliers **−13.53%** (note −3.0 / −12.9). Six-session: builders **−2.78%**, suppliers **−27.89%** (note −2.8 / −26.5). Gap is larger than the note printed — driven by neocloud (−13.91% vs note −10.6; IBKR confirms Yahoo). Seesaw still the discriminating pattern; H2/H4 still required. |
+| 3 | Sort on crowding, not valuation | H3 | **Sign intact; magnitude revised (SUPERSEDED / UNRECONCILED).** Spearman(5 Nov, YTD→4 Nov) = **−0.53** (p=0.0093; AI-only −0.59, p=0.0061), not note −0.69 / −0.76. Prior-5d Spearman **+0.62** (AI +0.75) still supports continuation-into-the-day. Crowding-not-valuation remains the working claim at a weaker YTD rho; H3 panel must adjudicate with controls. Logged: Call 3 magnitude revised. |
 | 4 | Policy exposure large, measured loss small; funding second channel | H4 funding block | Pending |
 | 5 | First-shock base rate favours bounce within a quarter | H1 (sector transfer) | **Category risk** — S&P result used in semis book until H1 |
 | 6 | S&P has paid <1/3 midterm fee; semis double | Descriptive + midterm prior | Descriptive only so far |
@@ -21,3 +22,8 @@ From the 6 Nov note — operational, not yet H5-validated. H5 trough rule now fi
 - SOXX 5 Nov low 130.74 intraday / 131.90 close (split-adjusted)
 - CRWV 2032 notes >85 vs <70; loan auction 19 Nov >90 vs <80
 - Texas scope; S&P reclaim 7,500–7,600 vs ~6,618; VIX <22 vs >35; Dec FOMC
+
+## Cross-section corrections (P1)
+
+Worst-7 on 5 Nov (Yahoo): LITE, MU, AMD, **IREN**, MRVL, LRCX, NBIS — note omitted IREN and kept VRT.  
+Oct 2026 book (10 AI / 13 names) figures **UNRECONCILED** — membership not in uploads.
