@@ -9,7 +9,7 @@ import pandas as pd
 import requests
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; ai-selloff-study/0.1; research)"}
-SERIES = ("BAMLH0A0HYM2", "DGS10", "FEDFUNDS", "VIXCLS")
+SERIES = ("BAMLH0A0HYM2", "DGS10", "FEDFUNDS", "VIXCLS", "NASDAQCOM")
 
 
 def fetch_fred_series(series_id: str, raw_dir: Path) -> pd.Series:

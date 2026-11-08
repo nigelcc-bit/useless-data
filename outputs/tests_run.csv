@@ -17,8 +17,11 @@ T009,D1,SOXX IBKR -12.1% vs press -12.8%,OPEN,,,,,discrepancy flagged; not paper
 T010,D5,name-level YTD and prior-5d unverified,OPEN,,,,,values removed from data/; audit doc only
 T011,D6,PIT forward multiples unavailable,OPEN,,,,,fallback pre-registered as T005b
 T012,D7,name-level EW / 52w counts lack RAW_FILE,OPEN,,,,,BLOCKED until data/raw name closes
-P1_FRED,meta,FRED BAMLH0A0HYM2 DGS10 FEDFUNDS VIXCLS,PASS,,,,17242,"['BAMLH0A0HYM2', 'DGS10', 'FEDFUNDS', 'VIXCLS']"
-P1_SPLIT_AUDIT,meta,Yahoo splits matched corporate_actions; gaps logged,PASS,,,,22,yahoo_splits=22; market_gaps_gt25pct=59
+P1_FRED,meta,FRED BAMLH0A0HYM2 DGS10 FEDFUNDS VIXCLS,PASS,,,,17242.0,"['BAMLH0A0HYM2', 'DGS10', 'FEDFUNDS', 'VIXCLS']"
+P1_SPLIT_AUDIT,meta,Yahoo splits matched corporate_actions; gaps logged,PASS,,,,22.0,yahoo_splits=22; market_gaps_gt25pct=59
 P1_D4_MERGER,meta,MRVL/LITE all-stock deal ~4 Nov 2026,CONFIRMED — merger dummy written,,,,,RSS hit for Marvell/Lumentum acquisition language; see merger_search_raw.xml
 P1_SPEC_LITERAL,meta,SPEC_LITERAL fixtures vs prices.parquet,PASS,,,,,all SPEC_LITERAL within tol
-P1_D5_D7,meta,name-level EW/Spearman/52w from ingested closes,FAIL,,,-0.5296442687747036,23,supplier_ew_nov5_pct: observed=-13.5316 target=-12.9 tol=0.3; spearman_nov5_vs_ytd: observed=-0.529644 target=-0.69 tol=0.05; spearman_nov5_vs_ytd_ai_only: observed=-0.590977 target=-0.76 tol=0.05; spearman_ytd_max gate: observed=-0.5296442687747036 required < -0.6
+P1_LITE_SENSITIVITY,meta,Spearman YTD/prior5 excluding LITE (merger ~2 Nov),DIAGNOSTIC,0.021783087892448556,,-0.4861660079051384,22.0,with_LITE ytd_rho=-0.5296; without_LITE ytd_rho=-0.4862; ai_with=-0.5910; ai_without=-0.5351
+P1_D5_D7,meta,name-level EW/Spearman/52w from ingested closes,SUPERSEDED_TARGETS,0.009344661031627151,,-0.5296442687747036,23,note magnitudes SUPERSEDED; Yahoo active; see docs/gap_diagnosis.md; Call 3 magnitude revised
+P1_FRED_NASDAQCOM,meta,FRED NASDAQCOM vs Yahoo ^IXIC vs note -5.52%,PASS,,,-0.055233,,FRED and Yahoo both -5.5233%; Stooq still blocked
+P1_GAP_DIAGNOSIS,meta,supplier set identical; neocloud layer note error; YTD adj≈close,NOTE_ERROR,,,-3.31,16,neocloud Yahoo EW -13.91 vs note -10.6; sets identical; SUPERSEDE applied

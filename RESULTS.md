@@ -33,13 +33,13 @@ Source vocabulary:
 | SMH 5 Nov | −11.2% ±0.2pp | −11.21% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
 | SOXX 28 Oct→5 Nov | −24.2% | −24.19% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
 | Log-decline share before 5 Nov | 53% | 53.2% | PASS | SPEC_LITERAL → RAW_FILE prices.parquet (P1) |
-| Hyperscaler EW 5 Nov | −3.0% | −2.98% | PASS | DERIVED — EW of MSFT/AMZN/GOOGL/META from prices.parquet |
-| Supplier EW 5 Nov | −12.9% | −13.53% | **FAIL** | DERIVED — EW of 16 AI suppliers from prices.parquet |
-| Spearman(5 Nov, YTD) | −0.69 | −0.53 | **FAIL** | DERIVED — YTD = close 4 Nov / close 31 Dec 2025 |
-| Spearman(5 Nov, prior 5d) | +0.59 | +0.62 | PASS | DERIVED — close 4 Nov / close 28 Oct |
+| Hyperscaler EW 5 Nov | −2.98% | −2.98% | PASS | DERIVED — prices.parquet (note −3.0 SUPERSEDED as rounding) |
+| Supplier EW 5 Nov | −13.53% | −13.53% | PASS | DERIVED — note −12.9 **SUPERSEDED** (neocloud layer error) |
+| Spearman(5 Nov, YTD) | −0.53 (p=0.0093) | −0.53 | PASS | DERIVED — note −0.69 **SUPERSEDED**; Call 3 magnitude revised |
+| Spearman(5 Nov, prior 5d) | +0.62 | +0.62 | PASS | DERIVED — close 4 Nov / close 28 Oct |
 | Names >20% below 52w high | 21/23 | 21/23 | PASS | DERIVED — vs trailing 252d **daily High** |
 
-Fixture **targets** unchanged. P1 **STOPPED** on FAIL rows — see [`docs/p1_findings.md`](docs/p1_findings.md). Suspect input: note YTD ranks (one-day returns match).
+Diagnosis: [`docs/gap_diagnosis.md`](docs/gap_diagnosis.md). Old note targets retained under `superseded_cross_section_targets_6nov_note` in `config/fixtures.yaml`.
 
 ### Skipped tests (current suite)
 

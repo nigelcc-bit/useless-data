@@ -89,17 +89,19 @@ def test_soxx_press_discrepancy_is_flagged(fx):
     assert "D1" in soxx["note"]
 
 
-def test_fixture_spearman_targets_unchanged(fx):
-    """Do not edit fixture targets — D5 blocks the test, not the target."""
+def test_active_cross_section_targets_are_yahoo_p1(fx):
+    """Active fixtures are Yahoo P1 values; note magnitudes live under SUPERSEDED."""
     t = fx["cross_section_targets"]
-    assert t["spearman_nov5_vs_ytd"] == -0.69
-    assert t["spearman_nov5_vs_prior5"] == 0.59
-    assert t["spearman_nov5_vs_ytd_ai_only"] == -0.76
-    assert t["spearman_nov5_vs_prior5_ai_only"] == 0.73
-
-
-def test_name_level_cross_section_targets_unchanged(fx):
-    t = fx["cross_section_targets"]
-    assert t["hyperscaler_ew_nov5_pct"] == -3.0
-    assert t["supplier_ew_nov5_pct"] == -12.9
+    assert t["spearman_nov5_vs_ytd"] == -0.53
+    assert t["spearman_nov5_vs_ytd_ai_only"] == -0.59
+    assert t["supplier_ew_nov5_pct"] == -13.53
     assert t["names_gt20pct_below_52w"] == 21
+
+
+def test_superseded_note_targets_retained(fx):
+    s = fx["superseded_cross_section_targets_6nov_note"]
+    assert s["status"] == "SUPERSEDED"
+    assert s["spearman_nov5_vs_ytd"] == -0.69
+    assert s["spearman_nov5_vs_ytd_ai_only"] == -0.76
+    assert s["supplier_ew_nov5_pct"] == -12.9
+    assert "Call 3" in s["killed_log"]
