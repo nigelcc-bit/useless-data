@@ -176,5 +176,35 @@ Printed in `outputs/exhibits/h1b_episodes.csv`. Counts: SPX 14 episodes / 21 eve
 ### SOX decision rule (drives the book)
 SOX further-10% rate = **40%** → **INCONCLUSIVE** (between 25% and 50%). Book decision rests on H2/H5. “Do not add supplier beta” is neither confirmed nor overturned by H1b alone.
 
+### Episode-level hit rates (descriptive — no new tests)
+An episode “hits” if **any** de-clustered event in that episode has further-10% DD within 63 sessions.
+
+| Series | Episode hits | note |
+|---|---|---|
+| SOX | **3/10** | SOX_E02 (1997–98), SOX_E03 (2000), SOX_E06 (2008) |
+| SPX | **5/14** | |
+| IXIC | **4/7** | |
+| SMH | **1/8** | |
+| SOXX | **2/7** | |
+
+SMH/SOXX **miss the 1997–98 episode** (listing starts 2000/2001), which holds **3 of SOX’s 6** event-level further-DD hits.
+
+### Median forward outcomes (event-level)
+
+| Series | median +63 | median +252 | median max_dd_63 |
+|---|---:|---:|---:|
+| SPX | +9.6% | +19.7% | −6.7% |
+| SOX | **+1.5%** | **+30.6%** | **−8.5%** |
+| SMH | +19.1% | +47.2% | −6.3% |
+| SOXX | +12.8% | +36.6% | −7.3% |
+| IXIC | −0.1% | +11.9% | −9.0% |
+
+### EXPLORATORY_UNTESTED (post-hoc; not in FDR family)
+**Logged 2026-11-08 (Australia/Sydney).** Judgment-coded over N=10 SOX episodes. **Not a pre-registered test; do not count in FDR.**
+
+> SOX further-drawdown hits occurred only in earnings-led downturns (1997–98, 2000, 2008), not in shock/rate-led episodes.
+
+Candidate monitor (desk, not a test): AI-supplier forward EPS revisions over the next 4–8 weeks.
+
 ### Per-event lists
 Full event-level `+21/+63/+252` and `max_dd_63` printed at run time and stored in `outputs/exhibits/h1b_forward_events.csv` (all series N≤21).

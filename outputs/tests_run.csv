@@ -35,3 +35,4 @@ P2_SPLIT_AUDIT,meta,Every |ret|>25% requires sourced reason (earnings/deal/ipo_l
 T002b,H1b,Fisher exact further-10pct DD within 63d: SOX vs SPX de-clustered deep-DD cluster events,RUN,0.46459028550241005,,2.1333333333333333,36.0,SOX 6/15=0.400; SPX 5/21=0.238; decision=INCONCLUSIVE — SOX further-10% rate between 25% and 50%; book decision rests on H2/H5
 T002c,H1b,"Fisher exact further-10pct DD within 63d: IXIC vs SOX (sensitivity, same era)",RUN,1.0,,1.0,20.0,IXIC 2/5=0.400; SOX 6/15=0.400
 P2_H1B_FORWARD,H1b,H1b forward returns + episode IDs + SOX decision rule,PASS,,,0.4,65.0,INCONCLUSIVE — SOX further-10% rate between 25% and 50%; book decision rests on H2/H5
+H1B_EARNINGS_LED_POSTHOC,H1b,"SOX further-drawdown hits only in earnings-led downturns (1997-98, 2000, 2008), not shock/rate-led — post-hoc judgment",EXPLORATORY_UNTESTED,,,,10.0,NOT in FDR family; N=10 SOX episodes; judgment-coded; candidate monitor: AI-supplier fwd EPS revisions 4-8 weeks
