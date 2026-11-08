@@ -286,7 +286,8 @@ def power_table_for_series(close: pd.Series, label: str, rule: str) -> tuple[pd.
         sub_first_el = sub_first_all.loc[sub_first_all["fwd_eligible"]]
         sub_cluster = sub_all.loc[sub_all["cluster"]]
         n = int(len(sub_first_el))
-        status = "PRIOR_ONLY_NOT_TESTED" if n < 8 else "POWERED"
+        # N>=8 is a floor for testing, not a power calculation
+        status = "PRIOR_ONLY_NOT_TESTED" if n < 8 else "TESTABLE_N_GE_8"
         rows.append(
             {
                 "series": label,
@@ -444,34 +445,42 @@ def run(raw_dir: Path | None = None) -> dict:
     else:
         print("(none)")
 
-    # Log PLANNED Fisher test
+    # Semis near-high (le5) first-shock cells are N=1–7 → T002 not runnable
+    semis_le5 = summary_df[
+        (summary_df["series"].isin(["SOX", "SMH", "SOXX"]))
+        & (summary_df["band"] == "le5")
+    ]
+    semis_le5_ns = {
+        f"{r.series}/{r.rule}": int(r.n_first_shocks_fwd_eligible)
+        for r in semis_le5.itertuples()
+    }
+
     tests_path = ROOT / "outputs" / "tests_run.csv"
     tests = pd.read_csv(tests_path)
-    tests = tests[tests["test_id"] != "T002"]
-    planned = {
-        "test_id": "T002",
-        "hypothesis": "H1",
-        "description": (
-            "Fisher exact further-10pct DD within 63d: semis vs SPX, "
-            "near-high (le5) first-shock cell — PLANNED after power check"
-        ),
-        "status": "PLANNED",
-        "raw_p": "",
-        "bh_p": "",
-        "effect": "",
-        "n": "",
-        "notes": (
-            f"P2 power only; SPX_1928_2019_ruleA_n={spx_ctrl['n_events']} "
-            f"(target 151, match={spx_ctrl['match']}); "
-            "no forward returns computed this phase"
-        ),
-    }
-    # also log P2 power check rows
-    for tid in ("P2_H1_POWER", "P2_SPX_151_CONTROL"):
+    for tid in ("T002", "P2_H1_POWER", "P2_SPX_151_CONTROL", "P2_SPX_5NOV_CLASS"):
         tests = tests[tests["test_id"] != tid]
     extra = pd.DataFrame(
         [
-            planned,
+            {
+                "test_id": "T002",
+                "hypothesis": "H1",
+                "description": (
+                    "Fisher exact further-10pct DD within 63d: semis vs SPX, "
+                    "near-high (le5) first-shock cell"
+                ),
+                "status": "NOT_RUN_UNDERPOWERED",
+                "raw_p": "",
+                "bh_p": "",
+                "effect": "",
+                "n": "",
+                "notes": (
+                    f"semis le5 first-shock N={semis_le5_ns}; all <8; "
+                    "Call 5 does not transfer — SOX 5 Nov was cluster day "
+                    f"29.8% below 252d high, not near-high first shock; "
+                    f"SPX_1928_2019_ruleA_n={spx_ctrl['n_events']} match="
+                    f"{spx_ctrl['match']}; no forward returns this phase"
+                ),
+            },
             {
                 "test_id": "P2_SPX_151_CONTROL",
                 "hypothesis": "H1",
@@ -486,13 +495,33 @@ def run(raw_dir: Path | None = None) -> dict:
             {
                 "test_id": "P2_H1_POWER",
                 "hypothesis": "H1",
-                "description": "Power check N first shocks by series/rule/band (fwd-eligible)",
+                "description": (
+                    "Count N first shocks by series/rule/band (fwd-eligible); "
+                    "status TESTABLE_N_GE_8 vs PRIOR_ONLY_NOT_TESTED"
+                ),
                 "status": "PASS",
                 "raw_p": "",
                 "bh_p": "",
                 "effect": "",
                 "n": int(summary_df["n_first_shocks_fwd_eligible"].sum()),
-                "notes": "counts only; N<8 PRIOR_ONLY_NOT_TESTED; see h1_power_table.csv",
+                "notes": (
+                    "counts only; N>=8 is a floor not power; "
+                    "see h1_power_table.csv"
+                ),
+            },
+            {
+                "test_id": "P2_SPX_5NOV_CLASS",
+                "hypothesis": "H1",
+                "description": "SPX 5 Nov classification under rules A and B",
+                "status": "PASS",
+                "raw_p": "",
+                "bh_p": "",
+                "effect": "",
+                "n": "",
+                "notes": (
+                    "rule A: first shock (near-high); rule B: cluster day "
+                    "(prior rule-B event 2026-06-05)"
+                ),
             },
         ]
     )

@@ -1,10 +1,7 @@
 test_id,hypothesis,description,status,raw_p,bh_p,effect,n,notes
 T000,meta,SPEC_LITERAL ETF fixture arithmetic,PASS,,,,,YAML close vectors only; P1 must re-verify via prices.parquet
-T000b,meta,Spearman YTD/prior5 fixture gates,BLOCKED,,,,,D5; calibrated panel quarantined from data/
-T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,BLOCKED,,,,,D7; no RAW_FILE under data/raw/
 T000d,meta,quarantine: no CALIBRATED under data/config/src reads,PASS,,,,,test_quarantine_calibrated.py
 T000e,meta,P1 SPEC_LITERAL gate registry,PASS,,,,,runs against prices.parquet when present; else skip
-T001,H1,power check SOX/SMH/IXIC first-shock cells,NOT_RUN,,,,,requires prices.parquet (local P1)
 T003,H2,variance ratio beta-neutral spread,NOT_RUN,,,,,regime=HY OAS BAMLH0A0HYM2 for 2023-2024
 T004,H2,event study -2.5σ spread days fwd 5/21/63,NOT_RUN,,,,,
 T005,H3,crowding vs valuation horse race 7 episodes,NOT_RUN,,,,,includes layer dummy block
@@ -13,9 +10,7 @@ T006,H3,Romano-Wolf stepdown on regressor blocks,NOT_RUN,,,,,
 T007,H4,SUR/Wald Oct vs Nov coefficient equality,NOT_RUN,,,,,vector includes layer dummies from H3
 T008,H5,L5/L10 vs fwd 63d walk-forward OOS,NOT_RUN,,,,,trough=63d low + next close up; L after confirmation
 T009,D1,SOXX IBKR -12.1% vs press -12.8%,OPEN,,,,,discrepancy flagged; not papered over
-T010,D5,name-level YTD and prior-5d unverified,OPEN,,,,,values removed from data/; audit doc only
 T011,D6,PIT forward multiples unavailable,OPEN,,,,,fallback pre-registered as T005b
-T012,D7,name-level EW / 52w counts lack RAW_FILE,OPEN,,,,,BLOCKED until data/raw name closes
 P1_FRED,meta,FRED BAMLH0A0HYM2 DGS10 FEDFUNDS VIXCLS,PASS,,,,17242.0,"['BAMLH0A0HYM2', 'DGS10', 'FEDFUNDS', 'VIXCLS']"
 P1_SPLIT_AUDIT,meta,Yahoo splits matched corporate_actions; gaps logged,PASS,,,,22.0,yahoo_splits=22; market_gaps_gt25pct=59
 P1_D4_MERGER,meta,MRVL/LITE all-stock deal ~4 Nov 2026,CONFIRMED — merger dummy written,,,,,RSS hit for Marvell/Lumentum acquisition language; see merger_search_raw.xml
@@ -26,6 +21,15 @@ P1_FRED_NASDAQCOM,meta,FRED NASDAQCOM vs Yahoo ^IXIC vs note -5.52%,PASS,,,-0.05
 P1_IBKR_NEOCLOUD,meta,IBKR confirms Yahoo neocloud 5 Nov EW -13.91%,PASS,,,-13.91,3.0,CRWV -9.83 IREN -16.95 NBIS -14.94; third-source confirmation
 P1_GAP_DIAGNOSIS,meta,supplier NOTE ERROR; YTD Spearman UNRECONCILED,SUPERSEDED,,,-0.53,23.0,YTD label UNRECONCILED; neocloud NOTE ERROR IBKR+Yahoo; Call 3 magnitude revised
 P1_REDERIVE_XS,meta,re-derive six-session/layer/worst7/52w from prices.parquet,PASS,,,-27.89,23.0,SUPERSEDED supplier six-session -26.5->-27.89; neocloud; worst7+IREN; book UNRECONCILED
-T002,H1,"Fisher exact further-10pct DD within 63d: semis vs SPX, near-high (le5) first-shock cell — PLANNED after power check",PLANNED,,,,,"P2 power only; SPX_1928_2019_ruleA_n=151 (target 151, match=True); no forward returns computed this phase"
-P2_SPX_151_CONTROL,H1,Reproduce 151 SPX <=-4% days 1928-2019,PASS,,,151,151,first=1929-03-25 00:00:00 last=2018-02-05 00:00:00
-P2_H1_POWER,H1,Power check N first shocks by series/rule/band (fwd-eligible),PASS,,,,308,counts only; N<8 PRIOR_ONLY_NOT_TESTED; see h1_power_table.csv
+T002,H1,"Fisher exact further-10pct DD within 63d: semis vs SPX, near-high (le5) first-shock cell",NOT_RUN_UNDERPOWERED,,,,,"semis le5 first-shock N={'SOX/A': 3, 'SOX/B': 6, 'SMH/A': 1, 'SMH/B': 4, 'SOXX/A': 1, 'SOXX/B': 5}; all <8; Call 5 does not transfer — SOX 5 Nov was cluster day 29.8% below 252d high, not near-high first shock; SPX_1928_2019_ruleA_n=151 match=True; no forward returns this phase"
+P2_SPX_151_CONTROL,H1,Reproduce 151 SPX <=-4% days 1928-2019,PASS,,,151.0,151.0,first=1929-03-25 00:00:00 last=2018-02-05 00:00:00
+P2_H1_POWER,H1,Count N first shocks by series/rule/band (fwd-eligible); status TESTABLE_N_GE_8 vs PRIOR_ONLY_NOT_TESTED,PASS,,,,308.0,counts only; N>=8 is a floor not power; see h1_power_table.csv
+P2_SPX_5NOV_CLASS,H1,SPX 5 Nov classification under rules A and B,PASS,,,,,rule A: first shock (near-high); rule B: cluster day (prior rule-B event 2026-06-05)
+T002b,H1b,"EXPLORATORY: semis deep-drawdown cluster days have worse 63-session forward outcomes than S&P days in the same state (rule B, dist<-20%, cluster; de-cluster 63-session blocks)",EXPLORATORY,,,,,"registered before any forward returns; counts N={'SPX': 21, 'IXIC': 10, 'SOX': 15, 'SMH': 9, 'SOXX': 10}; apply N>=8 floor; see h1b_deep_dd_counts.csv"
+P2_H1B_COUNTS,H1b,H1b deep-DD cluster de-clustered counts by series,PASS,,,,65.0,counts only; no forward returns; see h1b_deep_dd_event_lists.csv
+T001,H1,power check SOX/SMH/IXIC/SPX first-shock cells (counts),DONE,,,,,P2 h1_power_table.csv; N>=8 → TESTABLE_N_GE_8 else PRIOR_ONLY_NOT_TESTED; SPX 151 control PASS
+T010,D5,name-level YTD and prior-5d unverified,RESOLVED_VIA_P1,,,,,Yahoo Close Spearmans computed; note YTD label UNRECONCILED; see docs/gap_diagnosis.md / P1_D5_D7
+T012,D7,name-level EW / 52w counts lack RAW_FILE,RESOLVED_VIA_P1,,,,,prices.parquet RAW_FILE present; EW/52w re-derived; note magnitudes SUPERSEDED where disagreed
+T000b,meta,Spearman YTD/prior5 fixture gates,RESOLVED_VIA_P1,,,,,D5 resolved via P1; calibrated panel remains quarantined
+T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,RESOLVED_VIA_P1,,,,,D7 resolved via P1 RAW_FILE; see P1_REDERIVE_XS
+P2_SPLIT_AUDIT,meta,Every |ret|>25% requires sourced reason (earnings/deal/ipo_listing/split); no auto-explain,PASS,,,,,config/large_move_reasons.yaml; APLD 2022-07-19=deal (Marathon); SNDK 2025-02-18=ipo_listing (when-issued→regular-way)

@@ -250,8 +250,8 @@ def main() -> int:
     stooq_rep.to_csv(exhibits / "stooq_crosscheck.csv", index=False)
     print(stooq_rep.to_string(index=False), flush=True)
 
-    # 3. Split audit — Yahoo split events must be in corporate_actions;
-    # |ret|>25% without a split event = logged market gap (not a fail).
+    # 3. Split audit — Yahoo splits ↔ corporate_actions; every |ret|>25%
+    # needs a sourced reason in large_move_reasons.yaml (no auto-explain).
     added = sync_corporate_actions_from_yahoo(raw_dir)
     print(f"corporate_actions: auto-imported {added} Yahoo splits", flush=True)
     ysplits = yahoo_splits_from_raw(raw_dir)
@@ -269,7 +269,7 @@ def main() -> int:
             {
                 "test_id": "P1_SPLIT_AUDIT",
                 "hypothesis": "meta",
-                "description": "Yahoo splits must match corporate_actions; gaps logged",
+                "description": "Yahoo splits + sourced |ret|>25% reasons required",
                 "status": "FAIL",
                 "raw_p": "",
                 "bh_p": "",
@@ -279,20 +279,24 @@ def main() -> int:
             }
         )
         append_tests_run(test_log)
-        print("STOP — unexplained Yahoo splits. Do not proceed to fixture resolution.")
+        print("STOP — unexplained large moves / splits. Do not proceed.")
         return 2
-    n_gaps = int((gap_log["kind"] == "market_gap").sum()) if len(gap_log) else 0
+    n_moves = len(gap_log) if len(gap_log) else 0
+    n_explained = int(gap_log["explained"].sum()) if n_moves else 0
     test_log.append(
         {
             "test_id": "P1_SPLIT_AUDIT",
             "hypothesis": "meta",
-            "description": "Yahoo splits matched corporate_actions; gaps logged",
+            "description": "Yahoo splits matched; every |ret|>25% has sourced reason",
             "status": "PASS",
             "raw_p": "",
             "bh_p": "",
             "effect": "",
             "n": len(split_report),
-            "notes": f"yahoo_splits={len(split_report)}; market_gaps_gt25pct={n_gaps}",
+            "notes": (
+                f"yahoo_splits={len(split_report)}; large_moves={n_moves}; "
+                f"sourced_explained={n_explained}; no auto-explain"
+            ),
         }
     )
 
