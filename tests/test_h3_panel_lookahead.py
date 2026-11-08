@@ -9,7 +9,7 @@ import pytest
 from src.config_io import ROOT, episodes
 from src.features.crowding import distance_from_high, prior_return, realised_vol
 from src.features.layer import layer_assignments
-from src.features.liquidity import adv_dollar, load_volume_panel
+from src.features.liquidity import adv_dollar, load_volume_panel, resolve_yahoo_raw_dir
 
 
 def _tickers():
@@ -18,11 +18,17 @@ def _tickers():
 
 @pytest.fixture(scope="module")
 def close_volume():
+    from src.features.calendar_hygiene import scrub_processed_price_frames
+
+    scrub_processed_price_frames()
     prices = pd.read_parquet(ROOT / "data" / "processed" / "prices.parquet")
     prices.index = pd.to_datetime(prices.index).tz_localize(None).normalize()
     tickers = [t for t in _tickers() if t in prices.columns]
     close = prices[tickers]
-    volume = load_volume_panel(ROOT / "data" / "raw" / "2026-11-07", tickers)
+    volume = load_volume_panel(resolve_yahoo_raw_dir(), tickers)
+    # Holiday placeholders from ^VIX must not remain in the trading calendar
+    for hol in (pd.Timestamp("2026-05-25"), pd.Timestamp("2026-09-07")):
+        assert hol not in close.index, f"{hol.date()} still in prices calendar"
     return close, volume
 
 

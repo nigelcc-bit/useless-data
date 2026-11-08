@@ -248,8 +248,9 @@ P3 coverage skeleton exists (`panel.parquet` price blocks only). Fundamentals in
 
 **Run:** 2026-11-08 (Australia/Sydney). Design block above unchanged.
 
-- **Ffill audit:** every universe name has holes on **2026-05-25** and **2026-09-07** only (US Memorial Day / Labor Day placeholder rows). `non_us_calendar_cause=0`. Returns computed on each name’s native `dropna` calendar; ffill capped at 1 session and not used in feature math.
+- **Calendar:** `2026-05-25` / `2026-09-07` rows came from Yahoo **`^VIX`** printing on US equity holidays, then an outer join in `build_price_frames`. Dropped via `drop_vix_only_sessions` (no ffill). Source note in `src/features/calendar_hygiene.py`.
+- **ADV regression:** broke in commit `2902f6f` (volume read from `data/raw/2026-11-08` with no equity Yahoo caches). Fixed by `resolve_yahoo_raw_dir` → `2026-11-07`. Guard: `tests/test_adv_coverage.py` (≥90% listed).
 - **EDGAR:** all 45 seed names have 10-K/10-Q or 20-F in companyfacts → `h3_exclusions: []`.
 - **Short interest:** FINRA biweekly CDN available from **2018-01-12** → **KEPT** (covers E1). Crowding = mom/dist/vol/SI.
-- **AI exposure:** proposed in `config/ai_exposure.yaml`, tag `JUDGMENT_CODED_POST_OUTCOME`, status `PROPOSED_AWAITING_SIGNOFF`.
+- **AI exposure:** time-varying E1–E4 / E5–E7 in `config/ai_exposure.yaml`; human decision recorded verbatim (Nigel Clark, 2026-11-08). Tag `JUDGMENT_CODED_POST_OUTCOME`, status `PROPOSED_AWAITING_SIGNOFF` (pre-2023 band still under review). Spearman vs layer dummy: `ai_exposure_spearman_vs_layer.csv`.
 - Coverage exhibits: `h3_feature_coverage.csv`, `h3_feature_coverage_summary.csv`, `edgar_coverage_by_name.csv`, `ffill_audit_*.csv`.

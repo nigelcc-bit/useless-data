@@ -110,7 +110,8 @@ def write_audit(prices_path: Path | None = None) -> tuple[pd.DataFrame, pd.DataF
     print(summary.to_string(index=False))
     print(
         f"\nTotal hole-days={len(detail)}; "
-        f"non_us_calendar_cause={int(detail['non_us_calendar_cause'].sum()) if len(detail) else 0}"
+        f"non_us_calendar_cause={int(detail['non_us_calendar_cause'].sum()) if len(detail) else 0}. "
+        "Holiday placeholders should be dropped via calendar_hygiene (not ffilled)."
     )
     return detail, summary
 

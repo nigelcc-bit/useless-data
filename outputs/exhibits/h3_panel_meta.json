@@ -12,8 +12,34 @@
   },
   "ai_exposure": {
     "status": "PROPOSED_AWAITING_SIGNOFF",
-    "tag": "JUDGMENT_CODED_POST_OUTCOME"
+    "tag": "JUDGMENT_CODED_POST_OUTCOME",
+    "time_varying": true,
+    "bands": {
+      "e1_e4": "Episodes E1\u2013E4 (labelled pre-2023 / oos band in human decision)",
+      "e5_e7": "Episodes E5\u2013E7 (2023+ / AI-flush fit band); inherits prior single scores"
+    },
+    "human_decision": {
+      "name": "Nigel Clark",
+      "date": "2026-11-08",
+      "timezone": "Australia/Sydney",
+      "verbatim": "Make scores time-varying: one score for E1-E4 (pre-2023) and one\nfor E5-E7 (2023+). Current scores apply to E5-E7.\nPre-2023 proposals for me to review (show the revenue-segment\nevidence from 10-K/20-F for each): NVDA, MU, AVGO, MRVL, ANET, VRT,\nLITE, FN, LRCX, AMAT, KLAC, ASML, TSM to 1 or 2 unless segment data\nsupports 3; IREN 0 for E3 (bitcoin miner), 1 for E4.\nReport Spearman between the score and the AI/non-AI layer dummy.\nIf |rho| > 0.8 in an episode, note that the score is redundant there.\nStatus stays JUDGMENT_CODED_POST_OUTCOME.\n"
+    }
   },
+  "calendar_scrub": {
+    "rows_before": 2979,
+    "rows_after": 2979,
+    "dropped": 0,
+    "holiday_present_before": {
+      "2026-05-25": false,
+      "2026-09-07": false
+    },
+    "holiday_present_after": {
+      "2026-05-25": false,
+      "2026-09-07": false
+    },
+    "source": "Yahoo ^VIX on US equity holidays \u2192 outer-join in build_price_frames"
+  },
+  "yahoo_volume_dir": "/workspace/data/raw/2026-11-07",
   "block_cols": {
     "crowding": [
       "prior_63d_return",
@@ -39,5 +65,56 @@
       "log_mkt_cap",
       "adv"
     ]
-  }
+  },
+  "spearman_ai_vs_layer": [
+    {
+      "episode": "E1",
+      "n": 33,
+      "spearman_rho": 0.469041575982343,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E2",
+      "n": 35,
+      "spearman_rho": 0.6118264057738428,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E3",
+      "n": 38,
+      "spearman_rho": 0.6646427611882942,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E4",
+      "n": 45,
+      "spearman_rho": 0.5967552196697257,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E5",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E6",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E7",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    }
+  ]
 }

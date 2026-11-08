@@ -58,7 +58,25 @@ def build_price_frames(ohlcv: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, pd
     close.index = pd.to_datetime(close.index).normalize()
     high.index = pd.to_datetime(high.index).normalize()
     adj.index = pd.to_datetime(adj.index).normalize()
+    # ^VIX (Cboe) can print on US equity holidays and, under an outer join,
+    # inject all-NaN equity rows (e.g. Memorial Day / Labor Day 2026). Drop
+    # sessions where every non-VIX column is missing.
+    close, high, adj = drop_vix_only_sessions(close, high, adj)
     return close.sort_index(), high.sort_index(), adj.sort_index()
+
+
+def drop_vix_only_sessions(
+    close: pd.DataFrame,
+    high: pd.DataFrame,
+    adj: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Remove calendar rows created solely by ^VIX on US equity holidays."""
+    equity_cols = [c for c in close.columns if c != "^VIX"]
+    if not equity_cols:
+        return close, high, adj
+    keep = close[equity_cols].notna().any(axis=1)
+    idx = close.index[keep]
+    return close.loc[idx], high.loc[idx], adj.loc[idx]
 
 
 def stooq_crosscheck(raw_dir: Path, close: pd.DataFrame) -> pd.DataFrame:

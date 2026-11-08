@@ -22,12 +22,17 @@ from src.features.crowding import (
 )
 from src.features.ffill_audit import write_audit
 from src.features.funding import FUNDING_COLS
-from src.features.layer import ai_exposure_meta, ai_revenue_exposure, layer_assignments
-from src.features.liquidity import adv_dollar, load_volume_panel
+from src.features.calendar_hygiene import scrub_processed_price_frames
+from src.features.layer import (
+    ai_exposure_meta,
+    ai_score_for_episode,
+    layer_assignments,
+    spearman_ai_vs_layer_dummy,
+)
+from src.features.liquidity import adv_dollar, load_volume_panel, resolve_yahoo_raw_dir
 from src.features.valuation import VALUATION_COLS
 from src.ingest.finra_short_interest import ingest_finra, si_pct_asof
 from src.ingest.sec_companyfacts import (
-    fetch_companyfacts,
     fundamentals_asof,
     ingest_all as ingest_edgar_coverage,
     load_ticker_cik_map,
@@ -113,14 +118,23 @@ def build_panel(
     run_finra: bool = True,
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     prices_path = prices_path or (ROOT / "data" / "processed" / "prices.parquet")
+    # SEC/FINRA live under 2026-11-08; Yahoo OHLCV/volume under 2026-11-07
+    # (ADV regressed to 0% in 2902f6f when volume was read from the SEC folder).
     raw_dir = raw_dir or (ROOT / "data" / "raw" / "2026-11-08")
+    yahoo_dir = resolve_yahoo_raw_dir(ROOT / "data" / "raw" / "2026-11-07")
+
+    # Drop US holiday placeholders injected by ^VIX before any feature math
+    cal_meta = scrub_processed_price_frames(prices_path.parent)
+    print("Calendar scrub:", cal_meta)
+
     prices = pd.read_parquet(prices_path)
     prices.index = pd.to_datetime(prices.index).tz_localize(None).normalize()
     tickers = universe_tickers()
     close = equity_close(prices, tickers)
-    volume = load_volume_panel(raw_dir, tickers)
+    volume = load_volume_panel(yahoo_dir, tickers)
+    print(f"Volume panel from {yahoo_dir}: shape={volume.shape}")
 
-    # Ffill audit (does not alter feature math)
+    # Ffill audit after scrub (should be empty of holiday holes)
     write_audit(prices_path)
 
     # EDGAR coverage + caches
@@ -140,11 +154,19 @@ def build_panel(
         if path.exists():
             facts_cache[t] = json.loads(path.read_text())
 
-    # FINRA SI
+    # FINRA SI (reuse exhibit panel when present — avoid re-probing CDN)
     include_si = False
     si_panel = pd.DataFrame()
     si_diag: dict = {}
-    if run_finra:
+    exhibits = ROOT / "outputs" / "exhibits"
+    si_csv = exhibits / "finra_short_interest_panel.csv"
+    si_json = exhibits / "finra_si_diagnostics.json"
+    if run_finra and si_csv.exists() and si_json.exists():
+        print("=== FINRA short interest (cached exhibit) ===")
+        si_panel = pd.read_csv(si_csv, parse_dates=["settlement_date"])
+        si_diag = json.loads(si_json.read_text())
+        include_si = bool(si_diag.get("covers_e1_2018"))
+    elif run_finra:
         print("=== FINRA short interest ingest ===")
         si_panel, si_diag = ingest_finra(raw_dir)
         include_si = bool(si_diag.get("covers_e1_2018"))
@@ -157,7 +179,6 @@ def build_panel(
 
     blocks = block_cols(include_si)
     layers = layer_assignments().set_index("ticker")
-    ai = ai_revenue_exposure()
     ai_meta = ai_exposure_meta()
 
     eps = episodes()["episodes"]
@@ -201,6 +222,7 @@ def build_panel(
             if shares not in (None, 0) and np.isfinite(px) and px > 0:
                 log_mcap = float(np.log(px * float(shares)))
 
+            ai_score = ai_score_for_episode(ticker, eid)
             row = {
                 "episode": eid,
                 "episode_start": start,
@@ -224,7 +246,7 @@ def build_panel(
                 "log_mkt_cap": log_mcap,
                 "adv": float(adv_t[ticker].loc[asof]) if len(adv_t) and asof in adv_t.index and ticker in adv_t else np.nan,
                 "layer": layers.loc[ticker, "layer"] if ticker in layers.index else None,
-                "ai_revenue_exposure_0_3_JUDGMENT": float(ai.get(ticker)) if ticker in ai.index and pd.notna(ai.get(ticker)) else np.nan,
+                "ai_revenue_exposure_0_3_JUDGMENT": ai_score if np.isfinite(ai_score) else np.nan,
                 "edgar_eligible": bool(
                     edgar_cov.loc[edgar_cov["ticker"] == ticker, "eligible_h3"].iloc[0]
                 )
@@ -237,12 +259,16 @@ def build_panel(
 
     panel = pd.DataFrame(rows)
     coverage = coverage_table(panel, blocks)
+    spearman = spearman_ai_vs_layer_dummy(panel)
     meta_out = {
         "include_si": include_si,
         "si_status": si_status,
         "si_diag": si_diag,
         "ai_exposure": ai_meta,
+        "calendar_scrub": cal_meta,
+        "yahoo_volume_dir": str(yahoo_dir),
         "block_cols": {k: list(v) for k, v in blocks.items()},
+        "spearman_ai_vs_layer": spearman.to_dict(orient="records"),
     }
     return panel, coverage, meta_out
 
@@ -320,6 +346,9 @@ def run() -> dict:
     coverage.to_csv(exhibits / "h3_feature_coverage.csv", index=False)
     summary = coverage_summary(coverage)
     summary.to_csv(exhibits / "h3_feature_coverage_summary.csv", index=False)
+    spearman = pd.DataFrame(meta.get("spearman_ai_vs_layer") or [])
+    if len(spearman):
+        spearman.to_csv(exhibits / "ai_exposure_spearman_vs_layer.csv", index=False)
     (exhibits / "h3_panel_meta.json").write_text(json.dumps(meta, indent=2, default=str))
 
     edgar_cov = pd.read_csv(exhibits / "edgar_coverage_by_name.csv")
@@ -328,10 +357,14 @@ def run() -> dict:
     print("\n=== Coverage summary (listed ∩ EDGAR-eligible) ===")
     pivot = summary.pivot(index="episode", columns="block", values="mean_pct_non_missing")
     print(pivot.round(1).to_string())
+    print("\n=== Spearman AI score vs AI/non-AI layer dummy ===")
+    if len(spearman):
+        print(spearman.to_string(index=False))
     print("\n=== EDGAR coverage by name ===")
     print(edgar_cov.to_string(index=False))
     print(f"\nSI status: {meta['si_status']}")
     print(f"AI exposure: {meta['ai_exposure']}")
+    print(f"Calendar scrub: {meta.get('calendar_scrub')}")
 
     # tests_run log
     tests_path = ROOT / "outputs" / "tests_run.csv"
@@ -366,13 +399,13 @@ def run() -> dict:
             {
                 "test_id": "P3_FFILL_AUDIT",
                 "hypothesis": "meta",
-                "description": "Price hole ffill audit; cap=1; native calendars for returns",
+                "description": "Drop VIX-only US holiday rows; no ffill of equity calendar",
                 "status": "PASS",
                 "raw_p": "",
                 "bh_p": "",
                 "effect": "",
-                "n": "",
-                "notes": "see ffill_audit_detail.csv; holes=US Memorial/Labor Day 2026",
+                "n": meta.get("calendar_scrub", {}).get("dropped", ""),
+                "notes": json.dumps(meta.get("calendar_scrub", {})),
             },
             {
                 "test_id": "T005b",

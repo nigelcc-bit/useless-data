@@ -1,54 +1,294 @@
-# AI revenue exposure 0–3. Cursor proposal — human must sign off.
-# Tag in every output: JUDGMENT_CODED_POST_OUTCOME
+# AI revenue exposure 0–3. Tag in every output: JUDGMENT_CODED_POST_OUTCOME
 # H3 must be run WITH and WITHOUT this regressor.
 
 status: PROPOSED_AWAITING_SIGNOFF
 tag: JUDGMENT_CODED_POST_OUTCOME
 scale: "0=none, 1=low/indirect, 2=material AI revenue or AI-linked capex, 3=AI-core"
 
+bands:
+  e1_e4: "Episodes E1–E4 (labelled pre-2023 / oos band in human decision)"
+  e5_e7: "Episodes E5–E7 (2023+ / AI-flush fit band); inherits prior single scores"
+
+human_decision:
+  name: Nigel Clark
+  date: "2026-11-08"
+  timezone: Australia/Sydney
+  verbatim: |
+    Make scores time-varying: one score for E1-E4 (pre-2023) and one
+    for E5-E7 (2023+). Current scores apply to E5-E7.
+    Pre-2023 proposals for me to review (show the revenue-segment
+    evidence from 10-K/20-F for each): NVDA, MU, AVGO, MRVL, ANET, VRT,
+    LITE, FN, LRCX, AMAT, KLAC, ASML, TSM to 1 or 2 unless segment data
+    supports 3; IREN 0 for E3 (bitcoin miner), 1 for E4.
+    Report Spearman between the score and the AI/non-AI layer dummy.
+    If |rho| > 0.8 in an episode, note that the score is redundant there.
+    Status stays JUDGMENT_CODED_POST_OUTCOME.
+
+companyfacts_segment_note: >
+  SEC XBRL companyfacts (data.sec.gov) for these issuers carry total revenue
+  tags only — no product/segment USD members (segment field absent on
+  RevenueFromContractWithCustomer* / SalesRevenueNet). Therefore no name
+  below receives score_e1_e4=3 on segment evidence; proposals are 1 or 2
+  pending human review of 10-K/20-F narrative.
+
+# score_e5_e7 = prior single "score" values (human: current scores apply to E5–E7).
+# score_e1_e4 = Cursor proposal for review unless score_by_episode overrides.
 names:
-  MSFT: { score: 2, note: "Azure OpenAI / AI cloud mix rising; still diversified" }
-  AMZN: { score: 2, note: "AWS AI infra; retail dilutes share" }
-  GOOGL: { score: 2, note: "Search+Cloud AI; core ad franchise remains" }
-  META: { score: 2, note: "AI ads + infra spend; consumer apps dominate revenue" }
-  AAPL: { score: 1, note: "On-device AI narrative; AI revenue share still low" }
-  ORCL: { score: 2, note: "OCI AI / multi-cloud; database franchise still large" }
-  NVDA: { score: 3, note: "AI GPU/core" }
-  AMD: { score: 3, note: "AI GPU/CPU challenger" }
-  AVGO: { score: 3, note: "Custom AI ASICs / networking silicon" }
-  MRVL: { score: 3, note: "Custom silicon / AI networking" }
-  TSM: { score: 3, note: "Foundry for AI GPUs/ASICs" }
-  INTC: { score: 2, note: "Foundry/AI CPU ambitions; legacy PC/server mix" }
-  MU: { score: 3, note: "HBM for AI" }
-  SNDK: { score: 2, note: "NAND/storage; AI-adjacent not core GPU" }
-  WDC: { score: 1, note: "HDD/storage; weak AI-specific mix" }
-  STX: { score: 1, note: "HDD; weak AI-specific mix" }
-  LRCX: { score: 3, note: "Semicap for advanced nodes / HBM" }
-  AMAT: { score: 3, note: "Semicap broad AI-node exposure" }
-  KLAC: { score: 3, note: "Process control for advanced nodes" }
-  ASML: { score: 3, note: "EUV bottleneck for AI silicon" }
-  TER: { score: 2, note: "Test; AI-node leverage but not exclusive" }
-  LITE: { score: 3, note: "Optical for AI clusters" }
-  COHR: { score: 2, note: "Lasers/optics; AI networking mix growing" }
-  ANET: { score: 3, note: "AI data-center switching" }
-  GLW: { score: 2, note: "Fibre / optical materials" }
-  ALAB: { score: 3, note: "Connectivity silicon for AI racks" }
-  CIEN: { score: 2, note: "Optical networking; AI traffic leverage" }
-  FN: { score: 3, note: "Optical interconnect for AI" }
-  APH: { score: 2, note: "Connectors; AI rack content rising" }
-  GEV: { score: 2, note: "Power equipment for data-center load" }
-  VRT: { score: 3, note: "Thermal/power for AI data centers" }
-  ETN: { score: 2, note: "Electrical infra; data-center share rising" }
-  PWR: { score: 2, note: "Electrical construction; data-center projects" }
-  NVT: { score: 2, note: "Electrical/connectivity for data centers" }
-  CRWV: { score: 3, note: "Neocloud GPU rental" }
-  NBIS: { score: 3, note: "AI cloud / GPU infra" }
-  IREN: { score: 3, note: "HPC/AI hosting conversion" }
-  APLD: { score: 3, note: "AI data-center hosting" }
-  CORZ: { score: 3, note: "HPC/AI hosting" }
-  CRWD: { score: 0, note: "Cyber control — no AI-capex link" }
-  NOW: { score: 1, note: "Software platform; AI features but not AI-capex chain" }
-  HOOD: { score: 0, note: "Fintech control" }
-  PANW: { score: 0, note: "Cyber control" }
-  SNOW: { score: 1, note: "Data platform; AI narrative, not GPU chain" }
-  DDOG: { score: 1, note: "Observability; AI ops narrative, not GPU chain" }
+  MSFT:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Azure OpenAI / AI cloud mix rising; still diversified"
+    note_e1_e4: "Cloud material; AI-specific revenue not segmented in companyfacts"
+  AMZN:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "AWS AI infra; retail dilutes share"
+    note_e1_e4: "AWS material; AI mix not XBRL-segmented"
+  GOOGL:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Search+Cloud AI; core ad franchise remains"
+    note_e1_e4: "Ads-dominant; AI revenue share not segmented"
+  META:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "AI ads + infra spend; consumer apps dominate revenue"
+    note_e1_e4: "Social/ads franchise; AI not a disclosed revenue segment"
+  AAPL:
+    score_e5_e7: 1
+    score_e1_e4: 1
+    note_e5_e7: "On-device AI narrative; AI revenue share still low"
+    note_e1_e4: "No AI revenue segment in companyfacts"
+  ORCL:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "OCI AI / multi-cloud; database franchise still large"
+    note_e1_e4: "Database/cloud; AI not XBRL-segmented"
+  NVDA:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "AI GPU/core"
+    evidence_e1_e4: >
+      PROPOSAL for review. companyfacts: RevenueFromContractWithCustomerExcludingAssessedTax
+      has NO segment members (0 rows with segment=). 10-K narrative historically
+      discloses Compute/Graphics platforms including Data Center, but without
+      XBRL segment USD we cannot verify AI-core majority → score 2 not 3.
+  AMD:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "AI GPU/CPU challenger"
+    note_e1_e4: "CPU/GPU franchise; AI accelerator mix not XBRL-segmented → 2"
+  AVGO:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Custom AI ASICs / networking silicon"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts revenue tags have no segment members. Pre-2023
+      semiconductor solutions / infrastructure software mix is broad → 2 not 3.
+  MRVL:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Custom silicon / AI networking"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment USD on revenue tags. Networking/storage
+      semis diversified → 2.
+  TSM:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Foundry for AI GPUs/ASICs"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts (20-F path) has no us-gaap segment revenue members
+      in cache. Advanced-node foundry serves many end-markets → 2 not 3.
+  INTC:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Foundry/AI CPU ambitions; legacy PC/server mix"
+    note_e1_e4: "PC/server dominant historically; AI not segmented → 1"
+  MU:
+    score_e5_e7: 3
+    score_e1_e4: 1
+    note_e5_e7: "HBM for AI"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: SalesRevenueNet / RevenueFromContract* lack segment
+      members. Pre-HBM boom DRAM/NAND mix is diversified memory → 1 not 3.
+  SNDK:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "NAND/storage; AI-adjacent not core GPU"
+    note_e1_e4: "NAND; no AI segment in companyfacts → 1"
+  WDC:
+    score_e5_e7: 1
+    score_e1_e4: 1
+    note_e5_e7: "HDD/storage; weak AI-specific mix"
+    note_e1_e4: "HDD/NAND; no AI segment"
+  STX:
+    score_e5_e7: 1
+    score_e1_e4: 1
+    note_e5_e7: "HDD; weak AI-specific mix"
+    note_e1_e4: "HDD; no AI segment"
+  LRCX:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Semicap for advanced nodes / HBM"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts revenue has no segment members. Wafer-fab equipment
+      serves broad semiconductor demand → 2 not 3.
+  AMAT:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Semicap broad AI-node exposure"
+    evidence_e1_e4: >
+      PROPOSAL. Deprecated SegmentReportingInformationRevenueFromExternalCustomers
+      exists only for ancient periods; modern revenue tags have no segment members.
+      Broad semicap → 2.
+  KLAC:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Process control for advanced nodes"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment USD on revenue. Process control is
+      advanced-node levered but multi-end-market → 2.
+  ASML:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "EUV bottleneck for AI silicon"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment members on revenue tags. EUV/DUV systems
+      serve all advanced logic/memory customers → 2 not 3.
+  TER:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Test; AI-node leverage but not exclusive"
+    note_e1_e4: "ATE diversified; no AI segment → 1"
+  LITE:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Optical for AI clusters"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts revenue tags lack segment members. Optical transport /
+      datacom mix pre-AI-cluster boom → 2.
+  COHR:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Lasers/optics; AI networking mix growing"
+    note_e1_e4: "Photonics diversified; no AI segment → 1"
+  ANET:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "AI data-center switching"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment members. Cloud networking was already
+      material pre-2023 but not AI-labelled in XBRL → 2.
+  GLW:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Fibre / optical materials"
+    note_e1_e4: "Materials conglomerate; no AI segment → 1"
+  ALAB:
+    score_e5_e7: 3
+    score_e1_e4: 3
+    note_e5_e7: "Connectivity silicon for AI racks"
+    note_e1_e4: "IPO 2024-03-20; no pre-2023 history — use current score when listed (E4)"
+  CIEN:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Optical networking; AI traffic leverage"
+    note_e1_e4: "Carrier/optical; no AI segment → 1"
+  FN:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Optical interconnect for AI"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment members. Manufacturing services for
+      optical/interconnect OEMs — AI content not XBRL-isolated → 2.
+  APH:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Connectors; AI rack content rising"
+    note_e1_e4: "Broad interconnect; no AI segment → 1"
+  GEV:
+    score_e5_e7: 2
+    score_e1_e4: 2
+    note_e5_e7: "Power equipment for data-center load"
+    note_e1_e4: "GE Vernova listing 2024; use current score when listed in E4"
+  VRT:
+    score_e5_e7: 3
+    score_e1_e4: 2
+    note_e5_e7: "Thermal/power for AI data centers"
+    evidence_e1_e4: >
+      PROPOSAL. companyfacts: no segment members on revenue. Critical
+      infrastructure / thermal for general data centers → 2 not 3.
+  ETN:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Electrical infra; data-center share rising"
+    note_e1_e4: "Diversified electrical; no AI segment → 1"
+  PWR:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Electrical construction; data-center projects"
+    note_e1_e4: "Specialty contractor mix; no AI segment → 1"
+  NVT:
+    score_e5_e7: 2
+    score_e1_e4: 1
+    note_e5_e7: "Electrical/connectivity for data centers"
+    note_e1_e4: "Electrical products; no AI segment → 1"
+  CRWV:
+    score_e5_e7: 3
+    score_e1_e4: 3
+    note_e5_e7: "Neocloud GPU rental"
+    note_e1_e4: "IPO 2025-03-28; use current score when listed (E4)"
+  NBIS:
+    score_e5_e7: 3
+    score_e1_e4: 3
+    note_e5_e7: "AI cloud / GPU infra"
+    note_e1_e4: "Listed 2024-10-21; use current score when listed (E4)"
+  IREN:
+    score_e5_e7: 3
+    # Human: IREN 0 for E3 (bitcoin miner), 1 for E4.
+    score_by_episode: {E3: 0, E4: 1}
+    score_e1_e4: 0
+    note_e5_e7: "HPC/AI hosting conversion"
+    evidence_e1_e4: >
+      Human decision: E3=0 bitcoin miner; E4=1. Listed from 2021-11-17 so E1–E2
+      N/A. companyfacts revenue tags have no segment members.
+  APLD:
+    score_e5_e7: 3
+    score_e1_e4: 0
+    note_e5_e7: "AI data-center hosting"
+    note_e1_e4: "Hosting/bitcoin-era narrative; no AI segment → 0/low"
+  CORZ:
+    score_e5_e7: 3
+    score_e1_e4: 0
+    note_e5_e7: "HPC/AI hosting"
+    note_e1_e4: "Bitcoin-mining era; no AI segment → 0"
+  CRWD:
+    score_e5_e7: 0
+    score_e1_e4: 0
+    note_e5_e7: "Cyber control — no AI-capex link"
+    note_e1_e4: "Control"
+  NOW:
+    score_e5_e7: 1
+    score_e1_e4: 0
+    note_e5_e7: "Software platform; AI features but not AI-capex chain"
+    note_e1_e4: "Control / platform software"
+  HOOD:
+    score_e5_e7: 0
+    score_e1_e4: 0
+    note_e5_e7: "Fintech control"
+    note_e1_e4: "Control"
+  PANW:
+    score_e5_e7: 0
+    score_e1_e4: 0
+    note_e5_e7: "Cyber control"
+    note_e1_e4: "Control"
+  SNOW:
+    score_e5_e7: 1
+    score_e1_e4: 0
+    note_e5_e7: "Data platform; AI narrative, not GPU chain"
+    note_e1_e4: "Control / data cloud"
+  DDOG:
+    score_e5_e7: 1
+    score_e1_e4: 0
+    note_e5_e7: "Observability; AI ops narrative, not GPU chain"
+    note_e1_e4: "Control / observability"

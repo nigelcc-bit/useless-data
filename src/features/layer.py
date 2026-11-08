@@ -2,6 +2,7 @@
 
 Layer assignment is judgment-coded from config/universe.yaml.
 AI revenue exposure 0–3 from config/ai_exposure.yaml — tag JUDGMENT_CODED_POST_OUTCOME.
+Scores are time-varying: E1–E4 vs E5–E7 (plus optional per-episode overrides).
 """
 
 from __future__ import annotations
@@ -10,6 +11,10 @@ import yaml
 import pandas as pd
 
 from src.config_io import ROOT, universe
+
+# Episode bands per human decision 2026-11-08
+E1_E4 = {"E1", "E2", "E3", "E4"}
+E5_E7 = {"E5", "E6", "E7"}
 
 
 def layer_assignments() -> pd.DataFrame:
@@ -37,32 +42,96 @@ def layer_assignments() -> pd.DataFrame:
     return df
 
 
-def ai_revenue_exposure() -> pd.Series:
-    """Judgment 0–3 from config/ai_exposure.yaml (PROPOSED until human sign-off)."""
+def _load_ai_yaml() -> dict:
     path = ROOT / "config" / "ai_exposure.yaml"
     if not path.exists():
-        tickers = layer_assignments()["ticker"]
-        return pd.Series(
-            index=tickers, dtype="float64", name="ai_revenue_exposure_0_3_JUDGMENT"
-        )
-    data = yaml.safe_load(path.read_text())
+        return {}
+    return yaml.safe_load(path.read_text()) or {}
+
+
+def ai_score_for_episode(ticker: str, episode: str, data: dict | None = None) -> float:
+    """Resolve time-varying AI exposure score for (ticker, episode)."""
+    data = data if data is not None else _load_ai_yaml()
     names = data.get("names") or {}
-    s = pd.Series(
-        {t: (meta or {}).get("score") for t, meta in names.items()},
-        dtype="float64",
-        name="ai_revenue_exposure_0_3_JUDGMENT",
-    )
-    # align to universe
+    meta = names.get(ticker) or {}
+    by_ep = meta.get("score_by_episode") or {}
+    if episode in by_ep and by_ep[episode] is not None:
+        return float(by_ep[episode])
+    if episode in E5_E7:
+        if "score_e5_e7" in meta and meta["score_e5_e7"] is not None:
+            return float(meta["score_e5_e7"])
+        # legacy single score field = E5–E7 band
+        if "score" in meta and meta["score"] is not None:
+            return float(meta["score"])
+    if episode in E1_E4:
+        if "score_e1_e4" in meta and meta["score_e1_e4"] is not None:
+            return float(meta["score_e1_e4"])
+    return float("nan")
+
+
+def ai_revenue_exposure(episode: str | None = None) -> pd.Series:
+    """Judgment 0–3. If episode given, return time-varying scores for that episode."""
+    data = _load_ai_yaml()
     tickers = layer_assignments()["ticker"]
-    return s.reindex(tickers)
+    if episode is None:
+        # Default: E5–E7 (current) scores for backward-compat callers
+        vals = {t: ai_score_for_episode(t, "E5", data) for t in tickers}
+    else:
+        vals = {t: ai_score_for_episode(t, episode, data) for t in tickers}
+    return pd.Series(vals, dtype="float64", name="ai_revenue_exposure_0_3_JUDGMENT")
 
 
 def ai_exposure_meta() -> dict:
-    path = ROOT / "config" / "ai_exposure.yaml"
-    if not path.exists():
+    data = _load_ai_yaml()
+    if not data:
         return {"status": "MISSING", "tag": "JUDGMENT_CODED_POST_OUTCOME"}
-    data = yaml.safe_load(path.read_text())
     return {
         "status": data.get("status"),
         "tag": data.get("tag", "JUDGMENT_CODED_POST_OUTCOME"),
+        "time_varying": True,
+        "bands": data.get("bands"),
+        "human_decision": data.get("human_decision"),
     }
+
+
+def spearman_ai_vs_layer_dummy(panel: pd.DataFrame) -> pd.DataFrame:
+    """Per-episode Spearman ρ between AI score and AI-chain vs non_ai_control dummy.
+
+    AI-chain = layer != non_ai_control. Flags |ρ|>0.8 as redundant.
+    """
+    from scipy.stats import spearmanr
+
+    rows = []
+    df = panel.copy()
+    df["ai_chain"] = (df["layer"] != "non_ai_control").astype(float)
+    for ep, g in df.groupby("episode", sort=True):
+        sub = g.loc[
+            g["listed_at_start"]
+            & g["ai_revenue_exposure_0_3_JUDGMENT"].notna()
+            & g["ai_chain"].notna()
+        ]
+        if len(sub) < 5:
+            rows.append(
+                {
+                    "episode": ep,
+                    "n": len(sub),
+                    "spearman_rho": float("nan"),
+                    "redundant_abs_rho_gt_0_8": False,
+                    "note": "too few observations",
+                }
+            )
+            continue
+        rho, _p = spearmanr(
+            sub["ai_revenue_exposure_0_3_JUDGMENT"],
+            sub["ai_chain"],
+        )
+        rows.append(
+            {
+                "episode": ep,
+                "n": len(sub),
+                "spearman_rho": float(rho),
+                "redundant_abs_rho_gt_0_8": bool(abs(rho) > 0.8),
+                "note": "score redundant with layer dummy" if abs(rho) > 0.8 else "",
+            }
+        )
+    return pd.DataFrame(rows)

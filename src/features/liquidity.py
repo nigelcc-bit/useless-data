@@ -13,8 +13,42 @@ import numpy as np
 import pandas as pd
 
 
-def load_volume_panel(raw_dir: Path, tickers: list[str]) -> pd.DataFrame:
+def resolve_yahoo_raw_dir(raw_dir: Path | None = None) -> Path:
+    """Directory that actually holds yahoo_{TICKER}.json equity caches.
+
+    Broken in 2902f6f when build_panel defaulted raw_dir to the SEC/FINRA
+    date folder (2026-11-08) which has index ETFs only → ADV went to 0%.
+    Prefer an explicit dir if it has equity-name caches; else search data/raw/*/.
+    """
+    from src.config_io import ROOT
+
+    # Probe names that are equities in the H3 universe (not index ETFs).
+    _PROBE = ("AAPL", "MSFT", "NVDA", "AMZN", "META")
+
+    def _has_equity_yahoo(d: Path) -> bool:
+        if not d.is_dir():
+            return False
+        return any((d / f"yahoo_{t}.json").exists() for t in _PROBE)
+
+    if raw_dir is not None and _has_equity_yahoo(raw_dir):
+        return raw_dir
+    raw_root = ROOT / "data" / "raw"
+    # Prefer known price-ingest day, then newest dated folder with caches
+    preferred = raw_root / "2026-11-07"
+    if _has_equity_yahoo(preferred):
+        return preferred
+    dated = sorted(
+        (p for p in raw_root.glob("*") if _has_equity_yahoo(p)),
+        reverse=True,
+    )
+    if dated:
+        return dated[0]
+    return raw_dir or preferred
+
+
+def load_volume_panel(raw_dir: Path | None, tickers: list[str]) -> pd.DataFrame:
     """Wide volume panel from Yahoo chart cache (equity tickers only)."""
+    raw_dir = resolve_yahoo_raw_dir(raw_dir)
     cols = {}
     for t in tickers:
         path = raw_dir / f"yahoo_{t}.json"

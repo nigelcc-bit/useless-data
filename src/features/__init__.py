@@ -7,8 +7,8 @@ from src.features.crowding import (
     realised_vol,
 )
 from src.features.funding import FUNDING_COLS, empty_funding
-from src.features.layer import ai_revenue_exposure, layer_assignments
-from src.features.liquidity import adv_dollar, load_volume_panel
+from src.features.layer import ai_revenue_exposure, ai_score_for_episode, layer_assignments
+from src.features.liquidity import adv_dollar, load_volume_panel, resolve_yahoo_raw_dir
 from src.features.valuation import VALUATION_COLS, empty_valuation
 
 BLOCK_COLS = block_cols(include_si=False)
@@ -19,6 +19,7 @@ __all__ = [
     "VALUATION_COLS",
     "adv_dollar",
     "ai_revenue_exposure",
+    "ai_score_for_episode",
     "block_cols",
     "distance_from_high",
     "empty_funding",
@@ -27,4 +28,5 @@ __all__ = [
     "load_volume_panel",
     "prior_return",
     "realised_vol",
+    "resolve_yahoo_raw_dir",
 ]

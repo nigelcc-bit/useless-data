@@ -35,7 +35,7 @@ T002b,H1b,Fisher exact further-10pct DD within 63d: SOX vs SPX de-clustered deep
 T002c,H1b,"Fisher exact further-10pct DD within 63d: IXIC vs SOX (sensitivity, same era)",RUN,1.0,,1.0,20.0,IXIC 2/5=0.400; SOX 6/15=0.400
 P2_H1B_FORWARD,H1b,H1b forward returns + episode IDs + SOX decision rule,PASS,,,0.4,65.0,INCONCLUSIVE — SOX further-10% rate between 25% and 50%; book decision rests on H2/H5
 H1B_EARNINGS_LED_POSTHOC,H1b,"SOX further-drawdown hits only in earnings-led downturns (1997-98, 2000, 2008), not shock/rate-led — post-hoc judgment",EXPLORATORY_UNTESTED,,,,10.0,NOT in FDR family; N=10 SOX episodes; judgment-coded; candidate monitor: AI-supplier fwd EPS revisions 4-8 weeks
-P3_H3_COVERAGE,H3,Updated feature coverage after EDGAR/FINRA,PASS,,,,1575,si=KEPT
+P3_H3_COVERAGE,H3,Updated feature coverage names×episodes×block after EDGAR/FINRA,PASS,,,,1575,si=KEPT; edgar_exclusions=0
 P3_SI_DECISION,H3,FINRA short interest back-to-2018 gate,KEPT,,,,8022,"{""n_files_ok"": 211, ""n_files_fail_or_empty"": 849, ""first_settlement"": ""2018-01-12"", ""last_settlement"": ""2026-10-15"", ""covers_e1_2018"": true, ""n_rows"": 8022, ""n_tickers"": 45}"
-P3_FFILL_AUDIT,meta,Price hole ffill audit; cap=1; native calendars,PASS,,,,,holes=US Memorial/Labor Day 2026; non_us_calendar_cause=0
-T005b,H3,Trailing multiples lagged to filing date (D6 fallback),WIRED_DEVIATION_FROM_SPEC,,,,,panel columns present; FDR when H3 runs
+P3_FFILL_AUDIT,meta,Drop VIX-only US holiday rows; no ffill of equity calendar,PASS,,,,0,"{""rows_before"": 2979, ""rows_after"": 2979, ""dropped"": 0, ""holiday_present_before"": {""2026-05-25"": false, ""2026-09-07"": false}, ""holiday_present_after"": {""2026-05-25"": false, ""2026-09-07"": false}, ""source"": ""Yahoo ^VIX on US equity holidays \u2192 outer-join in build_price_frames""}"
+T005b,H3,Trailing multiples lagged to filing date (D6 fallback),WIRED_DEVIATION_FROM_SPEC,,,,,columns in panel.parquet; FDR family member when H3 runs
