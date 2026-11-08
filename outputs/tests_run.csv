@@ -5,7 +5,6 @@ T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,BLOCKED,,,,,D7; no RAW_FI
 T000d,meta,quarantine: no CALIBRATED under data/config/src reads,PASS,,,,,test_quarantine_calibrated.py
 T000e,meta,P1 SPEC_LITERAL gate registry,PASS,,,,,runs against prices.parquet when present; else skip
 T001,H1,power check SOX/SMH/IXIC first-shock cells,NOT_RUN,,,,,requires prices.parquet (local P1)
-T002,H1,Fisher exact further-10pct DD semis vs SPX,NOT_RUN,,,,,blocked on T001 N>=8
 T003,H2,variance ratio beta-neutral spread,NOT_RUN,,,,,regime=HY OAS BAMLH0A0HYM2 for 2023-2024
 T004,H2,event study -2.5σ spread days fwd 5/21/63,NOT_RUN,,,,,
 T005,H3,crowding vs valuation horse race 7 episodes,NOT_RUN,,,,,includes layer dummy block
@@ -27,3 +26,6 @@ P1_FRED_NASDAQCOM,meta,FRED NASDAQCOM vs Yahoo ^IXIC vs note -5.52%,PASS,,,-0.05
 P1_IBKR_NEOCLOUD,meta,IBKR confirms Yahoo neocloud 5 Nov EW -13.91%,PASS,,,-13.91,3.0,CRWV -9.83 IREN -16.95 NBIS -14.94; third-source confirmation
 P1_GAP_DIAGNOSIS,meta,supplier NOTE ERROR; YTD Spearman UNRECONCILED,SUPERSEDED,,,-0.53,23.0,YTD label UNRECONCILED; neocloud NOTE ERROR IBKR+Yahoo; Call 3 magnitude revised
 P1_REDERIVE_XS,meta,re-derive six-session/layer/worst7/52w from prices.parquet,PASS,,,-27.89,23.0,SUPERSEDED supplier six-session -26.5->-27.89; neocloud; worst7+IREN; book UNRECONCILED
+T002,H1,"Fisher exact further-10pct DD within 63d: semis vs SPX, near-high (le5) first-shock cell — PLANNED after power check",PLANNED,,,,,"P2 power only; SPX_1928_2019_ruleA_n=151 (target 151, match=True); no forward returns computed this phase"
+P2_SPX_151_CONTROL,H1,Reproduce 151 SPX <=-4% days 1928-2019,PASS,,,151,151,first=1929-03-25 00:00:00 last=2018-02-05 00:00:00
+P2_H1_POWER,H1,Power check N first shocks by series/rule/band (fwd-eligible),PASS,,,,308,counts only; N<8 PRIOR_ONLY_NOT_TESTED; see h1_power_table.csv
