@@ -22,6 +22,8 @@ P1_SPLIT_AUDIT,meta,Yahoo splits matched corporate_actions; gaps logged,PASS,,,,
 P1_D4_MERGER,meta,MRVL/LITE all-stock deal ~4 Nov 2026,CONFIRMED — merger dummy written,,,,,RSS hit for Marvell/Lumentum acquisition language; see merger_search_raw.xml
 P1_SPEC_LITERAL,meta,SPEC_LITERAL fixtures vs prices.parquet,PASS,,,,,all SPEC_LITERAL within tol
 P1_LITE_SENSITIVITY,meta,Spearman YTD/prior5 excluding LITE (merger ~2 Nov),DIAGNOSTIC,0.021783087892448556,,-0.4861660079051384,22.0,with_LITE ytd_rho=-0.5296; without_LITE ytd_rho=-0.4862; ai_with=-0.5910; ai_without=-0.5351
-P1_D5_D7,meta,name-level EW/Spearman/52w from ingested closes,SUPERSEDED_TARGETS,0.009344661031627151,,-0.5296442687747036,23,note magnitudes SUPERSEDED; Yahoo active; see docs/gap_diagnosis.md; Call 3 magnitude revised
+P1_D5_D7,meta,name-level EW/Spearman/52w from ingested closes,SUPERSEDED_TARGETS,0.009344661031627151,,-0.5296442687747036,23.0,note magnitudes SUPERSEDED; Yahoo active; see docs/gap_diagnosis.md; Call 3 magnitude revised
 P1_FRED_NASDAQCOM,meta,FRED NASDAQCOM vs Yahoo ^IXIC vs note -5.52%,PASS,,,-0.055233,,FRED and Yahoo both -5.5233%; Stooq still blocked
-P1_GAP_DIAGNOSIS,meta,supplier set identical; neocloud layer note error; YTD adj≈close,NOTE_ERROR,,,-3.31,16,neocloud Yahoo EW -13.91 vs note -10.6; sets identical; SUPERSEDE applied
+P1_IBKR_NEOCLOUD,meta,IBKR confirms Yahoo neocloud 5 Nov EW -13.91%,PASS,,,-13.91,3.0,CRWV -9.83 IREN -16.95 NBIS -14.94; third-source confirmation
+P1_GAP_DIAGNOSIS,meta,supplier NOTE ERROR; YTD Spearman UNRECONCILED,SUPERSEDED,,,-0.53,23.0,YTD label UNRECONCILED; neocloud NOTE ERROR IBKR+Yahoo; Call 3 magnitude revised
+P1_REDERIVE_XS,meta,re-derive six-session/layer/worst7/52w from prices.parquet,PASS,,,-27.89,23.0,SUPERSEDED supplier six-session -26.5->-27.89; neocloud; worst7+IREN; book UNRECONCILED

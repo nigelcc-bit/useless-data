@@ -1,0 +1,20 @@
+metric,note,rederived,delta_pp,action
+hyperscaler_ew_nov5,-3.0,-2.98,0.02,keep
+supplier_ew_nov5,-12.9,-13.53,-0.63,SUPERSEDED
+hyperscaler_ew_six_session,-2.8,-2.78,0.02,keep
+supplier_ew_six_session,-26.5,-27.89,-1.39,SUPERSEDED
+layer_semis_ew_nov5,-14.0,-14.0,0.0,keep
+layer_optics_ew_nov5,-13.8,-13.85,-0.05,keep
+layer_power_ew_nov5,-10.8,-10.7,0.1,keep
+layer_neocloud_ew_nov5,-10.6,-13.91,-3.31,SUPERSEDED (Yahoo+IBKR)
+layer_non_ai_ew_nov5,-8.7,-8.71,-0.01,keep
+names_gt20pct_below_52w,21,21,0.0,keep
+SPY_from_52w_high_pct,-6.2,-6.22,-0.02,keep
+SOXX_from_52w_high_pct,-39.7,-39.68,0.02,keep
+worst7_list,"LITE,MU,AMD,MRVL,LRCX,NBIS,VRT","LITE,MU,AMD,IREN,MRVL,LRCX,NBIS",,SUPERSEDED (IREN in)
+book_10ai_nov5_ew,-14.6,,,UNRECONCILED (membership unknown)
+book_10ai_six_session_ew,-29.6,,,UNRECONCILED (membership unknown)
+book_13_avg_dist_52w,-46.7,,,UNRECONCILED (membership unknown)
+book_13_ytd_ew,34.5,,,UNRECONCILED (membership unknown)
+spearman_ytd_n23,-0.69,-0.53,0.16,SUPERSEDED / UNRECONCILED
+spearman_ytd_ai_n20,-0.76,-0.59,0.17,SUPERSEDED / UNRECONCILED

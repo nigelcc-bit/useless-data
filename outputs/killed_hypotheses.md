@@ -4,7 +4,7 @@ Equal in status to the findings. A project that kills nothing has learned nothin
 
 | ID | Hypothesis | Killed by | Date | Note |
 |---|---|---|---|---|
-| K001 | Call 3 magnitude as published (−0.69 / −0.76 YTD Spearmans; supplier EW −12.9) | P1 Yahoo ingest + gap diagnosis | 2026-11-08 | **Call 3 magnitude revised** — crowding sort still signed correctly (ρ≈−0.53, p≈0.009) but weaker than the note; supplier EW −13.53 (neocloud layer was −10.6 in note vs −13.9 Yahoo). Old targets SUPERSEDED in `config/fixtures.yaml`, not deleted. |
+| K001 | Call 3 magnitude as published (−0.69 / −0.76 YTD Spearmans; supplier EW −12.9) | P1 Yahoo ingest + gap diagnosis | 2026-11-08 | **Call 3 magnitude revised** — label **UNRECONCILED** for YTD rho (note inputs unrecoverable; Yahoo Close≈Adj at −0.53, p=0.0093). Supplier/neocloud EW = **NOTE ERROR** (Yahoo+IBKR −13.91% neocloud vs note −10.6). Also SUPERSEDED: six-session supplier EW −26.5→−27.89; worst-7 adds IREN. Old targets retained under SUPERSEDED. |
 
 ## Abandoned tests
 
