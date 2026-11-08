@@ -208,3 +208,37 @@ Candidate monitor (desk, not a test): AI-supplier forward EPS revisions over the
 
 ### Per-event lists
 Full event-level `+21/+63/+252` and `max_dd_63` printed at run time and stored in `outputs/exhibits/h1b_forward_events.csv` (all series N≤21).
+
+## H3 design (frozen before fundamentals load)
+
+**Frozen:** 2026-11-08 22:15 Australia/Sydney (AEDT). **No SEC/FINRA fundamentals have been loaded at freeze time.** Do not edit this design block after seeing fundamental coverage or regression output.
+
+### Primary model
+Per-episode cross-section of **episode return** on:
+- crowding **PC1**
+- valuation **PC1**
+- funding **PC1**
+- layer dummy (builders = reference)
+- log market cap
+
+Full regressor list (mom, dist, vol, trailing multiples, funding ratios, …) = **secondary**. Report **VIFs** and **PC loadings** for every run.
+
+### Inference
+- Wild cluster bootstrap on **GICS sub-industry** clusters (Webb weights)
+- Plus **episode-level** bootstrap
+- Do not report naive OLS t-stats as primary inference
+
+### Universe
+H3 universe = names with **EDGAR 10-K / 10-Q or 20-F** coverage at episode start. Exclusions listed in `config/universe.yaml` with reason (kept current as coverage is measured). Survivorship: count names that existed at each episode start.
+
+### AI exposure (0–3)
+Cursor proposes; human signs off. Tag: **`JUDGMENT_CODED_POST_OUTCOME`**. Always run H3 **with and without** this regressor.
+
+### Valuation (D6)
+Trailing P/S, P/E, EV/EBITDA lagged to **filing date** only (`DEVIATION_FROM_SPEC`, FDR row **T005b**). No point-in-time forward multiples until D6 clears.
+
+### Short interest
+Attempt FINRA equity short interest history. If not available back through 2018 episode starts → **drop SI**, log `DEVIATION_FROM_SPEC`, crowding = mom / dist / vol only.
+
+### Status at freeze
+P3 coverage skeleton exists (`panel.parquet` price blocks only). Fundamentals ingest and updated coverage follow this freeze commit.
