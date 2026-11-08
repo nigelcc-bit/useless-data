@@ -117,3 +117,35 @@ Dated **2026-11-08 (Australia/Sydney)**. Original text preserved; revisions logg
 **Original:** `data/processed/nov5_cross_section.csv` held back-solved `ytd_to_4nov_pct` / `ret_prior5_pct` tagged CALIBRATED_CIRCULAR so Spearmans would PASS.
 
 **Revision:** file deleted; no CALIBRATED values under `data/` or `config/`; `docs/reconstruction_audit.md` is the sole record; `tests/test_quarantine_calibrated.py` fails the build if `src/` reads a CALIBRATED column/file.
+
+## H1b design (frozen before forward returns)
+
+**Frozen:** 2026-11-08 14:16 Australia/Sydney (AEDT). Counts already logged (`outputs/exhibits/h1b_deep_dd_counts.csv`). **No forward returns have been loaded at freeze time.** Do not edit this design block after seeing forward-return results.
+
+### State (from P2 counts)
+- Rule B event; `dist_high_tm1 < −20%`; cluster day (another rule-B event in prior 126 sessions).
+- De-cluster: first qualifying day per non-overlapping 63-session block.
+- Fwd-eligible: not within 63 sessions of 2026-11-05. N≥8 floor → `TESTABLE_N_GE_8`.
+
+### Primary / robustness / sensitivity
+| Role | Contrast | FDR row | Inference |
+|---|---|---|---|
+| **Primary** | SOX vs SPX, de-clustered deep-DD events, further 10%+ drawdown within 63 sessions | **T002b** | Fisher exact (raw p logged) |
+| **Robustness** | SMH, SOXX same state vs SPX rates | — | Descriptive only — **no p-values** |
+| **Sensitivity** | IXIC vs SOX (same era) | **T002c** | Fisher exact; one extra FDR row |
+
+### Bootstrap unit
+Resample **bear-market episodes**, not events. An episode = a run of de-clustered events in which consecutive events are separated by **fewer than 252 sessions**. Print episode IDs before / with results.
+
+### Decision rule (SOX own forward record — drives the book)
+| SOX rate of further-10% DD within 63 sessions | Decision |
+|---|---|
+| **≥ 50%** | “Do not add supplier beta” stands; sizing must assume another leg |
+| **≤ 25%** | Patience reading supported by sector history |
+| **Between 25% and 50%** | Inconclusive; book decision rests on H2/H5 |
+
+### Per-event report
+For each fwd-eligible de-clustered event: `+21` / `+63` / `+252` close-to-close return; max further drawdown within 63 sessions (min of `close[t+j]/close[t]−1` for j=1…63). Print the full list when N&lt;20 (all H1b series currently N≤21; print SOX/SMH/SOXX/IXIC in full; SPX N=21 print in full).
+
+### Status at freeze
+T002b / T002c registered as EXPLORATORY / planned sensitivity. Forward-return module not yet executed.
