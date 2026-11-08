@@ -25,7 +25,6 @@ T002,H1,"Fisher exact further-10pct DD within 63d: semis vs SPX, near-high (le5)
 P2_SPX_151_CONTROL,H1,Reproduce 151 SPX <=-4% days 1928-2019,PASS,,,151.0,151.0,first=1929-03-25 00:00:00 last=2018-02-05 00:00:00
 P2_H1_POWER,H1,Count N first shocks by series/rule/band (fwd-eligible); status TESTABLE_N_GE_8 vs PRIOR_ONLY_NOT_TESTED,PASS,,,,308.0,counts only; N>=8 is a floor not power; see h1_power_table.csv
 P2_SPX_5NOV_CLASS,H1,SPX 5 Nov classification under rules A and B,PASS,,,,,rule A: first shock (near-high); rule B: cluster day (prior rule-B event 2026-06-05)
-T002b,H1b,"EXPLORATORY: semis deep-drawdown cluster days have worse 63-session forward outcomes than S&P days in the same state (rule B, dist<-20%, cluster; de-cluster 63-session blocks)",EXPLORATORY,,,,,"registered before any forward returns; counts N={'SPX': 21, 'IXIC': 10, 'SOX': 15, 'SMH': 9, 'SOXX': 10}; apply N>=8 floor; see h1b_deep_dd_counts.csv"
 P2_H1B_COUNTS,H1b,H1b deep-DD cluster de-clustered counts by series,PASS,,,,65.0,counts only; no forward returns; see h1b_deep_dd_event_lists.csv
 T001,H1,power check SOX/SMH/IXIC/SPX first-shock cells (counts),DONE,,,,,P2 h1_power_table.csv; N>=8 → TESTABLE_N_GE_8 else PRIOR_ONLY_NOT_TESTED; SPX 151 control PASS
 T010,D5,name-level YTD and prior-5d unverified,RESOLVED_VIA_P1,,,,,Yahoo Close Spearmans computed; note YTD label UNRECONCILED; see docs/gap_diagnosis.md / P1_D5_D7
@@ -33,3 +32,6 @@ T012,D7,name-level EW / 52w counts lack RAW_FILE,RESOLVED_VIA_P1,,,,,prices.parq
 T000b,meta,Spearman YTD/prior5 fixture gates,RESOLVED_VIA_P1,,,,,D5 resolved via P1; calibrated panel remains quarantined
 T000c,meta,hyperscaler/supplier EW and 21/23 below 52w,RESOLVED_VIA_P1,,,,,D7 resolved via P1 RAW_FILE; see P1_REDERIVE_XS
 P2_SPLIT_AUDIT,meta,Every |ret|>25% requires sourced reason (earnings/deal/ipo_listing/split); no auto-explain,PASS,,,,,config/large_move_reasons.yaml; APLD 2022-07-19=deal (Marathon); SNDK 2025-02-18=ipo_listing (when-issued→regular-way)
+T002b,H1b,Fisher exact further-10pct DD within 63d: SOX vs SPX de-clustered deep-DD cluster events,RUN,0.46459028550241005,,2.1333333333333333,36.0,SOX 6/15=0.400; SPX 5/21=0.238; decision=INCONCLUSIVE — SOX further-10% rate between 25% and 50%; book decision rests on H2/H5
+T002c,H1b,"Fisher exact further-10pct DD within 63d: IXIC vs SOX (sensitivity, same era)",RUN,1.0,,1.0,20.0,IXIC 2/5=0.400; SOX 6/15=0.400
+P2_H1B_FORWARD,H1b,H1b forward returns + episode IDs + SOX decision rule,PASS,,,0.4,65.0,INCONCLUSIVE — SOX further-10% rate between 25% and 50%; book decision rests on H2/H5
