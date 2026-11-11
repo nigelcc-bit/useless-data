@@ -12,7 +12,7 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 | ID | Hypothesis | Null | Decision rule / falsifier | Result | Decision |
 |---|---|---|---|---|---|
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
-| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | *pending* | |
+| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | VR + −2.5σ counts run (P5); forward returns not yet | *pending fwd* |
 | H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
 | H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
@@ -404,4 +404,37 @@ Logged as `H4_ROBUST_ORCL_NEOCLOUD` / `H4_ROBUST_ZSCORE_RETURNS` in `tests_run.c
 Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0.41**, E7 **0.40** — so layer dominance alone is not November-specific. H4 tests which layer loadings changed; funding did not dominate October.
 
 Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`, `h4_robustness.json`.
+
+## H2 results (P5) — VR + event counts only
+
+**Run:** 2026-11-12 (Australia/Melbourne). **Stop before forward returns.**
+
+### Construction
+- Sample: 2023-01-01 → 2026-11-05 (N=965 residual days).
+- EW builders (6) vs EW AI-chain suppliers (exclude builders + non_ai_control).
+- Beta-neutral: each basket residual vs SPY, trailing 126d OLS with intercept; spread = supplier residual − builder residual.
+- Regime: HY OAS (`BAMLH0A0HYM2`) above/below trailing 126d median (median lagged 1 day). Ingested HY OAS first obs **2023-11-07**.
+
+### Variance ratio (Lo–MacKinlay, overlapping, homoskedastic)
+
+| q | VR | z | p |
+|---:|---:|---:|---:|
+| 2 | 0.990 | −0.30 | 0.762 |
+| 5 | 0.891 | −1.54 | 0.123 |
+| 10 | 0.786 | −1.97 | **0.049** |
+| 21 | 0.669 | −2.01 | **0.044** |
+
+AR(1) φ ≈ −0.010 (near zero). VR &lt; 1 at q=10/21 rejects pure random walk at 5% (mean-reversion direction), but the falsifier also requires forward-return evidence — **not yet run**.
+
+### −2.5σ event counts by HY OAS regime
+
+| Regime | N events |
+|---|---:|
+| HY_OAS_above_median | 7 |
+| HY_OAS_below_median | 6 |
+| Unclassified (HY OAS median warm-up) | 1 |
+
+Total classified events: **13**. Event dates in `h2_events_m2p5sigma.csv` (includes 2026-11-04).
+
+**Stop before forward returns.** Exhibits: `h2_spread_series.csv`, `h2_variance_ratio.csv`, `h2_events_m2p5sigma.csv`, `h2_event_counts_by_regime.csv`, `h2_vr_event_summary.json`.
 

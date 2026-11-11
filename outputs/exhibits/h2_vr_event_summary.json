@@ -1,0 +1,112 @@
+{
+  "status": "COUNTS_AND_VR_ONLY",
+  "null": "After beta control, supplier-minus-builder spread is a random walk.",
+  "falsifier": "Variance ratio \u2248 1 and no significant forward spread return.",
+  "start": "2023-01-01",
+  "n_builders": 6,
+  "n_suppliers": 33,
+  "builders": [
+    "AAPL",
+    "AMZN",
+    "GOOGL",
+    "META",
+    "MSFT",
+    "ORCL"
+  ],
+  "suppliers": [
+    "ALAB",
+    "AMAT",
+    "AMD",
+    "ANET",
+    "APH",
+    "APLD",
+    "ASML",
+    "AVGO",
+    "CIEN",
+    "COHR",
+    "CORZ",
+    "CRWV",
+    "ETN",
+    "FN",
+    "GEV",
+    "GLW",
+    "INTC",
+    "IREN",
+    "KLAC",
+    "LITE",
+    "LRCX",
+    "MRVL",
+    "MU",
+    "NBIS",
+    "NVDA",
+    "NVT",
+    "PWR",
+    "SNDK",
+    "STX",
+    "TER",
+    "TSM",
+    "VRT",
+    "WDC"
+  ],
+  "beta_window": 126,
+  "n_sample_days": 965,
+  "spread_mean": -0.00021943831976045558,
+  "spread_std": 0.01974582236356257,
+  "ar1": {
+    "intercept": -0.00020513660918678668,
+    "phi": -0.009648508020665412,
+    "n": 964
+  },
+  "variance_ratio": [
+    {
+      "q": 2,
+      "vr": 0.9902378038398532,
+      "z": -0.3032572460531887,
+      "p": 0.7616938256212242,
+      "n": 965,
+      "phi": 0.0010362694300518134
+    },
+    {
+      "q": 5,
+      "vr": 0.8911586228882478,
+      "z": -1.5432527730668746,
+      "p": 0.12276945744000463,
+      "n": 965,
+      "phi": 0.004974093264248704
+    },
+    {
+      "q": 10,
+      "vr": 0.7860817664115033,
+      "z": -1.9681538078282739,
+      "p": 0.04905034329176545,
+      "n": 965,
+      "phi": 0.011813471502590673
+    },
+    {
+      "q": 21,
+      "vr": 0.6692695848254787,
+      "z": -2.013660001133459,
+      "p": 0.044045242223795134,
+      "n": 965,
+      "phi": 0.026975902623571017
+    }
+  ],
+  "events": {
+    "n_events_total": 13,
+    "n_events_unclassified_warmup": 1,
+    "n_events_by_regime": {
+      "HY_OAS_above_median": 7,
+      "HY_OAS_below_median": 6
+    },
+    "n_sample_days": 965,
+    "n_z_eligible_days": 840,
+    "threshold": -2.5,
+    "sigma_window": 126,
+    "regime_series": "BAMLH0A0HYM2",
+    "regime_rule": "above/below trailing 126d median of HY OAS (median lagged 1 day)",
+    "hy_oas_first_obs": "2023-11-07",
+    "stop_before_forward": true,
+    "forward_returns_computed": false
+  },
+  "note": "P5 stop gate: variance ratio + \u22122.5\u03c3 event counts by HY OAS regime only. Forward spread returns NOT computed."
+}

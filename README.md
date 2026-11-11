@@ -160,12 +160,16 @@ Pre-registered alternative **"funding dominates October" NOT supported** (fundin
 
 The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific.
 
-### 5.5 Status of the 6 Nov note's seven calls
+### 5.5 H2: beta-neutral supplier−builder spread (P5, partial)
+
+From 2023-01-01: EW supplier − EW builder, each beta-neutralised vs SPY (126d). **Variance ratio** (Lo–MacKinlay): VR(10)=0.79 (p=0.049), VR(21)=0.67 (p=0.044) — below 1 at longer horizons. **−2.5σ events** by HY OAS 126d-median regime: 7 above / 6 below (1 warm-up unclassified; HY OAS ingest starts 2023-11-07). **Stop before forward returns.**
+
+### 5.6 Status of the 6 Nov note's seven calls
 
 | Call | Status |
 |---|---|
 | 1. Election was an accelerant, not the origin | Untested (out of scope) |
-| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H4 rejects E6/E7 pool (**outcome #2**); H2 pending |
+| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H4 rejects E6/E7 pool (**outcome #2**); H2 VR/counts run, fwd pending |
 | 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
 | 4. Policy exposure large, measured loss small | H4 null rejected; funding-dominates-Oct **not** supported; layer composition rotated |
 | 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |
