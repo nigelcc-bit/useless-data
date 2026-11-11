@@ -11,7 +11,7 @@
 
 | # | Pre-registered outcome | Status |
 |---|---|---|
-| 1 | H2 + H5 hold and L(5) > 0 → flush / patience | **Cannot trigger** — H2 killed (K004); H5 pending |
+| 1 | H2 + H5 hold and L(5) > 0 → flush / patience | **Cannot trigger** — H2 killed (K004); H5 **PRIOR ONLY** (OOS N=4) |
 | 2 | H4 rejects + layer dominates November → profit pool to builders | **Triggered** |
 | 3 | H1 semis worse continuation than S&P → Call 5 does not apply | Settled via H1b/K002 (Call 5 does not transfer; H1b inconclusive) |
 | 4 | H3 flips, valuation dominates → retract crowding notes | **Not triggered** — H3 UNSUPPORTED (K003); neither block wins |
@@ -24,7 +24,7 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 | H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | CD p=0.45; pooled fwd net 30bp p_NW 0.30–0.76 (N=9); 63d +3.5% net 7/9 = PRIOR | **K004** — seesaw is description, not signal; outcome #1 cannot trigger |
 | H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
 | H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
-| H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
+| H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | Troughs=15; train=10 / OOS=5; OOS L10 N=4 | **PRIOR ONLY** (OOS N&lt;8); do not test |
 
 ## Fixture reproduction (P0)
 
@@ -503,4 +503,30 @@ Logged as PRIOR ONLY; not used for the H2 decision. Exhibit: `h2_forward_summary
 - **Outcome #1 cannot trigger** (required H2). Call 2’s directional description still stands.
 
 Exhibits: `h2_forward_events.csv`, `h2_forward_summary.csv`, `h2_forward_meta.json`, `h2_variance_ratio.csv`, `h2_chow_denning.json`, `h2_events_m2p5sigma.csv`, `h2_nov4_nov5_beta_decomp.csv`.
+
+## H5 design / counts (P6) — stop before testing
+
+**Run:** 2026-11-12 (Australia/Melbourne). Counts + monitor only.
+
+### Trough rule
+63d low on **cumulative supplier−builder EW return spread** from 2023-01-01, confirmed by next close up. L(k) after confirmation close; signal uses closes through asof−1 only.
+
+### Walk-forward split (frozen)
+- Train: confirmation date **&lt; 2025-01-01**
+- OOS: confirmation date **≥ 2025-01-01**
+- Power floor: OOS troughs with complete L(10) **N ≥ 8**
+
+### Counts
+| | N |
+|---|---:|
+| Total confirmed troughs | 15 |
+| L(5) complete | 15 |
+| L(10) complete | 14 |
+| Train / OOS | 10 / 5 |
+| Train L10 / OOS L10 | 10 / **4** |
+
+**Decision: H5 PRIOR ONLY** — OOS L10 N=4 &lt; 8; **do not test.** Full trough list with L(5)/L(10): `h5_trough_list.csv`.
+
+### Daily monitor (spec deliverable 5)
+`python -m src.monitor.daily_desk` — from prior US close, before 5pm HKT: L(5), L(10), trough status, beta-neutral spread z. Latest (prior close 2026-11-05): L5=−0.025, L10 incomplete for latest trough; spread z=−0.59; prior close is a 63d low on cum spread (confirmation pending). Exhibit: `h5_daily_monitor.json`.
 

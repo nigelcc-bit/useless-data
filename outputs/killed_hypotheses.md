@@ -24,3 +24,4 @@ H1b (EXPLORATORY, T002b) deep-DD cluster counts: see `outputs/exhibits/h1b_deep_
 | ID | Claim | Why PRIOR | Date | Note |
 |---|---|---|---|---|
 | P-H2-63d | H2 de-clustered −2.5σ events: +63d mean_net ≈ +3.5%, hit 7/9 | Underpowered / non-significant (N=9; NW p=0.31) | 2026-11-12 | Point estimate only. K004 kills the factor claim; do not promote 63d rebound to a finding. |
+| P-H5 | H5 L(5)/L(10) forecasts 63d relative supplier performance | OOS N with complete L(10) = 4 &lt; 8 | 2026-11-12 | **PRIOR ONLY — do not test.** Troughs=15 (train 10 / OOS 5) on cum supplier−builder spread from 2023. Monitor still ships. |

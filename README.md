@@ -164,16 +164,20 @@ The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numer
 
 From 2023-01-01: EW supplier − EW builder, each beta-neutralised vs SPY (126d). **VR hetero-robust z\***: none individually sig; Chow–Denning CD=1.49 (p=0.45). **Pooled fwd net 30bp** at 5/21/63: not significant (N=9). **K004 — seesaw is description, not signal.** 63d +3.5% net (7/9) is a **PRIOR**, not a finding. **5 Nov is not an H2 event** (z=−0.59); **4 Nov is** (z=−3.81).
 
-### 5.6 Pre-registered outcomes scorecard
+### 5.6 H5: leadership troughs (P6 counts) — PRIOR ONLY
+
+63d lows on cum supplier−builder spread from 2023: **15** troughs (train 10 / OOS 5). OOS with complete L(10) = **4 &lt; 8** → **H5 PRIOR ONLY; do not test.** Daily monitor (`src.monitor.daily_desk`) prints L(5)/L(10), trough status, and beta-neutral spread z from the prior US close (before 5pm HKT).
+
+### 5.7 Pre-registered outcomes scorecard
 
 | # | Outcome | Status |
 |---|---|---|
-| 1 | H2+H5 hold, L(5)>0 → flush / patience | **Cannot trigger** (H2 killed) |
+| 1 | H2+H5 hold, L(5)>0 → flush / patience | **Cannot trigger** (H2 killed; H5 PRIOR ONLY) |
 | 2 | H4 rejects + layer dominates Nov → profit pool to builders | **Triggered** |
 | 3 | H1 semis worse than S&P → Call 5 does not apply | Settled (K002 / H1b inconclusive) |
 | 4 | H3 valuation dominates → retract crowding | **Not triggered** (K003) |
 
-### 5.7 Status of the 6 Nov note's seven calls
+### 5.8 Status of the 6 Nov note's seven calls
 
 | Call | Status |
 |---|---|

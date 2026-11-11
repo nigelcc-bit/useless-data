@@ -163,13 +163,10 @@ def interpret(L5: float, L10: float) -> str:
 
 
 def main() -> None:
-    now_hkt = datetime.now(tz=timezone.utc).astimezone(HKT)
-    print(f"asof_hkt={now_hkt.strftime('%Y-%m-%d %H:%M %Z')}")
-    print("status=WAITING_FOR_prices.parquet")
-    print("L5=nan L10=nan readout=INSUFFICIENT_DATA")
-    print("trough_rule=63d_low_confirmed_by_next_close_up")
-    print("L_window=after_confirmation_close")
-    print("signal_cutoff=prior_US_close_only")
+    """Delegate to the full daily desk monitor (spec deliverable 5)."""
+    from src.monitor.daily_desk import main as desk_main
+
+    desk_main()
 
 
 if __name__ == "__main__":
