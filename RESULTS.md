@@ -13,7 +13,7 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 |---|---|---|---|---|---|
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
 | H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | *pending* | |
-| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | *pending* | |
+| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Val beats crowding in **3/6** counted episodes (E1 N=8 excluded); falsifier not triggered | FAIL TO REJECT crowding claim |
 | H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | *pending — do not pool before this* | |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
 
@@ -273,3 +273,31 @@ Public-business-entity ASC 842 effective for fiscal years beginning after **2018
 
 ### Repo hygiene
 `data/raw/` gitignored; `data/raw_manifest.csv` holds file / sha256 / source URL / pull date.
+
+
+## H3 results (P4)
+
+**Run:** 2026-11-11 (Australia/Melbourne). Design freeze + Pre-P4 revisions unchanged. Code: `src/studies/h3_panel_regression.py`.
+
+### Primary (complete cases)
+
+| episode | n_complete | excluded_from_falsifier | adj_r2 | incr_adj_r2_crowding | incr_adj_r2_valuation | val_beats_crowding | adj_r2_crowd_only | adj_r2_val_only | adj_r2_both | coef_crowding_pc1 | coef_valuation_pc1 | p_crowding_pc1 | p_valuation_pc1 | status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| E1 | 8 | True | nan | nan | nan | False | -0.08601082908024704 | -0.1666645501468913 | nan | -0.027872052801204413 | -0.08257845832646386 | 0.0 | 0.0 | OK |
+| E2 | 21 | False | 0.6261735846372884 | 0.04584035702302147 | 0.043501082552169335 | False | -0.04373260092140008 | -0.051882574982122565 | 0.6261735846372884 | -0.05772761878944524 | -0.037201859955765415 | 0.0 | 0.0 | OK |
+| E3 | 28 | False | 0.2099031692340403 | -0.042282651943887695 | -0.025369401628211663 | True | 0.02151733199612671 | -0.030387550204985736 | 0.2099031692340403 | 0.00333626182837143 | 0.014997275290670742 | 0.8288288288288288 | 0.29429429429429427 | OK |
+| E4 | 31 | False | -0.0648815843137922 | -0.047695383207577935 | -0.03663865809345679 | True | -0.02034635380509564 | -0.033736028793752704 | -0.0648815843137922 | 0.0015275385366329696 | 0.006293833602612037 | 0.8968968968968969 | 0.7387387387387387 | OK |
+| E5 | 35 | False | 0.1485285584506657 | -0.0161287970741818 | -0.032925346689627766 | False | -0.017713681266968262 | -0.006675115758637995 | 0.1485285584506657 | 0.006912201751224332 | -0.00034007449068287096 | 0.26226226226226224 | 0.8828828828828829 | OK |
+| E6 | 36 | False | 0.5371020556157262 | -0.005823072304630972 | -0.013402375829719704 | False | 0.3669427969097745 | 0.058115798274342434 | 0.5371020556157262 | 0.014691522354211763 | -0.007450930909629802 | 0.29429429429429427 | 0.42842842842842843 | OK |
+| E7 | 36 | False | 0.5304594957150812 | -0.013788644071399903 | -0.002409393447360464 | True | 0.22899771418020287 | 0.0560188944422535 | 0.5304594957150812 | 0.009786309387897775 | 0.013442818980552728 | 0.7207207207207207 | 0.3983983983983984 | OK |
+
+### Falsifier
+- Counted episodes: **6** (excluded: ['E1'])
+- Valuation incremental adj-R² > crowding in **3** of those
+- **Decision:** FAIL TO REJECT crowding claim on falsifier
+- Exhibits: `h3_primary_by_episode.csv`, `h3_pc_loadings_and_vif.csv`, `h3_sensitivity_median_impute.csv`, `h3_secondary_full_regressors.csv`, `h3_falsifier_summary.json`
+
+Secondary: full regressors with/without AI exposure logged in `h3_secondary_full_regressors.csv` (tag `JUDGMENT_CODED_POST_OUTCOME`).
+
+**Stop before H4.**
+
