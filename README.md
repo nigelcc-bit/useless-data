@@ -2,7 +2,7 @@
 
 A pre-registered study of whether the November 2026 selloff in the AI supply chain was a **positioning flush** (crowded names sold, then bought back) or a **regime change** (the market moving the AI profit pool away from suppliers and toward the companies paying for the buildout).
 
-**Status (11 Nov 2026):** data ingest and the first hypothesis (H1) are done. The panel for H3 is built and waiting for sign-off. H2 to H5 have no results yet. Nothing in this README is a trading recommendation.
+**Status (11 Nov 2026):** P0–P3 complete; AI exposure signed off; Pre-P4 revisions logged. P4 (H3) in progress. H2/H4/H5 still pending. Nothing in this README is a trading recommendation.
 
 ---
 

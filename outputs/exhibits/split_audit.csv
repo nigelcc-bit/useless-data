@@ -1,0 +1,4 @@
+ticker,date,numerator,denominator,splitRatio,source,in_corporate_actions
+SMH,2023-05-05,2.0,1.0,2:1,yahoo_events,True
+SOXX,2024-03-07,3.0,1.0,3:1,yahoo_events,True
+SOXX,2026-11-05,3.0,1.0,3:1,yahoo_events,True

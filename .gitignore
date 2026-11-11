@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+dist/
+*.egg-info/
+data/interim/**
+!data/interim/.gitkeep
+# Raw payloads stay on disk for local rebuilds but are NOT committed.
+# Reproducibility: data/raw_manifest.csv (file, sha256, source_url, pull_date).
+data/raw/**
+!data/raw/.gitkeep
+
+.DS_Store
+.ipynb_checkpoints/

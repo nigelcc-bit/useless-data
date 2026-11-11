@@ -1,0 +1,4 @@
+ticker,event,from_date,dummy
+MRVL,merger_announced_LITE,2026-11-02,1
+LITE,merger_target_MRVL,2026-11-02,1
+

@@ -1,0 +1,8 @@
+symbol,status,note
+SPY,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+QQQ,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+SOXX,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+SMH,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+^GSPC,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+^IXIC,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining
+^VIX,STOOQ_UNAVAILABLE,probe SPY failed; skipped remaining

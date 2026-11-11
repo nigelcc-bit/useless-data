@@ -1,0 +1,13 @@
+{
+  "n": 23,
+  "hyperscaler_ew_nov5_pct": -2.9798812948700792,
+  "supplier_ew_nov5_pct": -13.53160453931039,
+  "spearman_nov5_vs_ytd": -0.5296442687747036,
+  "spearman_nov5_vs_ytd_p": 0.009344661031627151,
+  "spearman_nov5_vs_ytd_ai_only": -0.5909774436090225,
+  "spearman_nov5_vs_prior5": 0.6175889328063241,
+  "spearman_nov5_vs_prior5_p": 0.0016899317366156734,
+  "spearman_nov5_vs_prior5_ai_only": 0.7533834586466165,
+  "names_gt20pct_below_52w": 21,
+  "high_basis": "daily_high"
+}

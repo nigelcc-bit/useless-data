@@ -1,0 +1,114 @@
+# Hard fixtures. Active targets are current; SUPERSEDED blocks retain the 6 Nov note.
+as_of: "2026-11-08"
+event_date: "2026-11-05"
+
+index_etf_moves_2026_11_05:
+  SPX: { move_pct: -4.36, close: 7353.73, source: press }
+  IXIC: { move_pct: -5.52, close: 24315.00, source: press }
+  NDX: { move_pct: -6.4, source: press }
+  DJI: { move_pts: -1833.06, move_pct: -3.44, source: press }
+  SOX: { move_pct: -12.3, close: 9011.14, source: press }
+  VIX: { from: 16.61, to: 28.18, move_pct: 69.7, source: press }
+  SPY: { move_pct: -4.4, source: ibkr }
+  QQQ: { move_pct: -6.5, source: ibkr }
+  SMH: { move_pct: -11.2, source: ibkr }
+  SOXX: { move_pct: -12.1, press_quote_pct: -12.8, source: ibkr, note: "D1 — resolve IBKR vs press discrepancy" }
+
+verified_closes_2026_10_26_to_11_05:
+  dates: ["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04", "2026-11-05"]
+  SPY:  [765.37, 769.66, 772.31, 769.36, 755.72, 752.10, 754.35, 766.81, 733.00]
+  QQQ:  [712.20, 721.25, 725.61, 715.34, 690.49, 681.09, 685.28, 691.95, 647.05]
+  # SOXX 3:1 split-adjusted
+  SOXX: [163.94, 170.35, 173.98, 171.29, 157.17, 151.22, 155.00, 150.14, 131.90]
+  SMH:  [541.62, 557.98, 567.67, 561.67, 522.49, 508.31, 518.52, 504.27, 447.73]
+
+# Active cross-section targets after P1 diagnosis + full re-derivation (2026-11-08).
+# Provenance: Yahoo chart Close via data/processed/prices.parquet; N=23 = config/nov5_panel.yaml.
+# Neocloud 5 Nov also confirmed by IBKR (third source) — see docs/gap_diagnosis.md §0.
+cross_section_targets:
+  n_names: 23
+  hyperscaler_ew_nov5_pct: -2.98
+  supplier_ew_nov5_pct: -13.53
+  hyperscaler_ew_six_session_pct: -2.78
+  supplier_ew_six_session_pct: -27.89
+  layer_semis_ew_nov5_pct: -14.00
+  layer_optics_ew_nov5_pct: -13.85
+  layer_power_ew_nov5_pct: -10.70
+  layer_neocloud_ew_nov5_pct: -13.91
+  layer_non_ai_ew_nov5_pct: -8.71
+  soxx_six_session_pct: -24.2
+  spearman_nov5_vs_ytd: -0.53
+  spearman_nov5_vs_ytd_label: UNRECONCILED  # note YTD inputs unrecoverable; Yahoo Close≈Adj
+  spearman_nov5_vs_ytd_p: 0.009344661031627151
+  spearman_nov5_vs_ytd_ai_only: -0.59
+  spearman_nov5_vs_ytd_ai_only_p: 0.006070153699275824
+  spearman_nov5_vs_prior5: 0.62
+  spearman_nov5_vs_prior5_ai_only: 0.75
+  names_gt20pct_below_52w: 21
+  spy_from_52w_pct: -6.22
+  soxx_from_52w_pct: -39.68
+  log_decline_share_before_nov5: 0.53
+  worst7_nov5: ["LITE", "MU", "AMD", "IREN", "MRVL", "LRCX", "NBIS"]
+  high_basis: daily_high
+  provenance: "RAW_FILE:data/processed/prices.parquet; neocloud also IBKR-confirmed"
+
+# SUPERSEDED — 6 Nov note values retained, not deleted.
+superseded_cross_section_targets_6nov_note:
+  status: SUPERSEDED
+  superseded_on: "2026-11-08"
+  reason: >
+    Neocloud/supplier EW = NOTE ERROR (Yahoo+IBKR). YTD Spearmans = UNRECONCILED
+    (note inputs unrecoverable; Yahoo Close≈Adj at -0.53). Six-session supplier EW
+    and worst-7 list also re-derived (|Δ|>0.3pp).
+  supplier_ew_nov5_pct: -12.9
+  supplier_ew_six_session_pct: -26.5
+  layer_neocloud_ew_nov5_pct: -10.6
+  spearman_nov5_vs_ytd: -0.69
+  spearman_nov5_vs_ytd_ai_only: -0.76
+  hyperscaler_ew_nov5_pct: -3.0
+  hyperscaler_ew_six_session_pct: -2.8
+  spearman_nov5_vs_prior5: 0.59
+  spearman_nov5_vs_prior5_ai_only: 0.73
+  worst7_nov5: ["LITE", "MU", "AMD", "MRVL", "LRCX", "NBIS", "VRT"]
+  names_gt20pct_below_52w: 21
+  book_10ai_nov5_ew: -14.6
+  book_10ai_six_session_ew: -29.6
+  book_13_avg_dist_52w: -46.7
+  book_13_ytd_ew: 34.5
+  book_status: UNRECONCILED_membership_unknown
+  killed_log: "Call 3 magnitude revised"
+
+sp500_event_study_1928_2019:
+  n_4pct_days: 151
+  n_cluster_days: 125
+  n_first_shocks: 26
+  first_shock_within_5pct_of_high:
+    n: 9
+    hits_at_63d: 8
+    median_63d_pct: 6.7
+    further_10pct_drawdowns: 0
+  first_shock_within_10pct_of_high:
+    n: 15
+    hits_at_63d: 13
+    further_10pct_drawdowns: 1
+  first_shock_more_than_10pct_below:
+    n: 11
+    positive_at_21d: 3
+    further_10pct_drawdowns: 5
+  any_day_baseline:
+    median_63d_pct: 2.4
+    positive_63d_rate: 0.63
+    median_252d_pct: 8.9
+    positive_252d_rate: 0.69
+  near_high_median_252d_pct: 3.1
+
+gates:
+  soxx_nov5_ret: -0.121
+  soxx_tol: 0.003
+  spy_nov5_ret: -0.044
+  spy_tol: 0.002
+  # SUPERSEDED old spearman_ytd_max: -0.60 (required rho < -0.60)
+  spearman_ytd_max: -0.40
+  spearman_ytd_max_superseded: -0.60
+  max_missing_share: 0.15
+  max_unexplained_single_day_move: 0.25

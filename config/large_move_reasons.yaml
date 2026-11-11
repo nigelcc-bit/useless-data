@@ -1,0 +1,382 @@
+policy: 'Every equity |Close ret| > 25% must have a sourced reason here. Allowed categories:
+  earnings, deal, ipo_listing, split. No auto-explain. Missing/empty source = build
+  fail.'
+moves:
+- ticker: META
+  date: '2022-02-03'
+  category: earnings
+  reason: Q4 earnings / weak Q1 guidance; Facebook DAU decline and Apple privacy headwinds.
+  source: https://www.cnbc.com/2022/02/03/facebook-shares-plummet-22percent-after-reporting-weak-guidance.html
+  source_title: Facebook stock plummets 26% (CNBC)
+- ticker: ORCL
+  date: '2025-09-10'
+  category: earnings
+  reason: 'FY26 Q1: RPO $455B (+359% YoY); raised OCI outlook on AI cloud contracts.'
+  source: https://www.oracle.com/news/announcement/q1fy26-earnings-release-2025-09-09/
+  source_title: Oracle FY26 Q1 financial results
+- ticker: NVDA
+  date: '2016-11-11'
+  category: earnings
+  reason: 'Q3 FY2017 beat: $2.0B revenue (+54% YoY); Q4 guide well above Street.'
+  source: https://www.sec.gov/Archives/edgar/data/1045810/000104581016000343/q3fy17pr.htm
+  source_title: NVIDIA Q3 FY2017 results (SEC)
+- ticker: AMD
+  date: '2016-04-22'
+  category: deal
+  reason: Q1 results plus $293M China server JV with THATIC; Q2 revenue guide +~15%
+    q/q.
+  source: https://ir.amd.com/news-events/press-releases/detail/683/amd-reports-2016-first-quarter-results
+  source_title: AMD Reports 2016 First Quarter Results
+- ticker: MRVL
+  date: '2023-05-26'
+  category: earnings
+  reason: Q1 FY2024 beat; AI revenue expected to at least double in FY24 and again
+    in FY25.
+  source: https://www.cnbc.com/2023/05/26/marvell-shares-soar-25percent-after-semiconductor-firm-beats-on-earnings.html
+  source_title: Marvell shares soar after earnings (CNBC)
+- ticker: MRVL
+  date: '2026-06-02'
+  category: deal
+  reason: 'Computex: Nvidia CEO called Marvell next ''trillion-dollar company''; Teralynx
+    AI switch launch.'
+  source: https://www.reuters.com/business/marvell-technology-surges-after-nvidias-huang-calls-it-next-trillion-dollar-2026-06-02/
+  source_title: Marvell surges after Huang remark (Reuters)
+- ticker: INTC
+  date: '2024-08-02'
+  category: earnings
+  reason: Cut Q3 outlook, suspended dividend, announced >15% workforce cuts.
+  source: https://www.reuters.com/technology/intel-shares-set-fall-most-24-years-it-struggles-with-turnaround-2024-08-02/
+  source_title: Intel shares slump 26% (Reuters)
+- ticker: INTC
+  date: '2026-10-30'
+  category: earnings
+  reason: Weak Q4 guidance citing PC softness from memory costs and Israel fab outage.
+  source: https://www.cnbc.com/2026/10/30/amazon-intel-earnings-big-tech-ai-spending-concerns.html
+  source_title: Intel shares fall after earnings (CNBC)
+- ticker: SNDK
+  date: '2025-02-18'
+  category: ipo_listing
+  reason: When-issued trading as SNDKV (13–21 Feb 2025); regular-way SNDK starts 24
+    Feb after WDC spin-off.
+  source: https://www.sec.gov/Archives/edgar/data/2023554/000119312525027285/d229754d8k.htm
+  source_title: Sandisk Form 8-K when-issued disclosure
+- ticker: SNDK
+  date: '2026-01-06'
+  category: deal
+  reason: 'CES: Nvidia CEO said AI memory/storage is underserved and could become
+    the world''s largest market.'
+  source: https://www.bloomberg.com/news/articles/2026-01-06/sandisk-s-1-000-rally-is-turbocharged-by-nvidia-ceo-s-remarks
+  source_title: Sandisk rally turbocharged by Nvidia CEO (Bloomberg)
+- ticker: SNDK
+  date: '2026-07-30'
+  category: earnings
+  reason: Memory/storage rebound after Microsoft AI/cloud earnings and Samsung memory-crunch
+    warning.
+  source: https://www.cnbc.com/2026/07/30/chip-stock-rally-lam-research-micron-amd.html
+  source_title: Chip stocks rally (CNBC)
+- ticker: LITE
+  date: '2018-11-12'
+  category: earnings
+  reason: Slashed FY Q2 2019 outlook after large 3D-sensing customer cut laser diode
+    orders.
+  source: https://www.sec.gov/Archives/edgar/data/1633978/000163397818000132/a991.htm
+  source_title: Lumentum updates FY Q2 2019 outlook (SEC)
+- ticker: COHR
+  date: '2023-08-16'
+  category: earnings
+  reason: Q4 results with weak FY2024 sales/EPS guide below consensus.
+  source: https://ir.coherent.com/news-releases/news-release-details/coherent-corp-releases-fourth-quarter-and-full-fiscal-year-2023
+  source_title: Coherent FY2023 results
+- ticker: ALAB
+  date: '2024-11-05'
+  category: earnings
+  reason: 'Q3 beat: $113.1M revenue (+206% YoY); Q4 guide above Street.'
+  source: https://www.asteralabs.com/news/astera-labs-announces-financial-results-for-the-third-quarter-of-fiscal-year-2024/
+  source_title: Astera Labs Q3 FY2024 results
+- ticker: ALAB
+  date: '2025-01-27'
+  category: deal
+  reason: AI-infra selloff as DeepSeek low-cost model raised AI-capex demand fears.
+  source: https://www.reuters.com/technology/artificial-intelligence/chinas-deepseek-sparks-ai-market-rout-2025-01-27/
+  source_title: DeepSeek sparks AI market rout (Reuters)
+- ticker: ALAB
+  date: '2025-08-06'
+  category: earnings
+  reason: 'Q2 beat: $191.9M revenue (+150% YoY); Q3 guide above consensus.'
+  source: https://ir.asteralabs.com/news-releases/news-release-details/astera-labs-announces-financial-results-second-quarter-fiscal-0
+  source_title: Astera Labs Q2 FY2025 results
+- ticker: CIEN
+  date: '2019-06-06'
+  category: earnings
+  reason: Fiscal Q2 revenue $865M (+18.5% YoY); non-GAAP EPS $0.48 beat.
+  source: https://www.sec.gov/Archives/edgar/data/936395/000093639519000017/ex991-2019q2earningspressr.htm
+  source_title: Ciena fiscal Q2 2019 results (SEC)
+- ticker: FN
+  date: '2023-08-22'
+  category: earnings
+  reason: Fiscal Q4 beat; AI datacom / 800G transceiver growth offset telecom inventory
+    cuts.
+  source: https://investor.fabrinet.com/news-releases/news-release-details/fabrinet-announces-fourth-quarter-and-fiscal-year-2023-financial
+  source_title: Fabrinet FY2023 results
+- ticker: VRT
+  date: '2022-02-23'
+  category: earnings
+  reason: Q4 miss on inflation/supply-chain; 2022 adjusted EPS guide far below Street.
+  source: https://www.sec.gov/Archives/edgar/data/1674101/000162828022003424/exhibit991vrt2232022.htm
+  source_title: Vertiv Q4 2021 results (SEC)
+- ticker: VRT
+  date: '2023-08-02'
+  category: earnings
+  reason: Q2 beat and raised FY2023 outlook on AI data-center demand.
+  source: https://investors.vertiv.com/news/news-details/2023/Vertiv-Reports-Strong-Second-Quarter-Results-and-Raises-Full-Year-2023-Outlook/default.aspx
+  source_title: Vertiv Q2 2023 results
+- ticker: VRT
+  date: '2025-01-27'
+  category: deal
+  reason: Data-center infra selloff on DeepSeek AI-efficiency / capex fears.
+  source: https://www.reuters.com/technology/artificial-intelligence/chinas-deepseek-sparks-ai-market-rout-2025-01-27/
+  source_title: DeepSeek sparks AI market rout (Reuters)
+- ticker: PWR
+  date: '2015-10-16'
+  category: earnings
+  reason: Cut preliminary Q3 EPS guide to $0.22–$0.24 from $0.34–$0.40 on delayed
+    transmission projects.
+  source: https://investors.quantaservices.com/sec-filings/all-sec-filings/content/0001193125-15-345175/0001193125-15-345175.pdf
+  source_title: Quanta preliminary Q3 results (8-K)
+- ticker: CRWV
+  date: '2025-04-01'
+  category: ipo_listing
+  reason: Day-three rebound above $40 IPO price amid renewed AI sentiment.
+  source: https://www.cnbc.com/2025/04/01/coreweave-shares-bounce-ipo-price.html
+  source_title: CoreWeave shares bounce above IPO price (CNBC)
+- ticker: CRWV
+  date: '2025-06-03'
+  category: deal
+  reason: Applied Digital ~15-year Ellendale leases for 250 MW CoreWeave HPC (~$7B
+    lease revenue).
+  source: https://www.reuters.com/business/applied-digital-coreweave-ink-15-year-lease-worth-7-billion-2025-06-02/
+  source_title: APLD–CoreWeave $7B lease (Reuters)
+- ticker: NBIS
+  date: '2025-01-27'
+  category: deal
+  reason: AI-infra plunge on DeepSeek low-cost model / GPU-spend fears.
+  source: https://www.reuters.com/technology/artificial-intelligence/chinas-deepseek-sparks-ai-market-rout-2025-01-27/
+  source_title: DeepSeek sparks AI market rout (Reuters)
+- ticker: NBIS
+  date: '2025-09-09'
+  category: deal
+  reason: Microsoft AI infrastructure agreement ~$17.4B (up to $19.4B) over five years.
+  source: https://www.sec.gov/Archives/edgar/data/1513845/000110465925088312/tm2525580d1_6k.htm
+  source_title: Nebius Form 6-K Microsoft agreement
+- ticker: NBIS
+  date: '2026-07-30'
+  category: earnings
+  reason: Rebound with AI-cloud peers after Microsoft Azure beat.
+  source: https://www.benzinga.com/trading-ideas/movers/26/07/60795105/nebius-stock-surges-as-microsofts-cloud-beat-lifts-neocloud-sentiment
+  source_title: Nebius surges on Microsoft cloud beat
+- ticker: NBIS
+  date: '2026-08-12'
+  category: earnings
+  reason: 'Q2 beat: ~$582M revenue; AI-cloud sales ~+514% YoY; large >$1B contracts.'
+  source: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
+  source_title: Nebius Q2 2026 shareholder letter (SEC)
+- ticker: IREN
+  date: '2021-12-17'
+  category: deal
+  reason: JPMorgan/Compass Point initiated coverage Overweight/Buy with double-digit
+    upside.
+  source: https://www.coindesk.com/business/2021/12/13/bitcoin-miner-iris-energy-has-more-than-100-upside-jpmorgan-analyst-says
+  source_title: Iris Energy JPMorgan initiation (CoinDesk)
+- ticker: IREN
+  date: '2022-05-16'
+  category: deal
+  reason: Bitcoin-miner selloff as crypto prices and mining profitability deteriorated.
+  source: https://www.theblock.co/news/ecosystems/2022-05-16-bitcoin-mining-stock-report-monday-may-16-147179
+  source_title: Bitcoin mining stock report May 16
+- ticker: IREN
+  date: '2023-02-15'
+  category: deal
+  reason: $67M Bitmain prepayments redeployed to buy 4.4 EH/s miners; capacity to
+    5.5 EH/s.
+  source: https://irisenergy.gcs-web.com/static-files/c55d4fed-bfe1-4b73-961d-aebef5d1ac5f
+  source_title: Iris Energy Q2 FY23 results
+- ticker: IREN
+  date: '2023-12-21'
+  category: deal
+  reason: 10 EH/s expansion fully funded; NVIDIA H100 GPU install for generative AI
+    begun.
+  source: https://www.sec.gov/Archives/edgar/data/1878848/000114036123058745/ef20017172_6k.htm
+  source_title: Iris Energy Form 6-K Dec 21 2023
+- ticker: IREN
+  date: '2024-03-20'
+  category: deal
+  reason: Bitcoin miners rallied after Fed hold/possible-cut signal; JPM reiterated
+    bullish AI/HPC view.
+  source: https://www.cnbc.com/2024/03/20/bitcoin-btc-price-falls-as-cryptocurrencies-lose-400-billion-value.html
+  source_title: Bitcoin turns higher after Fed (CNBC)
+- ticker: IREN
+  date: '2024-11-27'
+  category: earnings
+  reason: 'Q1 results/call: hyperscaler interest in Sweetwater AI hosting; accelerated
+    50 EH/s plans.'
+  source: https://www.coindesk.com/business/2024/11/27/bitcoin-miner-iren-surges-on-renewed-ai-interest-possible-btc-dividend-payment
+  source_title: IREN surges on AI interest (CoinDesk)
+- ticker: IREN
+  date: '2026-07-30'
+  category: earnings
+  reason: Rebound with AI-infra peers after Microsoft earnings lifted AI-capex sentiment.
+  source: https://finance.yahoo.com/technology/ai/articles/iren-ltd-iren-gaining-momentum-013647455.html
+  source_title: IREN gaining momentum (Yahoo)
+- ticker: APLD
+  date: '2022-05-12'
+  category: deal
+  reason: Crypto-exposed selloff amid Terra/UST collapse and bitcoin crash.
+  source: https://www.reuters.com/markets/us/crypto-collapse-intensifies-stablecoin-tether-slides-below-dollar-peg-2022-05-12/
+  source_title: Crypto collapse intensifies (Reuters)
+- ticker: APLD
+  date: '2022-06-13'
+  category: ipo_listing
+  reason: Post-IPO lock-up expired freeing ~36.4M shares amid crypto-stock selloff.
+  source: https://ir.applieddigital.com/news-events/press-releases/detail/8/applied-blockchain-announces-expiration-of-share-lock-up
+  source_title: APLD lock-up expiration
+- ticker: APLD
+  date: '2022-07-19'
+  category: deal
+  reason: Five-year 200MW Marathon hosting contract + raised fiscal Q4 revenue guidance
+    (announced after close 18 Jul).
+  source: https://ir.applieddigital.com/news-events/press-releases/detail/6/applied-blockchain-secures-200-megawatt-five-year-hosting
+  source_title: APLD Marathon 200MW hosting contract
+- ticker: APLD
+  date: '2023-05-16'
+  category: deal
+  reason: Sai Computing AI Cloud first major customer; 24-month agreement up to $180M.
+  source: https://ir.applieddigital.com/news-events/press-releases/detail/56/applied-digital-signs-first-major-customer-for-latest
+  source_title: APLD first major AI Cloud customer
+- ticker: APLD
+  date: '2024-01-16'
+  category: earnings
+  reason: Q2 revenue miss; cut FY24 guidance citing delayed Nvidia InfiniBand components.
+  source: https://www.sec.gov/Archives/edgar/data/1144879/000114487924000004/0001144879-24-000004.txt
+  source_title: APLD fiscal Q2 2024 results
+- ticker: APLD
+  date: '2024-09-05'
+  category: deal
+  reason: $160M private placement including Nvidia and Related Companies.
+  source: https://ir.applieddigital.com/news-events/press-releases/detail/107/applied-digital-announces-160-million-strategic-financing
+  source_title: APLD $160M strategic financing
+- ticker: APLD
+  date: '2024-09-09'
+  category: deal
+  reason: Follow-through after Nvidia/Related $160M strategic investment announced
+    5 Sep.
+  source: https://www.reuters.com/technology/applied-digital-surges-funding-deal-with-investors-including-nvidia-2024-09-05/
+  source_title: APLD surges on Nvidia funding (Reuters)
+- ticker: APLD
+  date: '2025-01-27'
+  category: deal
+  reason: AI data-center peer selloff on DeepSeek / AI-capex fears.
+  source: https://www.reuters.com/technology/artificial-intelligence/chinas-deepseek-sparks-ai-market-rout-2025-01-27/
+  source_title: DeepSeek sparks AI market rout (Reuters)
+- ticker: APLD
+  date: '2025-04-15'
+  category: earnings
+  reason: Q3 revenue miss; cloud-services soft; board approved Cloud Services divestiture
+    plan.
+  source: https://www.reuters.com/technology/applied-digital-misses-quarterly-revenue-estimates-clients-delay-renewing-data-2025-04-14/
+  source_title: APLD misses quarterly revenue (Reuters)
+- ticker: APLD
+  date: '2025-06-02'
+  category: deal
+  reason: Two ~15-year CoreWeave Ellendale leases (250 MW; ~$7B contracted revenue).
+  source: https://www.sec.gov/Archives/edgar/data/1144879/000164117225013199/form8-k.htm
+  source_title: APLD Form 8-K CoreWeave leases
+- ticker: APLD
+  date: '2025-06-04'
+  category: deal
+  reason: Follow-through on CoreWeave leases; brokers lifted targets (e.g. B. Riley
+    to $15).
+  source: https://www.fool.com/investing/2025/06/04/why-applied-digital-stock-skyrocketed-again-today/
+  source_title: Why APLD skyrocketed again (Motley Fool)
+- ticker: APLD
+  date: '2025-07-31'
+  category: earnings
+  reason: Fiscal Q4 results; CoreWeave exercised 150 MW option; Ellendale contracted
+    revenue ~$11B.
+  source: https://www.sec.gov/Archives/edgar/data/1144879/000114487925000019/apldq425earningsrelease.htm
+  source_title: APLD FY2025 Q4 results
+- ticker: APLD
+  date: '2026-02-06'
+  category: deal
+  reason: $50M senior secured financing to advance Polaris Forge 2 AI data-center
+    buildout.
+  source: https://www.forbes.com/sites/greatspeculations/2026/02/09/is-apld-stock-a-buy-after-its-recent-surge/
+  source_title: APLD after recent surge (Forbes)
+- ticker: CORZ
+  date: '2024-06-04'
+  category: deal
+  reason: 12-year CoreWeave HPC hosting ~200 MW; >$3.5B expected over initial terms.
+  source: https://investors.corescientific.com/news-events/press-releases/detail/74/core-scientific-to-provide-approximately-200-mw-of-infrastructure-to-host-coreweaves-high-performance-computing-services-capturing-significant-ai-compute-opportunity
+  source_title: Core Scientific–CoreWeave 200 MW
+- ticker: CORZ
+  date: '2025-01-27'
+  category: deal
+  reason: AI-pivoted bitcoin miners sold off on DeepSeek / AI-capex fears.
+  source: https://www.reuters.com/technology/artificial-intelligence/chinas-deepseek-sparks-ai-market-rout-2025-01-27/
+  source_title: DeepSeek sparks AI market rout (Reuters)
+- ticker: CORZ
+  date: '2025-06-26'
+  category: deal
+  reason: 'WSJ: CoreWeave in advanced talks to acquire Core Scientific.'
+  source: https://www.cnbc.com/2025/06/26/core-scientific-shares-surge-on-report-of-buyout-talks-with-coreweave.html
+  source_title: CORZ surges on CoreWeave buyout talks (CNBC)
+- ticker: NOW
+  date: '2026-10-29'
+  category: earnings
+  reason: Q4 cRPO growth guide 18.5% missed Street; AI disruption fears.
+  source: https://www.cnbc.com/2026/10/29/servicenow-now-earnings-q3-2026.html
+  source_title: ServiceNow plunges after earnings (CNBC)
+- ticker: HOOD
+  date: '2021-08-04'
+  category: ipo_listing
+  reason: Newly public surge ~50% in meme-stock / retail frenzy days after IPO.
+  source: https://www.reuters.com/business/finance/robinhood-shares-surge-more-than-80-retail-investors-dive-2021-08-04/
+  source_title: Robinhood shares surge (Reuters)
+- ticker: HOOD
+  date: '2021-08-05'
+  category: ipo_listing
+  reason: Filing registered sale of up to ~97.9M shares by early investors (no company
+    proceeds).
+  source: https://www.reuters.com/business/finance/robinhood-slides-10-after-four-days-surge-2021-08-05/
+  source_title: Robinhood slides after selling-shareholder filing (Reuters)
+- ticker: PANW
+  date: '2024-02-21'
+  category: earnings
+  reason: Cut FY billings/revenue guidance amid platformization deferring near-term
+    payments.
+  source: https://www.cnbc.com/2024/02/21/palo-alto-networks-stock-on-pace-for-worst-day-since-2012-ipo.html
+  source_title: Palo Alto worst day since IPO (CNBC)
+- ticker: SNOW
+  date: '2024-11-21'
+  category: earnings
+  reason: Raised FY2025 product-revenue guide to $3.43B; multi-year Anthropic AI partnership.
+  source: https://www.snowflake.com/en/news/press-releases/snowflake-reports-financial-results-for-the-third-quarter-of-fiscal-2025/
+  source_title: Snowflake Q3 FY2025 results
+- ticker: SNOW
+  date: '2026-05-28'
+  category: earnings
+  reason: Q1 beat; raised FY product-revenue to $5.84B; $6B five-year AWS compute
+    deal.
+  source: https://www.reuters.com/business/snowflake-raises-annual-product-revenue-forecast-enterprises-ramp-up-ai-2026-05-27/
+  source_title: Snowflake boosts forecast, $6B AWS deal (Reuters)
+- ticker: DDOG
+  date: '2023-11-07'
+  category: earnings
+  reason: Q3 beat; lifted Q4/FY revenue guidance.
+  source: https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-third-quarter-2023-financial-results
+  source_title: Datadog Q3 2023 results
+- ticker: DDOG
+  date: '2026-05-07'
+  category: earnings
+  reason: 'Q1 beat: $1.01B revenue (+32% YoY); raised FY2026 revenue and EPS guidance.'
+  source: https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-first-quarter-2026-financial-results
+  source_title: Datadog Q1 2026 results

@@ -1,0 +1,117 @@
+actions:
+- ticker: SOXX
+  date: '2026-10-31'
+  type: split
+  ratio: '3:1'
+  note: SOXX 3-for-1 split in 2026; fixture closes are split-adjusted
+- ticker: SNDK
+  date: '2025-02-18'
+  type: split
+  ratio: '8:1'
+  note: SNDK 8-for-1; date confirmed/updated by split audit against Yahoo actions
+    | auto-dated from flag ret=+28.65%
+- ticker: AAPL
+  date: '2020-08-31'
+  type: split
+  ratio: '4:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: AMZN
+  date: '2022-06-06'
+  type: split
+  ratio: '20:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: ANET
+  date: '2021-11-18'
+  type: split
+  ratio: '4:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: ANET
+  date: '2024-12-04'
+  type: split
+  ratio: '4:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: APH
+  date: '2021-03-05'
+  type: split
+  ratio: '2:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: APH
+  date: '2024-06-12'
+  type: split
+  ratio: '2:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: APH
+  date: '2026-09-03'
+  type: split
+  ratio: '2:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: APLD
+  date: '2022-04-13'
+  type: split
+  ratio: '1:6'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: AVGO
+  date: '2024-07-15'
+  type: split
+  ratio: '10:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: CRWD
+  date: '2026-07-02'
+  type: split
+  ratio: '4:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: GOOGL
+  date: '2022-07-18'
+  type: split
+  ratio: '20:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: KLAC
+  date: '2026-06-12'
+  type: split
+  ratio: '10:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: LRCX
+  date: '2024-10-03'
+  type: split
+  ratio: '10:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: NOW
+  date: '2025-12-18'
+  type: split
+  ratio: '5:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: NVDA
+  date: '2021-07-20'
+  type: split
+  ratio: '4:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: NVDA
+  date: '2024-06-10'
+  type: split
+  ratio: '10:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: PANW
+  date: '2022-09-14'
+  type: split
+  ratio: '3:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: PANW
+  date: '2024-12-16'
+  type: split
+  ratio: '2:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: SMH
+  date: '2023-05-05'
+  type: split
+  ratio: '2:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: SOXX
+  date: '2024-03-07'
+  type: split
+  ratio: '3:1'
+  note: auto-imported from Yahoo chart events during P1
+- ticker: WDC
+  date: '2025-02-24'
+  type: split
+  ratio: 1323:1000
+  note: auto-imported from Yahoo chart events during P1
