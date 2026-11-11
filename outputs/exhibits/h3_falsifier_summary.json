@@ -1,0 +1,13 @@
+{
+  "null": "Crowding proxies carry no incremental R\u00b2 over valuation + fundamentals.",
+  "falsifier": "Valuation block incremental adj-R\u00b2 exceeds crowding in \u2265 4 of 7 episodes (episodes with N<20 complete cases excluded from falsifier count).",
+  "n_episodes_counted": 6,
+  "n_episodes_val_beats_crowding": 3,
+  "falsifier_triggered": false,
+  "decision": "FAIL TO REJECT crowding claim on falsifier",
+  "excluded_episodes": [
+    "E1"
+  ],
+  "ai_exposure_tag": "JUDGMENT_CODED_POST_OUTCOME",
+  "valuation_label": "DEVIATION_FROM_SPEC"
+}

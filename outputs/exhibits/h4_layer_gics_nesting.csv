@@ -1,0 +1,9 @@
+layer,n_tickers,n_gics_clusters,gics_clusters,nested_in_single_gics,tickers
+builders,6,4,"Broadline Retail; Interactive Media & Services; Systems Software; Technology Hardware, Storage & Peripherals",False,"AAPL,AMZN,GOOGL,META,MSFT,ORCL"
+compute_semis,6,1,Semiconductors,True,"AMD,AVGO,INTC,MRVL,NVDA,TSM"
+memory_storage,4,2,"Semiconductors; Technology Hardware, Storage & Peripherals",False,"MU,SNDK,STX,WDC"
+neoclouds,5,1,Application Software,True,"APLD,CORZ,CRWV,IREN,NBIS"
+non_ai_control,6,3,Application Software; Investment Banking & Brokerage; Systems Software,False,"CRWD,DDOG,HOOD,NOW,PANW,SNOW"
+optics_networking,8,4,Communications Equipment; Electronic Components; Electronic Manufacturing Services; Semiconductors,False,"ALAB,ANET,APH,CIEN,COHR,FN,GLW,LITE"
+power_cooling,5,4,Construction & Engineering; Electrical Components & Equipment; Electronic Equipment & Instruments; Heavy Electrical Equipment,False,"ETN,GEV,NVT,PWR,VRT"
+semicap,5,1,Semiconductor Materials & Equipment,True,"AMAT,ASML,KLAC,LRCX,TER"

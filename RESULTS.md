@@ -13,8 +13,8 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 |---|---|---|---|---|---|
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
 | H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | *pending* | |
-| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | *pending* | |
-| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | *pending — do not pool before this* | |
+| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
+| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
 
 ## Fixture reproduction (P0)
@@ -273,3 +273,135 @@ Public-business-entity ASC 842 effective for fiscal years beginning after **2018
 
 ### Repo hygiene
 `data/raw/` gitignored; `data/raw_manifest.csv` holds file / sha256 / source URL / pull date.
+
+
+## H3 review (P4)
+
+**Run:** 2026-11-11 (Australia/Melbourne).
+
+### Decision
+**H3 UNSUPPORTED: neither crowding nor valuation adds explanatory power within layers.**
+
+- Falsifier not triggered (valuation beats crowding in 3/6 counted; E1 excluded).
+- Crowding incremental adj-R² ≤ 0 in **5/6** counted episodes; wild-bootstrap p on crowding PC1 is 0.26–0.90 in E3–E7.
+- K003: Call 3 (crowding, not valuation) not supported in multivariate panel; univariate crowding association (adj R² 0.37 E6, 0.23 E7) is absorbed by layer dummies.
+
+### Fragility / degenerate inference
+| episode | N | k | residual_df | flag | p_crowding | note |
+|---|---:|---:|---:|---|---:|---|
+| E1 | 8 | 10 | -3 | DEGENERATE | 0.000 | p=0.000 DEGENERATE (saturated / non-positive residual df; bootstrap mass at point estimate) |
+| E2 | 21 | 10 | 10 | FRAGILE | 0.000 | p=0.000 DEGENERATE/FRAGILE (residual df small; wild-bootstrap p not reliable) |
+| E3 | 28 | 11 | 16 | nan | 0.829 | nan |
+| E4 | 31 | 11 | 19 | nan | 0.897 | nan |
+| E5 | 35 | 11 | 23 | nan | 0.262 | nan |
+| E6 | 36 | 11 | 24 | nan | 0.294 | nan |
+| E7 | 36 | 11 | 24 | nan | 0.721 | nan |
+
+E1 is **DEGENERATE** (saturated, residual df < 0, R²=1). E2 is **FRAGILE** (residual df=10). p=0.000 in E1/E2 is **DEGENERATE** — wild-bootstrap mass collapses when the fit is saturated / residual df is tiny; do not read as “highly significant”.
+
+### EXPLORATORY (not in FDR family)
+**Layer incremental adj-R²** over crowding+valuation+funding+mcap:
+
+- E1: nan
+- E2: 0.6023904360995089
+- E3: 0.2806635842074383
+- E4: 0.02948242442715676
+- E5: 0.16840349968069335
+- E6: 0.2058908956324268
+- E7: 0.26913857027762633
+
+**Shapley R² (E5–E7)** — layer dominates:
+
+block|E5|E6|E7
+crowding|0.0125|0.1444|0.0916
+funding|0.0374|0.011|0.0229
+layer|0.3558|0.4096|0.4029
+mcap|0.0091|0.0936|0.127
+valuation|0.0092|0.024|0.0337
+
+
+episode        E5      E6      E7
+block                            
+crowding   0.0125  0.1444  0.0916
+funding    0.0374  0.0110  0.0229
+layer      0.3558  0.4096  0.4029
+mcap       0.0091  0.0936  0.1270
+valuation  0.0092  0.0240  0.0337
+
+**Crowding PC1 orientation:** vol and SI loadings flip to the **same sign as momentum** in E2/E3; elsewhere they load opposite mom/dist (risk-off / crowded-short axis). See `h3_pc1_orientation.csv`.
+
+episode  load_vol   load_si  load_mom  load_dist  vol_si_same_sign_as_mom
+     E1 -0.475711 -0.383047  0.517984   0.598888                    False
+     E2  0.611297  0.427963  0.620089   0.242184                     True
+     E3  0.392103  0.453276  0.682990   0.417518                     True
+     E4 -0.552985 -0.464413  0.471612   0.506073                    False
+     E5 -0.495232 -0.534399  0.227024   0.646238                    False
+     E6 -0.438942 -0.468303  0.504482   0.577511                    False
+     E7 -0.503068 -0.481749  0.455512   0.554392                    False
+
+**E6/E7 primary vs secondary** (`h3_e6_e7_primary_vs_secondary.csv`):
+
+episode          model  n_complete   adj_r2  coef_crowding_pc1  coef_valuation_pc1  p_crowding_pc1  p_valuation_pc1  coef_prior_63d  coef_dist_252d  coef_vol_21d   coef_si   coef_ep   coef_sp  coef_ebitda_ev
+     E6    primary_pc1          36 0.537102           0.014692           -0.007451        0.264264         0.428428             NaN             NaN           NaN       NaN       NaN       NaN             NaN
+     E6 secondary_full          36 0.793734                NaN                 NaN             NaN              NaN       -0.020991       -0.058803     -0.474769 -0.783915 -0.839723 -0.232733       -0.492871
+     E7    primary_pc1          36 0.530459           0.009786            0.013443        0.754755         0.436436             NaN             NaN           NaN       NaN       NaN       NaN             NaN
+     E7 secondary_full          36 0.730944                NaN                 NaN             NaN              NaN       -0.323699        0.168495     -0.284948 -0.180097 -0.969342  0.125002       -0.644232
+
+
+## H4 results (P4) — frozen stacked Wald
+
+**Run:** 2026-11-11 (Australia/Melbourne); additions accepted 2026-11-12.
+
+### Status
+- Prior separate-episode GICS-cluster Wald: **FROZEN TEST INVALID** (numerically degenerate).
+- Post-hoc 4-df core Wald (p≈0.012): **DEVIATION_FROM_SPEC / EXPLORATORY** — own `tests_run` row; **must not carry the decision**.
+- **Primary (this run):** stacked E6+E7, H3 primary slopes + slope×E7, cluster by **name** (G=36), Webb wild bootstrap. Intercepts/episode levels free. `log_mkt_cap` centered+scaled.
+
+### Degeneracy diagnosis (layer ⊃ GICS)
+Several layer dummies nest inside a single GICS sub-industry cluster, so a GICS-cluster sandwich cannot separately identify those layer effects (singular / explosive V). Nested in one GICS cluster: **3/8** layers (compute_semis→Semiconductors; neoclouds→Application Software; semicap→Semiconductor Materials & Equipment). Confirmed cause of the invalid prior run. Full table: `h4_layer_gics_nesting.csv`.
+
+### Primary Wald
+- N=72 (36 names × 2); interaction df=11
+- Design XtX cond=4.82e+03; interaction V cond (wild)=1.63e+03
+- Wald (wild) stat=39.51; p_chi2=4.337e-05; **wald_p_wild_boot = &lt; 0.001 (0 of 999)**
+- CR2 check: stat=26.71; **p_chi2=0.005**
+- **Decision:** H4 null **REJECTED** (wild p&lt;0.001, CR2 p=0.005) — do not pool E6 and E7
+- **Power caveat:** Stacked N=72 (36 names × 2). k_slopes=11; interaction df=11. Name clusters=36. A non-rejection does not prove equality with G≈36 clusters.
+
+### What rotated (pre-registered alternative)
+- Pre-registered alternative **"funding dominates October" NOT supported** (funding Shapley E6 = **0.011**).
+- What rotated: **layer composition** — compute semis worse in E7 (robust); neoclouds and funding borderline (percentile CI excludes 0; neither survives Holm @5%).
+- **Pre-registered outcome #2 triggered:** H4 rejects stability and the layer dummy dominates in November → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways.
+
+### Slope × E7 interactions (raw + Holm)
+
+| interaction | coef | p_raw_wild | p_holm | sig_holm_05 | pct CI excl 0 |
+|---|---:|---:|---:|:---:|:---:|
+| crowding_pc1:e7 | −0.0049 | 0.844 | 1.000 | no | no |
+| valuation_pc1:e7 | 0.0209 | 0.051 | 0.459 | no | no |
+| funding_pc1:e7 | 0.0282 | 0.058 | 0.464 | no | yes |
+| log_mkt_cap:e7 | 0.0610 | 0.132 | 0.925 | no | no |
+| layer_compute_semis:e7 | −0.1131 | 0.006 | 0.066 | no | yes |
+| layer_memory_storage:e7 | −0.0236 | 0.809 | 1.000 | no | no |
+| layer_neoclouds:e7 | 0.1706 | 0.038 | 0.380 | no | yes |
+| layer_non_ai_control:e7 | −0.0483 | 0.622 | 1.000 | no | no |
+| layer_optics_networking:e7 | −0.0297 | 0.744 | 1.000 | no | no |
+| layer_power_cooling:e7 | 0.0185 | 0.760 | 1.000 | no | no |
+| layer_semicap:e7 | 0.0322 | 0.530 | 1.000 | no | no |
+
+No individual interaction is Holm-significant @5%. Joint Wald (11 df) carries the rejection. Compute-semis is the strongest single move (raw p=0.006, Holm p=0.066).
+
+### Robustness (EXPLORATORY)
+
+| Check | Rejection survives? | compute_semis:e7 CI excl 0? |
+|---|---|---|
+| (a) ORCL coded as neocloud (spec dual-code) | **yes** (wild p &lt; 0.001) | **yes** (coef −0.141) |
+| (b) Within-episode z-scored returns | **yes** (wild p &lt; 0.001) | **no** (CI includes 0) |
+
+Logged as `H4_ROBUST_ORCL_NEOCLOUD` / `H4_ROBUST_ZSCORE_RETURNS` in `tests_run.csv`.
+
+### Descriptive: layer Shapley is not November-specific
+Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0.41**, E7 **0.40** — so layer dominance alone is not November-specific. H4 tests which layer loadings changed; funding did not dominate October.
+
+Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`, `h4_robustness.json`.
+

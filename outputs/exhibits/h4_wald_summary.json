@@ -1,0 +1,103 @@
+{
+  "status_primary": "REJECT",
+  "null": "H3 coefficient vector is stable across Oct 2026 and Nov 2026 episodes.",
+  "falsifier": "Wald test fails to reject at 5% \u2192 treat as one regime.",
+  "method": "stacked_slope_x_E7_wild_cluster_by_name",
+  "n_names": 36,
+  "n_rows": 72,
+  "n_E6": 36,
+  "n_E7": 36,
+  "k_slopes": 11,
+  "interaction_df": 11,
+  "design_XtX_cond": 4822.689595009931,
+  "wald_stat_wild": 39.510228615373364,
+  "wald_p_chi2_wild": 4.337250177589134e-05,
+  "wald_p_wild_boot": 0.0,
+  "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+  "wald_cond_wild": 1633.1003276020276,
+  "wald_stat_cr2": 26.71481056754854,
+  "wald_p_chi2_cr2": 0.005073356240004492,
+  "wald_cond_cr2": 1499.519899520378,
+  "pool_allowed": false,
+  "decision": "REJECT stability @5% \u2014 do not pool E6 and E7",
+  "power_caveat": "Stacked N=72 (36 names \u00d7 2). k_slopes=11; interaction df=11. Name clusters=36. Design XtX cond=4.82e+03; interaction V cond (wild)=1.63e+03. A non-rejection does not prove equality with G\u224836 clusters.",
+  "rotation": {
+    "null_rejected": true,
+    "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+    "wald_p_cr2": 0.005073356240004492,
+    "pre_registered_alt_funding_dominates_october": {
+      "supported": false,
+      "funding_shapley_E6": 0.011025173118960938,
+      "note": "Pre-registered alternative 'funding dominates October' NOT supported (funding Shapley E6 = 0.011)."
+    },
+    "what_rotated": {
+      "primary": "layer composition",
+      "compute_semis_e7": "worse in E7 (layer_compute_semis:e7 < 0; robust)",
+      "neoclouds_e7": "borderline (percentile CI excludes 0; check Holm)",
+      "funding_e7": "borderline (percentile CI excludes 0; check Holm)"
+    },
+    "outcome_2_triggered": true,
+    "outcome_2_text": "If H4 rejects stability and the layer dummy dominates in November \u2192 profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways."
+  },
+  "robustness": {
+    "orcl_as_neocloud": {
+      "wald_p_wild_boot": 0.0,
+      "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+      "rejection_survives": true,
+      "compute_semis_e7_coef": -0.14079184242789594,
+      "compute_semis_e7_ci": [
+        -0.23015396433398205,
+        -0.05458922215522522
+      ],
+      "compute_semis_excludes_zero": true
+    },
+    "zscore_returns": {
+      "wald_p_wild_boot": 0.0,
+      "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+      "rejection_survives": true,
+      "compute_semis_e7_coef": -0.6899894936429232,
+      "compute_semis_e7_ci": [
+        -1.385932039323661,
+        0.05887931392850844
+      ],
+      "compute_semis_excludes_zero": false
+    }
+  },
+  "prior_run": {
+    "label": "FROZEN_TEST_INVALID_numerically_degenerate",
+    "note": "Separate-episode GICS-cluster Wald produced singular/ill-conditioned covariance because several layer dummies nest in a single GICS sub-industry (3/8 layers). That run is void."
+  },
+  "core_wald_posthoc": {
+    "label": "DEVIATION_FROM_SPEC",
+    "status": "EXPLORATORY",
+    "note": "4-df core Wald (PC1s+mcap) chosen after frozen test failed \u2014 logged in tests_run but must not carry the H4 decision.",
+    "wald_p": 0.012170556151991975
+  },
+  "layer_gics_nested_count": 3,
+  "coef_names": [
+    "intercept",
+    "e7",
+    "crowding_pc1",
+    "valuation_pc1",
+    "funding_pc1",
+    "log_mkt_cap",
+    "layer_compute_semis",
+    "layer_memory_storage",
+    "layer_neoclouds",
+    "layer_non_ai_control",
+    "layer_optics_networking",
+    "layer_power_cooling",
+    "layer_semicap",
+    "crowding_pc1:e7",
+    "valuation_pc1:e7",
+    "funding_pc1:e7",
+    "log_mkt_cap:e7",
+    "layer_compute_semis:e7",
+    "layer_memory_storage:e7",
+    "layer_neoclouds:e7",
+    "layer_non_ai_control:e7",
+    "layer_optics_networking:e7",
+    "layer_power_cooling:e7",
+    "layer_semicap:e7"
+  ]
+}

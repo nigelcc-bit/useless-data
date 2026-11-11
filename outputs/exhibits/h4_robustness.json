@@ -1,0 +1,24 @@
+{
+  "orcl_as_neocloud": {
+    "wald_p_wild_boot": 0.0,
+    "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+    "rejection_survives": true,
+    "compute_semis_e7_coef": -0.14079184242789594,
+    "compute_semis_e7_ci": [
+      -0.23015396433398205,
+      -0.05458922215522522
+    ],
+    "compute_semis_excludes_zero": true
+  },
+  "zscore_returns": {
+    "wald_p_wild_boot": 0.0,
+    "wald_p_wild_boot_report": "< 0.001 (0 of 999)",
+    "rejection_survives": true,
+    "compute_semis_e7_coef": -0.6899894936429232,
+    "compute_semis_e7_ci": [
+      -1.385932039323661,
+      0.05887931392850844
+    ],
+    "compute_semis_excludes_zero": false
+  }
+}

@@ -25,10 +25,12 @@ def close_volume():
     prices.index = pd.to_datetime(prices.index).tz_localize(None).normalize()
     tickers = [t for t in _tickers() if t in prices.columns]
     close = prices[tickers]
-    volume = load_volume_panel(resolve_yahoo_raw_dir(), tickers)
     # Holiday placeholders from ^VIX must not remain in the trading calendar
     for hol in (pd.Timestamp("2026-05-25"), pd.Timestamp("2026-09-07")):
         assert hol not in close.index, f"{hol.date()} still in prices calendar"
+    if not any((ROOT / "data" / "raw").glob("*/yahoo_AAPL.json")):
+        pytest.skip("yahoo equity caches not on disk (gitignored; restore via ingest)")
+    volume = load_volume_panel(resolve_yahoo_raw_dir(), tickers)
     return close, volume
 
 
