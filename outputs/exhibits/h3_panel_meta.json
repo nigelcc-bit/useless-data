@@ -1,0 +1,190 @@
+{
+  "include_si": true,
+  "si_status": "KEPT",
+  "si_diag": {
+    "n_files_ok": 211,
+    "n_files_fail_or_empty": 849,
+    "first_settlement": "2018-01-12",
+    "last_settlement": "2026-10-15",
+    "covers_e1_2018": true,
+    "n_rows": 8022,
+    "n_tickers": 45
+  },
+  "ai_exposure": {
+    "status": "SIGNED_OFF",
+    "tag": "JUDGMENT_CODED_POST_OUTCOME",
+    "time_varying": true,
+    "bands": {
+      "e1_e4": "Episodes E1\u2013E4 (labelled pre-2023 / oos band in human decision)",
+      "e5_e7": "Episodes E5\u2013E7 (2023+ / AI-flush fit band); inherits prior single scores"
+    },
+    "human_decision": {
+      "name": "Nigel",
+      "date": "2026-11-11",
+      "timezone": "Australia/Melbourne",
+      "verbatim": "Sign off the proposed scores (E1-E4 / E5-E7 table, IREN E3=0 E4=1).\nRecord: \"Signed off by Nigel, 2026-11-11\". Remove the surname \"Clark\",\nwhich I never provided. Status -> SIGNED_OFF, tag stays\nJUDGMENT_CODED_POST_OUTCOME. Note companyfacts had no segment data,\nso scores are judgment without segment evidence.\n"
+    }
+  },
+  "calendar_scrub": {
+    "rows_before": 2979,
+    "rows_after": 2979,
+    "dropped": 0,
+    "holiday_present_before": {
+      "2026-05-25": false,
+      "2026-09-07": false
+    },
+    "holiday_present_after": {
+      "2026-05-25": false,
+      "2026-09-07": false
+    },
+    "source": "Yahoo ^VIX on US equity holidays \u2192 outer-join in build_price_frames"
+  },
+  "yahoo_volume_dir": "/workspace/data/raw/2026-11-07",
+  "block_cols": {
+    "crowding": [
+      "prior_63d_return",
+      "dist_252d_high",
+      "realised_vol_21d",
+      "short_interest_pct_float"
+    ],
+    "valuation": [
+      "earnings_yield_ep_filing_lag",
+      "sales_yield_sp_filing_lag",
+      "ebitda_ev_yield_filing_lag"
+    ],
+    "funding": [
+      "net_debt_ebitda",
+      "interest_coverage",
+      "lease_liab_assets"
+    ],
+    "layer": [
+      "layer",
+      "ai_revenue_exposure_0_3_JUDGMENT"
+    ],
+    "liquidity": [
+      "log_mkt_cap",
+      "adv"
+    ]
+  },
+  "spearman_ai_vs_layer": [
+    {
+      "episode": "E1",
+      "n": 33,
+      "spearman_rho": 0.469041575982343,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E2",
+      "n": 35,
+      "spearman_rho": 0.6118264057738428,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E3",
+      "n": 38,
+      "spearman_rho": 0.6646427611882942,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E4",
+      "n": 45,
+      "spearman_rho": 0.5967552196697257,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E5",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E6",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    },
+    {
+      "episode": "E7",
+      "n": 45,
+      "spearman_rho": 0.6088593052659208,
+      "redundant_abs_rho_gt_0_8": false,
+      "note": ""
+    }
+  ],
+  "yield_recovered_names": {
+    "E1": [
+      "CIEN",
+      "LITE",
+      "NOW",
+      "PANW"
+    ],
+    "E2": [
+      "CIEN",
+      "COHR",
+      "PANW",
+      "WDC"
+    ],
+    "E3": [
+      "MRVL",
+      "NVT",
+      "PANW",
+      "SNOW",
+      "VRT"
+    ],
+    "E4": [
+      "ALAB",
+      "AMZN",
+      "APLD",
+      "COHR",
+      "CORZ",
+      "GEV",
+      "LITE",
+      "MRVL",
+      "MU",
+      "SNDK",
+      "SNOW"
+    ],
+    "E5": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "LITE",
+      "PANW",
+      "SNDK",
+      "SNOW"
+    ],
+    "E6": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "LITE",
+      "SNOW",
+      "WDC"
+    ],
+    "E7": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "SNDK",
+      "SNOW"
+    ]
+  },
+  "e1_lease_nonmissing": 1,
+  "e1_funding_pc1_fields": [
+    "net_debt_ebitda",
+    "interest_coverage"
+  ],
+  "valuation_transform": "yields_EP_SP_EBITDAEV"
+}

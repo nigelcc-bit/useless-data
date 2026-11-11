@@ -1,92 +1,132 @@
-# Layer taxonomy for H3/H4. Judgment-coded — flag as judgment in every output.
-# Ambiguous names (ORCL) coded both ways; report sensitivity.
-# Exclusions must be decided before regressions run.
-
 layers:
   builders:
     definition: Pay for the buildout; capex is a cash outflow
     names:
-      MSFT: { justification: "Hyperscaler AI capex payer" }
-      AMZN: { justification: "Hyperscaler AI capex payer" }
-      GOOGL: { justification: "Hyperscaler AI capex payer" }
-      META: { justification: "Hyperscaler AI capex payer" }
-      AAPL: { justification: "Large tech balance sheet; lower AI-capex intensity" }
-      ORCL: { justification: "Builder by model; neocloud by funding — dual-code", ambiguous: true }
-
+      MSFT:
+        justification: Hyperscaler AI capex payer
+      AMZN:
+        justification: Hyperscaler AI capex payer
+      GOOGL:
+        justification: Hyperscaler AI capex payer
+      META:
+        justification: Hyperscaler AI capex payer
+      AAPL:
+        justification: Large tech balance sheet; lower AI-capex intensity
+      ORCL:
+        justification: Builder by model; neocloud by funding — dual-code
+        ambiguous: true
   compute_semis:
     definition: GPU/ASIC/CPU for AI
     names:
-      NVDA: { justification: "GPU leader" }
-      AMD: { justification: "GPU/CPU competitor" }
-      AVGO: { justification: "Custom ASICs / networking silicon" }
-      MRVL: { justification: "Custom silicon / networking; merger check vs LITE" }
-      TSM: { justification: "Foundry bottleneck" }
-      INTC: { justification: "Foundry / CPU; guide catalyst 30 Oct" }
-
+      NVDA:
+        justification: GPU leader
+      AMD:
+        justification: GPU/CPU competitor
+      AVGO:
+        justification: Custom ASICs / networking silicon
+      MRVL:
+        justification: Custom silicon / networking; merger check vs LITE
+      TSM:
+        justification: Foundry bottleneck
+      INTC:
+        justification: Foundry / CPU; guide catalyst 30 Oct
   memory_storage:
     definition: DRAM/HBM/NAND
     names:
-      MU: { justification: "HBM / DRAM" }
-      SNDK: { justification: "NAND; 8-for-1 split audit required" }
-      WDC: { justification: "HDD/NAND storage" }
-      STX: { justification: "HDD storage" }
-
+      MU:
+        justification: HBM / DRAM
+      SNDK:
+        justification: NAND; 8-for-1 split audit required
+      WDC:
+        justification: HDD/NAND storage
+      STX:
+        justification: HDD storage
   semicap:
     definition: Tools and metrology
     names:
-      LRCX: { justification: "Etch / deposition" }
-      AMAT: { justification: "Broad semicap" }
-      KLAC: { justification: "Process control" }
-      ASML: { justification: "EUV lithography" }
-      TER: { justification: "Test equipment" }
-
+      LRCX:
+        justification: Etch / deposition
+      AMAT:
+        justification: Broad semicap
+      KLAC:
+        justification: Process control
+      ASML:
+        justification: EUV lithography
+      TER:
+        justification: Test equipment
   optics_networking:
     definition: Transceivers, switches, fibre
     names:
-      LITE: { justification: "Optical; merger check vs MRVL" }
-      COHR: { justification: "Lasers / optics" }
-      ANET: { justification: "Data-center switching" }
-      GLW: { justification: "Fibre / optical materials; rebuild 52w high from daily" }
-      ALAB: { justification: "Connectivity silicon" }
-      CIEN: { justification: "Optical networking" }
-      FN: { justification: "Optical interconnect" }
-      APH: { justification: "Connectors / interconnect" }
-
+      LITE:
+        justification: Optical; merger check vs MRVL
+      COHR:
+        justification: Lasers / optics
+      ANET:
+        justification: Data-center switching
+      GLW:
+        justification: Fibre / optical materials; rebuild 52w high from daily
+      ALAB:
+        justification: Connectivity silicon
+      CIEN:
+        justification: Optical networking
+      FN:
+        justification: Optical interconnect
+      APH:
+        justification: Connectors / interconnect
   power_cooling:
     definition: Grid, turbines, thermal
     names:
-      GEV: { justification: "Power equipment" }
-      VRT: { justification: "Thermal / power management" }
-      ETN: { justification: "Electrical infrastructure" }
-      PWR: { justification: "Electrical construction" }
-      NVT: { justification: "Electrical / connectivity" }
-
+      GEV:
+        justification: Power equipment
+      VRT:
+        justification: Thermal / power management
+      ETN:
+        justification: Electrical infrastructure
+      PWR:
+        justification: Electrical construction
+      NVT:
+        justification: Electrical / connectivity
   neoclouds:
     definition: Lease-financed compute
     names:
-      CRWV: { justification: "Neocloud credit channel (notes/CDS)" }
-      NBIS: { justification: "AI hosting" }
-      IREN: { justification: "HPC / hosting conversion" }
-      APLD: { justification: "Data-center / HPC" }
-      CORZ: { justification: "HPC hosting" }
-
+      CRWV:
+        justification: Neocloud credit channel (notes/CDS)
+      NBIS:
+        justification: AI hosting
+      IREN:
+        justification: HPC / hosting conversion
+      APLD:
+        justification: Data-center / HPC
+      CORZ:
+        justification: HPC hosting
   non_ai_control:
-    definition: Similar beta, no AI capex link — distinguishes AI-chain sale from high-multiple growth sale
+    definition: Similar beta, no AI capex link — distinguishes AI-chain sale from
+      high-multiple growth sale
     names:
-      CRWD: { justification: "Cyber growth control" }
-      NOW: { justification: "Software growth control" }
-      HOOD: { justification: "Fintech growth / retail flow control" }
-      PANW: { justification: "Cyber growth control" }
-      SNOW: { justification: "Data software control" }
-      DDOG: { justification: "Observability software control" }
-
+      CRWD:
+        justification: Cyber growth control
+      NOW:
+        justification: Software growth control
+      HOOD:
+        justification: Fintech growth / retail flow control
+      PANW:
+        justification: Cyber growth control
+      SNOW:
+        justification: Data software control
+      DDOG:
+        justification: Observability software control
 dual_code:
   ORCL:
     primary_layer: builders
     alternate_layer: neoclouds
-    reason: "Builder by business model, neocloud by funding structure"
-
+    reason: Builder by business model, neocloud by funding structure
 notes:
-  - "Control group target: 10–15 names; expand before H3 if ADV/beta matched names are available."
-  - "MRVL/LITE: verify all-stock acquisition announced ~4 Nov 2026; exclude post-announcement or add merger dummy."
-  - "Point-in-time index membership not sourced yet — survivorship bias to be quantified per episode."
+- 'Control group target: 10–15 names; expand before H3 if ADV/beta matched names are
+  available.'
+- 'MRVL/LITE: verify all-stock acquisition announced ~4 Nov 2026; exclude post-announcement
+  or add merger dummy.'
+- Point-in-time index membership not sourced yet — survivorship bias to be quantified
+  per episode.
+h3_exclusions: []
+h3_universe_rule: Names with EDGAR 10-K/10-Q or 20-F coverage in companyfacts; exclusions
+  listed under h3_exclusions with reason.

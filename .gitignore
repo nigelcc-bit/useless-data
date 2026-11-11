@@ -9,7 +9,10 @@ dist/
 *.egg-info/
 data/interim/**
 !data/interim/.gitkeep
-# raw pulls are committed under data/raw/<date>/ for reproducibility
+# Raw payloads stay on disk for local rebuilds but are NOT committed.
+# Reproducibility: data/raw_manifest.csv (file, sha256, source_url, pull_date).
+data/raw/**
+!data/raw/.gitkeep
 
 .DS_Store
 .ipynb_checkpoints/

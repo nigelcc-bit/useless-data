@@ -208,3 +208,68 @@ Candidate monitor (desk, not a test): AI-supplier forward EPS revisions over the
 
 ### Per-event lists
 Full event-level `+21/+63/+252` and `max_dd_63` printed at run time and stored in `outputs/exhibits/h1b_forward_events.csv` (all series N≤21).
+
+## H3 design (frozen before fundamentals load)
+
+**Frozen:** 2026-11-08 22:15 Australia/Sydney (AEDT). **No SEC/FINRA fundamentals have been loaded at freeze time.** Do not edit this design block after seeing fundamental coverage or regression output.
+
+### Primary model
+Per-episode cross-section of **episode return** on:
+- crowding **PC1**
+- valuation **PC1**
+- funding **PC1**
+- layer dummy (builders = reference)
+- log market cap
+
+Full regressor list (mom, dist, vol, trailing multiples, funding ratios, …) = **secondary**. Report **VIFs** and **PC loadings** for every run.
+
+### Inference
+- Wild cluster bootstrap on **GICS sub-industry** clusters (Webb weights)
+- Plus **episode-level** bootstrap
+- Do not report naive OLS t-stats as primary inference
+
+### Universe
+H3 universe = names with **EDGAR 10-K / 10-Q or 20-F** coverage at episode start. Exclusions listed in `config/universe.yaml` with reason (kept current as coverage is measured). Survivorship: count names that existed at each episode start.
+
+### AI exposure (0–3)
+Cursor proposes; human signs off. Tag: **`JUDGMENT_CODED_POST_OUTCOME`**. Always run H3 **with and without** this regressor.
+
+### Valuation (D6)
+Trailing P/S, P/E, EV/EBITDA lagged to **filing date** only (`DEVIATION_FROM_SPEC`, FDR row **T005b**). No point-in-time forward multiples until D6 clears.
+
+### Short interest
+Attempt FINRA equity short interest history. If not available back through 2018 episode starts → **drop SI**, log `DEVIATION_FROM_SPEC`, crowding = mom / dist / vol only.
+
+### Status at freeze
+P3 coverage skeleton exists (`panel.parquet` price blocks only). Fundamentals ingest and updated coverage follow this freeze commit.
+
+
+## H3 P3 ingest notes (post-freeze)
+
+**Run:** 2026-11-08 (Australia/Sydney). Design block above unchanged.
+
+- **Calendar:** `2026-05-25` / `2026-09-07` rows came from Yahoo **`^VIX`** printing on US equity holidays, then an outer join in `build_price_frames`. Dropped via `drop_vix_only_sessions` (no ffill). Source note in `src/features/calendar_hygiene.py`.
+- **ADV regression:** broke in commit `2902f6f` (volume read from `data/raw/2026-11-08` with no equity Yahoo caches). Fixed by `resolve_yahoo_raw_dir` → `2026-11-07`. Guard: `tests/test_adv_coverage.py` (≥90% listed).
+- **EDGAR:** all 45 seed names have 10-K/10-Q or 20-F in companyfacts → `h3_exclusions: []`.
+- **Short interest:** FINRA biweekly CDN available from **2018-01-12** → **KEPT** (covers E1). Crowding = mom/dist/vol/SI.
+- **AI exposure:** time-varying E1–E4 / E5–E7 in `config/ai_exposure.yaml`. **Signed off by Nigel, 2026-11-11.** Status `SIGNED_OFF`, tag `JUDGMENT_CODED_POST_OUTCOME`. companyfacts had no segment data — scores are judgment without segment evidence. Spearman vs layer dummy: `ai_exposure_spearman_vs_layer.csv`.
+- Coverage exhibits: `h3_feature_coverage.csv`, `h3_feature_coverage_summary.csv`, `edgar_coverage_by_name.csv`, `ffill_audit_*.csv`.
+
+
+## Pre-P4 revisions
+
+**Logged:** 2026-11-11 (Australia/Melbourne). **Before any H3 regression.**
+
+### (a) Valuation block → yields
+Use **E/P, S/P, EBITDA/EV** (filing-date lagged) instead of P/E, P/S, EV/EBITDA so loss-makers stay in the cross-section. Still `DEVIATION_FROM_SPEC` / FDR **T005b** (trailing, not forward PIT). Recovered names per episode: `outputs/exhibits/valuation_yield_recovered_names.csv`.
+
+### (b) Lease liabilities / ASC 842
+Public-business-entity ASC 842 effective for fiscal years beginning after **2018-12-15**. E1 start **2018-10-01** is structurally pre-adoption for nearly all names (`asc842_lease_first_filed.csv`: lease filed by E1 for **1/45** names — MSFT early adopter). **Do not impute zero.** E1 funding PC1 built from `net_debt_ebitda` + `interest_coverage` only when lease coverage is sparse.
+
+### (c) Missing data
+- **Primary:** complete cases per episode (print N).
+- **Sensitivity:** median imputation + missing-indicator dummies.
+- Episodes with **N < 20** complete cases are reported but **excluded from the H3 falsifier count**.
+
+### Repo hygiene
+`data/raw/` gitignored; `data/raw_manifest.csv` holds file / sha256 / source URL / pull date.

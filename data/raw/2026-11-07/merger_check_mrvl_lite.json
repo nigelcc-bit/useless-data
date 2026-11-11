@@ -1,9 +1,0 @@
-{
-  "status": "CONFIRMED",
-  "confirmed": true,
-  "sources": [
-    "Google News RSS (cached under data/raw)"
-  ],
-  "note": "RSS hit for Marvell/Lumentum acquisition language; see merger_search_raw.xml",
-  "announcement_date": "2026-11-04"
-}
