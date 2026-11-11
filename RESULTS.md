@@ -252,5 +252,24 @@ P3 coverage skeleton exists (`panel.parquet` price blocks only). Fundamentals in
 - **ADV regression:** broke in commit `2902f6f` (volume read from `data/raw/2026-11-08` with no equity Yahoo caches). Fixed by `resolve_yahoo_raw_dir` → `2026-11-07`. Guard: `tests/test_adv_coverage.py` (≥90% listed).
 - **EDGAR:** all 45 seed names have 10-K/10-Q or 20-F in companyfacts → `h3_exclusions: []`.
 - **Short interest:** FINRA biweekly CDN available from **2018-01-12** → **KEPT** (covers E1). Crowding = mom/dist/vol/SI.
-- **AI exposure:** time-varying E1–E4 / E5–E7 in `config/ai_exposure.yaml`; human decision recorded verbatim (Nigel Clark, 2026-11-08). Tag `JUDGMENT_CODED_POST_OUTCOME`, status `PROPOSED_AWAITING_SIGNOFF` (pre-2023 band still under review). Spearman vs layer dummy: `ai_exposure_spearman_vs_layer.csv`.
+- **AI exposure:** time-varying E1–E4 / E5–E7 in `config/ai_exposure.yaml`. **Signed off by Nigel, 2026-11-11.** Status `SIGNED_OFF`, tag `JUDGMENT_CODED_POST_OUTCOME`. companyfacts had no segment data — scores are judgment without segment evidence. Spearman vs layer dummy: `ai_exposure_spearman_vs_layer.csv`.
 - Coverage exhibits: `h3_feature_coverage.csv`, `h3_feature_coverage_summary.csv`, `edgar_coverage_by_name.csv`, `ffill_audit_*.csv`.
+
+
+## Pre-P4 revisions
+
+**Logged:** 2026-11-11 (Australia/Melbourne). **Before any H3 regression.**
+
+### (a) Valuation block → yields
+Use **E/P, S/P, EBITDA/EV** (filing-date lagged) instead of P/E, P/S, EV/EBITDA so loss-makers stay in the cross-section. Still `DEVIATION_FROM_SPEC` / FDR **T005b** (trailing, not forward PIT). Recovered names per episode: `outputs/exhibits/valuation_yield_recovered_names.csv`.
+
+### (b) Lease liabilities / ASC 842
+Public-business-entity ASC 842 effective for fiscal years beginning after **2018-12-15**. E1 start **2018-10-01** is structurally pre-adoption for nearly all names (`asc842_lease_first_filed.csv`: lease filed by E1 for **1/45** names — MSFT early adopter). **Do not impute zero.** E1 funding PC1 built from `net_debt_ebitda` + `interest_coverage` only when lease coverage is sparse.
+
+### (c) Missing data
+- **Primary:** complete cases per episode (print N).
+- **Sensitivity:** median imputation + missing-indicator dummies.
+- Episodes with **N < 20** complete cases are reported but **excluded from the H3 falsifier count**.
+
+### Repo hygiene
+`data/raw/` gitignored; `data/raw_manifest.csv` holds file / sha256 / source URL / pull date.

@@ -1,0 +1,50 @@
+# GICS sub-industry clusters for H3 wild cluster bootstrap (Webb weights).
+# Mapping is JUDGMENT from public issuer profiles — flag if used as regressor;
+# here used only as cluster IDs for inference.
+tag: JUDGMENT_CLUSTER_MAP
+clusters:
+  AAPL: Technology Hardware, Storage & Peripherals
+  MSFT: Systems Software
+  AMZN: Broadline Retail
+  GOOGL: Interactive Media & Services
+  META: Interactive Media & Services
+  ORCL: Systems Software
+  NVDA: Semiconductors
+  AMD: Semiconductors
+  AVGO: Semiconductors
+  MRVL: Semiconductors
+  TSM: Semiconductors
+  INTC: Semiconductors
+  MU: Semiconductors
+  SNDK: Technology Hardware, Storage & Peripherals
+  WDC: Technology Hardware, Storage & Peripherals
+  STX: Technology Hardware, Storage & Peripherals
+  LRCX: Semiconductor Materials & Equipment
+  AMAT: Semiconductor Materials & Equipment
+  KLAC: Semiconductor Materials & Equipment
+  ASML: Semiconductor Materials & Equipment
+  TER: Semiconductor Materials & Equipment
+  LITE: Communications Equipment
+  COHR: Electronic Components
+  ANET: Communications Equipment
+  GLW: Electronic Components
+  ALAB: Semiconductors
+  CIEN: Communications Equipment
+  FN: Electronic Manufacturing Services
+  APH: Electronic Components
+  GEV: Heavy Electrical Equipment
+  VRT: Electronic Equipment & Instruments
+  ETN: Electrical Components & Equipment
+  PWR: Construction & Engineering
+  NVT: Electrical Components & Equipment
+  CRWV: Application Software
+  NBIS: Application Software
+  IREN: Application Software
+  APLD: Application Software
+  CORZ: Application Software
+  CRWD: Systems Software
+  NOW: Application Software
+  HOOD: Investment Banking & Brokerage
+  PANW: Systems Software
+  SNOW: Application Software
+  DDOG: Application Software

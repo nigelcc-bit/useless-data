@@ -50,7 +50,7 @@ AVGO,E1,funding,66.66666666666667,3,True,True
 AVGO,E1,layer,100.0,2,True,True
 AVGO,E1,liquidity,100.0,2,True,True
 CIEN,E1,crowding,100.0,4,True,True
-CIEN,E1,valuation,66.66666666666667,3,True,True
+CIEN,E1,valuation,100.0,3,True,True
 CIEN,E1,funding,66.66666666666667,3,True,True
 CIEN,E1,layer,100.0,2,True,True
 CIEN,E1,liquidity,100.0,2,True,True
@@ -125,7 +125,7 @@ KLAC,E1,funding,66.66666666666667,3,True,True
 KLAC,E1,layer,100.0,2,True,True
 KLAC,E1,liquidity,100.0,2,True,True
 LITE,E1,crowding,100.0,4,True,True
-LITE,E1,valuation,33.333333333333336,3,True,True
+LITE,E1,valuation,66.66666666666667,3,True,True
 LITE,E1,funding,33.333333333333336,3,True,True
 LITE,E1,layer,100.0,2,True,True
 LITE,E1,liquidity,100.0,2,True,True
@@ -160,7 +160,7 @@ NBIS,E1,funding,33.333333333333336,3,False,True
 NBIS,E1,layer,100.0,2,False,True
 NBIS,E1,liquidity,0.0,2,False,True
 NOW,E1,crowding,100.0,4,True,True
-NOW,E1,valuation,33.333333333333336,3,True,True
+NOW,E1,valuation,66.66666666666667,3,True,True
 NOW,E1,funding,33.333333333333336,3,True,True
 NOW,E1,layer,100.0,2,True,True
 NOW,E1,liquidity,100.0,2,True,True
@@ -180,7 +180,7 @@ ORCL,E1,funding,66.66666666666667,3,True,True
 ORCL,E1,layer,100.0,2,True,True
 ORCL,E1,liquidity,100.0,2,True,True
 PANW,E1,crowding,100.0,4,True,True
-PANW,E1,valuation,33.333333333333336,3,True,True
+PANW,E1,valuation,66.66666666666667,3,True,True
 PANW,E1,funding,66.66666666666667,3,True,True
 PANW,E1,layer,100.0,2,True,True
 PANW,E1,liquidity,100.0,2,True,True
@@ -275,12 +275,12 @@ AVGO,E2,funding,66.66666666666667,3,True,True
 AVGO,E2,layer,100.0,2,True,True
 AVGO,E2,liquidity,100.0,2,True,True
 CIEN,E2,crowding,100.0,4,True,True
-CIEN,E2,valuation,66.66666666666667,3,True,True
+CIEN,E2,valuation,100.0,3,True,True
 CIEN,E2,funding,66.66666666666667,3,True,True
 CIEN,E2,layer,100.0,2,True,True
 CIEN,E2,liquidity,100.0,2,True,True
 COHR,E2,crowding,100.0,4,True,True
-COHR,E2,valuation,66.66666666666667,3,True,True
+COHR,E2,valuation,100.0,3,True,True
 COHR,E2,funding,100.0,3,True,True
 COHR,E2,layer,100.0,2,True,True
 COHR,E2,liquidity,100.0,2,True,True
@@ -405,7 +405,7 @@ ORCL,E2,funding,100.0,3,True,True
 ORCL,E2,layer,100.0,2,True,True
 ORCL,E2,liquidity,100.0,2,True,True
 PANW,E2,crowding,100.0,4,True,True
-PANW,E2,valuation,66.66666666666667,3,True,True
+PANW,E2,valuation,100.0,3,True,True
 PANW,E2,funding,100.0,3,True,True
 PANW,E2,layer,100.0,2,True,True
 PANW,E2,liquidity,100.0,2,True,True
@@ -445,7 +445,7 @@ VRT,E2,funding,0.0,3,True,True
 VRT,E2,layer,100.0,2,True,True
 VRT,E2,liquidity,50.0,2,True,True
 WDC,E2,crowding,100.0,4,True,True
-WDC,E2,valuation,66.66666666666667,3,True,True
+WDC,E2,valuation,100.0,3,True,True
 WDC,E2,funding,100.0,3,True,True
 WDC,E2,layer,100.0,2,True,True
 WDC,E2,liquidity,100.0,2,True,True
@@ -590,7 +590,7 @@ META,E3,funding,100.0,3,True,True
 META,E3,layer,100.0,2,True,True
 META,E3,liquidity,100.0,2,True,True
 MRVL,E3,crowding,100.0,4,True,True
-MRVL,E3,valuation,66.66666666666667,3,True,True
+MRVL,E3,valuation,100.0,3,True,True
 MRVL,E3,funding,66.66666666666667,3,True,True
 MRVL,E3,layer,100.0,2,True,True
 MRVL,E3,liquidity,100.0,2,True,True
@@ -620,7 +620,7 @@ NVDA,E3,funding,100.0,3,True,True
 NVDA,E3,layer,100.0,2,True,True
 NVDA,E3,liquidity,100.0,2,True,True
 NVT,E3,crowding,100.0,4,True,True
-NVT,E3,valuation,66.66666666666667,3,True,True
+NVT,E3,valuation,100.0,3,True,True
 NVT,E3,funding,100.0,3,True,True
 NVT,E3,layer,100.0,2,True,True
 NVT,E3,liquidity,100.0,2,True,True
@@ -630,7 +630,7 @@ ORCL,E3,funding,100.0,3,True,True
 ORCL,E3,layer,100.0,2,True,True
 ORCL,E3,liquidity,100.0,2,True,True
 PANW,E3,crowding,100.0,4,True,True
-PANW,E3,valuation,66.66666666666667,3,True,True
+PANW,E3,valuation,100.0,3,True,True
 PANW,E3,funding,100.0,3,True,True
 PANW,E3,layer,100.0,2,True,True
 PANW,E3,liquidity,100.0,2,True,True
@@ -645,7 +645,7 @@ SNDK,E3,funding,0.0,3,False,True
 SNDK,E3,layer,100.0,2,False,True
 SNDK,E3,liquidity,0.0,2,False,True
 SNOW,E3,crowding,100.0,4,True,True
-SNOW,E3,valuation,66.66666666666667,3,True,True
+SNOW,E3,valuation,100.0,3,True,True
 SNOW,E3,funding,33.333333333333336,3,True,True
 SNOW,E3,layer,100.0,2,True,True
 SNOW,E3,liquidity,100.0,2,True,True
@@ -665,7 +665,7 @@ TSM,E3,funding,0.0,3,True,True
 TSM,E3,layer,100.0,2,True,True
 TSM,E3,liquidity,100.0,2,True,True
 VRT,E3,crowding,100.0,4,True,True
-VRT,E3,valuation,66.66666666666667,3,True,True
+VRT,E3,valuation,100.0,3,True,True
 VRT,E3,funding,100.0,3,True,True
 VRT,E3,layer,100.0,2,True,True
 VRT,E3,liquidity,100.0,2,True,True
@@ -680,7 +680,7 @@ AAPL,E4,funding,100.0,3,True,True
 AAPL,E4,layer,100.0,2,True,True
 AAPL,E4,liquidity,100.0,2,True,True
 ALAB,E4,crowding,100.0,4,True,True
-ALAB,E4,valuation,66.66666666666667,3,True,True
+ALAB,E4,valuation,100.0,3,True,True
 ALAB,E4,funding,33.333333333333336,3,True,True
 ALAB,E4,layer,100.0,2,True,True
 ALAB,E4,liquidity,100.0,2,True,True
@@ -695,7 +695,7 @@ AMD,E4,funding,100.0,3,True,True
 AMD,E4,layer,100.0,2,True,True
 AMD,E4,liquidity,100.0,2,True,True
 AMZN,E4,crowding,100.0,4,True,True
-AMZN,E4,valuation,66.66666666666667,3,True,True
+AMZN,E4,valuation,100.0,3,True,True
 AMZN,E4,funding,100.0,3,True,True
 AMZN,E4,layer,100.0,2,True,True
 AMZN,E4,liquidity,100.0,2,True,True
@@ -710,7 +710,7 @@ APH,E4,funding,100.0,3,True,True
 APH,E4,layer,100.0,2,True,True
 APH,E4,liquidity,100.0,2,True,True
 APLD,E4,crowding,100.0,4,True,True
-APLD,E4,valuation,66.66666666666667,3,True,True
+APLD,E4,valuation,100.0,3,True,True
 APLD,E4,funding,100.0,3,True,True
 APLD,E4,layer,100.0,2,True,True
 APLD,E4,liquidity,100.0,2,True,True
@@ -730,12 +730,12 @@ CIEN,E4,funding,100.0,3,True,True
 CIEN,E4,layer,100.0,2,True,True
 CIEN,E4,liquidity,100.0,2,True,True
 COHR,E4,crowding,100.0,4,True,True
-COHR,E4,valuation,66.66666666666667,3,True,True
+COHR,E4,valuation,100.0,3,True,True
 COHR,E4,funding,100.0,3,True,True
 COHR,E4,layer,100.0,2,True,True
 COHR,E4,liquidity,100.0,2,True,True
 CORZ,E4,crowding,100.0,4,True,True
-CORZ,E4,valuation,66.66666666666667,3,True,True
+CORZ,E4,valuation,100.0,3,True,True
 CORZ,E4,funding,33.333333333333336,3,True,True
 CORZ,E4,layer,100.0,2,True,True
 CORZ,E4,liquidity,100.0,2,True,True
@@ -765,7 +765,7 @@ FN,E4,funding,100.0,3,True,True
 FN,E4,layer,100.0,2,True,True
 FN,E4,liquidity,100.0,2,True,True
 GEV,E4,crowding,100.0,4,True,True
-GEV,E4,valuation,66.66666666666667,3,True,True
+GEV,E4,valuation,100.0,3,True,True
 GEV,E4,funding,33.333333333333336,3,True,True
 GEV,E4,layer,100.0,2,True,True
 GEV,E4,liquidity,100.0,2,True,True
@@ -800,7 +800,7 @@ KLAC,E4,funding,100.0,3,True,True
 KLAC,E4,layer,100.0,2,True,True
 KLAC,E4,liquidity,100.0,2,True,True
 LITE,E4,crowding,100.0,4,True,True
-LITE,E4,valuation,66.66666666666667,3,True,True
+LITE,E4,valuation,100.0,3,True,True
 LITE,E4,funding,100.0,3,True,True
 LITE,E4,layer,100.0,2,True,True
 LITE,E4,liquidity,100.0,2,True,True
@@ -815,7 +815,7 @@ META,E4,funding,100.0,3,True,True
 META,E4,layer,100.0,2,True,True
 META,E4,liquidity,100.0,2,True,True
 MRVL,E4,crowding,100.0,4,True,True
-MRVL,E4,valuation,66.66666666666667,3,True,True
+MRVL,E4,valuation,100.0,3,True,True
 MRVL,E4,funding,100.0,3,True,True
 MRVL,E4,layer,100.0,2,True,True
 MRVL,E4,liquidity,100.0,2,True,True
@@ -825,7 +825,7 @@ MSFT,E4,funding,100.0,3,True,True
 MSFT,E4,layer,100.0,2,True,True
 MSFT,E4,liquidity,100.0,2,True,True
 MU,E4,crowding,100.0,4,True,True
-MU,E4,valuation,66.66666666666667,3,True,True
+MU,E4,valuation,100.0,3,True,True
 MU,E4,funding,100.0,3,True,True
 MU,E4,layer,100.0,2,True,True
 MU,E4,liquidity,100.0,2,True,True
@@ -865,12 +865,12 @@ PWR,E4,funding,100.0,3,True,True
 PWR,E4,layer,100.0,2,True,True
 PWR,E4,liquidity,100.0,2,True,True
 SNDK,E4,crowding,50.0,4,True,True
-SNDK,E4,valuation,66.66666666666667,3,True,True
+SNDK,E4,valuation,100.0,3,True,True
 SNDK,E4,funding,33.333333333333336,3,True,True
 SNDK,E4,layer,100.0,2,True,True
 SNDK,E4,liquidity,100.0,2,True,True
 SNOW,E4,crowding,100.0,4,True,True
-SNOW,E4,valuation,66.66666666666667,3,True,True
+SNOW,E4,valuation,100.0,3,True,True
 SNOW,E4,funding,33.333333333333336,3,True,True
 SNOW,E4,layer,100.0,2,True,True
 SNOW,E4,liquidity,100.0,2,True,True
@@ -935,7 +935,7 @@ APH,E5,funding,100.0,3,True,True
 APH,E5,layer,100.0,2,True,True
 APH,E5,liquidity,100.0,2,True,True
 APLD,E5,crowding,100.0,4,True,True
-APLD,E5,valuation,66.66666666666667,3,True,True
+APLD,E5,valuation,100.0,3,True,True
 APLD,E5,funding,100.0,3,True,True
 APLD,E5,layer,100.0,2,True,True
 APLD,E5,liquidity,100.0,2,True,True
@@ -960,7 +960,7 @@ COHR,E5,funding,100.0,3,True,True
 COHR,E5,layer,100.0,2,True,True
 COHR,E5,liquidity,100.0,2,True,True
 CORZ,E5,crowding,100.0,4,True,True
-CORZ,E5,valuation,66.66666666666667,3,True,True
+CORZ,E5,valuation,100.0,3,True,True
 CORZ,E5,funding,100.0,3,True,True
 CORZ,E5,layer,100.0,2,True,True
 CORZ,E5,liquidity,100.0,2,True,True
@@ -970,7 +970,7 @@ CRWD,E5,funding,100.0,3,True,True
 CRWD,E5,layer,100.0,2,True,True
 CRWD,E5,liquidity,100.0,2,True,True
 CRWV,E5,crowding,100.0,4,True,True
-CRWV,E5,valuation,66.66666666666667,3,True,True
+CRWV,E5,valuation,100.0,3,True,True
 CRWV,E5,funding,100.0,3,True,True
 CRWV,E5,layer,100.0,2,True,True
 CRWV,E5,liquidity,100.0,2,True,True
@@ -1010,12 +1010,12 @@ HOOD,E5,funding,33.333333333333336,3,True,True
 HOOD,E5,layer,100.0,2,True,True
 HOOD,E5,liquidity,50.0,2,True,True
 INTC,E5,crowding,100.0,4,True,True
-INTC,E5,valuation,66.66666666666667,3,True,True
+INTC,E5,valuation,100.0,3,True,True
 INTC,E5,funding,100.0,3,True,True
 INTC,E5,layer,100.0,2,True,True
 INTC,E5,liquidity,100.0,2,True,True
 IREN,E5,crowding,100.0,4,True,True
-IREN,E5,valuation,66.66666666666667,3,True,True
+IREN,E5,valuation,100.0,3,True,True
 IREN,E5,funding,33.333333333333336,3,True,True
 IREN,E5,layer,100.0,2,True,True
 IREN,E5,liquidity,100.0,2,True,True
@@ -1025,7 +1025,7 @@ KLAC,E5,funding,100.0,3,True,True
 KLAC,E5,layer,100.0,2,True,True
 KLAC,E5,liquidity,100.0,2,True,True
 LITE,E5,crowding,100.0,4,True,True
-LITE,E5,valuation,66.66666666666667,3,True,True
+LITE,E5,valuation,100.0,3,True,True
 LITE,E5,funding,100.0,3,True,True
 LITE,E5,layer,100.0,2,True,True
 LITE,E5,liquidity,100.0,2,True,True
@@ -1080,7 +1080,7 @@ ORCL,E5,funding,100.0,3,True,True
 ORCL,E5,layer,100.0,2,True,True
 ORCL,E5,liquidity,100.0,2,True,True
 PANW,E5,crowding,100.0,4,True,True
-PANW,E5,valuation,66.66666666666667,3,True,True
+PANW,E5,valuation,100.0,3,True,True
 PANW,E5,funding,100.0,3,True,True
 PANW,E5,layer,100.0,2,True,True
 PANW,E5,liquidity,100.0,2,True,True
@@ -1090,12 +1090,12 @@ PWR,E5,funding,100.0,3,True,True
 PWR,E5,layer,100.0,2,True,True
 PWR,E5,liquidity,100.0,2,True,True
 SNDK,E5,crowding,100.0,4,True,True
-SNDK,E5,valuation,66.66666666666667,3,True,True
+SNDK,E5,valuation,100.0,3,True,True
 SNDK,E5,funding,66.66666666666667,3,True,True
 SNDK,E5,layer,100.0,2,True,True
 SNDK,E5,liquidity,100.0,2,True,True
 SNOW,E5,crowding,100.0,4,True,True
-SNOW,E5,valuation,66.66666666666667,3,True,True
+SNOW,E5,valuation,100.0,3,True,True
 SNOW,E5,funding,33.333333333333336,3,True,True
 SNOW,E5,layer,100.0,2,True,True
 SNOW,E5,liquidity,100.0,2,True,True
@@ -1160,7 +1160,7 @@ APH,E6,funding,100.0,3,True,True
 APH,E6,layer,100.0,2,True,True
 APH,E6,liquidity,100.0,2,True,True
 APLD,E6,crowding,100.0,4,True,True
-APLD,E6,valuation,66.66666666666667,3,True,True
+APLD,E6,valuation,100.0,3,True,True
 APLD,E6,funding,100.0,3,True,True
 APLD,E6,layer,100.0,2,True,True
 APLD,E6,liquidity,100.0,2,True,True
@@ -1185,7 +1185,7 @@ COHR,E6,funding,100.0,3,True,True
 COHR,E6,layer,100.0,2,True,True
 COHR,E6,liquidity,100.0,2,True,True
 CORZ,E6,crowding,100.0,4,True,True
-CORZ,E6,valuation,66.66666666666667,3,True,True
+CORZ,E6,valuation,100.0,3,True,True
 CORZ,E6,funding,100.0,3,True,True
 CORZ,E6,layer,100.0,2,True,True
 CORZ,E6,liquidity,100.0,2,True,True
@@ -1195,7 +1195,7 @@ CRWD,E6,funding,100.0,3,True,True
 CRWD,E6,layer,100.0,2,True,True
 CRWD,E6,liquidity,100.0,2,True,True
 CRWV,E6,crowding,100.0,4,True,True
-CRWV,E6,valuation,66.66666666666667,3,True,True
+CRWV,E6,valuation,100.0,3,True,True
 CRWV,E6,funding,100.0,3,True,True
 CRWV,E6,layer,100.0,2,True,True
 CRWV,E6,liquidity,100.0,2,True,True
@@ -1235,12 +1235,12 @@ HOOD,E6,funding,33.333333333333336,3,True,True
 HOOD,E6,layer,100.0,2,True,True
 HOOD,E6,liquidity,50.0,2,True,True
 INTC,E6,crowding,100.0,4,True,True
-INTC,E6,valuation,66.66666666666667,3,True,True
+INTC,E6,valuation,100.0,3,True,True
 INTC,E6,funding,100.0,3,True,True
 INTC,E6,layer,100.0,2,True,True
 INTC,E6,liquidity,100.0,2,True,True
 IREN,E6,crowding,100.0,4,True,True
-IREN,E6,valuation,66.66666666666667,3,True,True
+IREN,E6,valuation,100.0,3,True,True
 IREN,E6,funding,100.0,3,True,True
 IREN,E6,layer,100.0,2,True,True
 IREN,E6,liquidity,100.0,2,True,True
@@ -1250,7 +1250,7 @@ KLAC,E6,funding,100.0,3,True,True
 KLAC,E6,layer,100.0,2,True,True
 KLAC,E6,liquidity,100.0,2,True,True
 LITE,E6,crowding,100.0,4,True,True
-LITE,E6,valuation,66.66666666666667,3,True,True
+LITE,E6,valuation,100.0,3,True,True
 LITE,E6,funding,100.0,3,True,True
 LITE,E6,layer,100.0,2,True,True
 LITE,E6,liquidity,100.0,2,True,True
@@ -1320,7 +1320,7 @@ SNDK,E6,funding,66.66666666666667,3,True,True
 SNDK,E6,layer,100.0,2,True,True
 SNDK,E6,liquidity,100.0,2,True,True
 SNOW,E6,crowding,100.0,4,True,True
-SNOW,E6,valuation,66.66666666666667,3,True,True
+SNOW,E6,valuation,100.0,3,True,True
 SNOW,E6,funding,33.333333333333336,3,True,True
 SNOW,E6,layer,100.0,2,True,True
 SNOW,E6,liquidity,100.0,2,True,True
@@ -1345,7 +1345,7 @@ VRT,E6,funding,100.0,3,True,True
 VRT,E6,layer,100.0,2,True,True
 VRT,E6,liquidity,100.0,2,True,True
 WDC,E6,crowding,100.0,4,True,True
-WDC,E6,valuation,66.66666666666667,3,True,True
+WDC,E6,valuation,100.0,3,True,True
 WDC,E6,funding,100.0,3,True,True
 WDC,E6,layer,100.0,2,True,True
 WDC,E6,liquidity,100.0,2,True,True
@@ -1385,7 +1385,7 @@ APH,E7,funding,100.0,3,True,True
 APH,E7,layer,100.0,2,True,True
 APH,E7,liquidity,100.0,2,True,True
 APLD,E7,crowding,100.0,4,True,True
-APLD,E7,valuation,66.66666666666667,3,True,True
+APLD,E7,valuation,100.0,3,True,True
 APLD,E7,funding,100.0,3,True,True
 APLD,E7,layer,100.0,2,True,True
 APLD,E7,liquidity,100.0,2,True,True
@@ -1410,7 +1410,7 @@ COHR,E7,funding,100.0,3,True,True
 COHR,E7,layer,100.0,2,True,True
 COHR,E7,liquidity,100.0,2,True,True
 CORZ,E7,crowding,100.0,4,True,True
-CORZ,E7,valuation,66.66666666666667,3,True,True
+CORZ,E7,valuation,100.0,3,True,True
 CORZ,E7,funding,100.0,3,True,True
 CORZ,E7,layer,100.0,2,True,True
 CORZ,E7,liquidity,100.0,2,True,True
@@ -1420,7 +1420,7 @@ CRWD,E7,funding,100.0,3,True,True
 CRWD,E7,layer,100.0,2,True,True
 CRWD,E7,liquidity,100.0,2,True,True
 CRWV,E7,crowding,100.0,4,True,True
-CRWV,E7,valuation,66.66666666666667,3,True,True
+CRWV,E7,valuation,100.0,3,True,True
 CRWV,E7,funding,100.0,3,True,True
 CRWV,E7,layer,100.0,2,True,True
 CRWV,E7,liquidity,100.0,2,True,True
@@ -1460,12 +1460,12 @@ HOOD,E7,funding,33.333333333333336,3,True,True
 HOOD,E7,layer,100.0,2,True,True
 HOOD,E7,liquidity,50.0,2,True,True
 INTC,E7,crowding,100.0,4,True,True
-INTC,E7,valuation,66.66666666666667,3,True,True
+INTC,E7,valuation,100.0,3,True,True
 INTC,E7,funding,100.0,3,True,True
 INTC,E7,layer,100.0,2,True,True
 INTC,E7,liquidity,100.0,2,True,True
 IREN,E7,crowding,100.0,4,True,True
-IREN,E7,valuation,66.66666666666667,3,True,True
+IREN,E7,valuation,100.0,3,True,True
 IREN,E7,funding,100.0,3,True,True
 IREN,E7,layer,100.0,2,True,True
 IREN,E7,liquidity,100.0,2,True,True
@@ -1540,12 +1540,12 @@ PWR,E7,funding,100.0,3,True,True
 PWR,E7,layer,100.0,2,True,True
 PWR,E7,liquidity,100.0,2,True,True
 SNDK,E7,crowding,100.0,4,True,True
-SNDK,E7,valuation,66.66666666666667,3,True,True
+SNDK,E7,valuation,100.0,3,True,True
 SNDK,E7,funding,66.66666666666667,3,True,True
 SNDK,E7,layer,100.0,2,True,True
 SNDK,E7,liquidity,100.0,2,True,True
 SNOW,E7,crowding,100.0,4,True,True
-SNOW,E7,valuation,66.66666666666667,3,True,True
+SNOW,E7,valuation,100.0,3,True,True
 SNOW,E7,funding,33.333333333333336,3,True,True
 SNOW,E7,layer,100.0,2,True,True
 SNOW,E7,liquidity,100.0,2,True,True

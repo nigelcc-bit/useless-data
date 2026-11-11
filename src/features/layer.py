@@ -88,9 +88,11 @@ def ai_exposure_meta() -> dict:
     return {
         "status": data.get("status"),
         "tag": data.get("tag", "JUDGMENT_CODED_POST_OUTCOME"),
+        "sign_off": data.get("sign_off"),
         "time_varying": True,
         "bands": data.get("bands"),
         "human_decision": data.get("human_decision"),
+        "companyfacts_segment_note": data.get("companyfacts_segment_note"),
     }
 
 

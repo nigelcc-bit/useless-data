@@ -30,7 +30,7 @@ from src.features.layer import (
     spearman_ai_vs_layer_dummy,
 )
 from src.features.liquidity import adv_dollar, load_volume_panel, resolve_yahoo_raw_dir
-from src.features.valuation import VALUATION_COLS
+from src.features.valuation import VALUATION_COLS, trailing_yields
 from src.ingest.finra_short_interest import ingest_finra, si_pct_asof
 from src.ingest.sec_companyfacts import (
     fundamentals_asof,
@@ -91,23 +91,12 @@ def episode_return(close: pd.Series, start: pd.Timestamp, end: pd.Timestamp) -> 
     return c1 / c0 - 1.0
 
 
-def _trailing_multiples(price: float, shares: float | None, fund: dict) -> dict:
-    out = {c: float("nan") for c in VALUATION_COLS}
+def _legacy_pe_available(price: float, shares: float | None, fund: dict) -> bool:
+    """True if old trailing P/E would have been finite (ni>0)."""
     if shares in (None, 0) or not np.isfinite(price) or price <= 0:
-        return out
-    mcap = price * float(shares)
-    rev = fund.get("revenue")
+        return False
     ni = fund.get("net_income")
-    ebitda = fund.get("ebitda")
-    net_debt = fund.get("net_debt")
-    if rev not in (None, 0):
-        out["trailing_ps_filing_lag"] = mcap / float(rev)
-    if ni not in (None, 0) and float(ni) > 0:
-        out["trailing_pe_filing_lag"] = mcap / float(ni)
-    if ebitda not in (None, 0):
-        ev = mcap + (float(net_debt) if net_debt is not None else 0.0)
-        out["ev_ebitda_filing_lag"] = ev / float(ebitda)
-    return out
+    return ni not in (None, 0) and float(ni) > 0
 
 
 def build_panel(
@@ -212,7 +201,14 @@ def build_panel(
             if ticker in facts_cache and not facts_cache[ticker].get("error"):
                 fund = fundamentals_asof(facts_cache[ticker], asof)
             shares = fund.get("shares_outstanding")
-            multiples = _trailing_multiples(px, shares, fund)
+            yields = trailing_yields(px, shares, fund)
+            # Pre-P4: name recovered if E/P finite but legacy P/E would be missing
+            ep = yields.get("earnings_yield_ep_filing_lag")
+            recovered_loss_maker = bool(
+                ep is not None
+                and np.isfinite(ep)
+                and not _legacy_pe_available(px, shares, fund)
+            )
 
             si_val = float("nan")
             if include_si:
@@ -221,6 +217,12 @@ def build_panel(
             log_mcap = float("nan")
             if shares not in (None, 0) and np.isfinite(px) and px > 0:
                 log_mcap = float(np.log(px * float(shares)))
+
+            # ASC 842: do not impute lease=0 when structurally absent (E1)
+            lease = fund.get("lease_liab_assets")
+            if eid == "E1":
+                # Only keep lease if actually filed by asof; else leave NaN
+                lease = lease if lease is not None and np.isfinite(float(lease)) else np.nan
 
             ai_score = ai_score_for_episode(ticker, eid)
             row = {
@@ -237,12 +239,13 @@ def build_panel(
                 "dist_252d_high": float(dist_t[ticker].loc[asof]) if asof in dist_t.index and ticker in dist_t else np.nan,
                 "realised_vol_21d": float(vol_t[ticker].loc[asof]) if asof in vol_t.index and ticker in vol_t else np.nan,
                 "short_interest_pct_float": si_val if include_si else np.nan,
-                "trailing_ps_filing_lag": multiples["trailing_ps_filing_lag"],
-                "trailing_pe_filing_lag": multiples["trailing_pe_filing_lag"],
-                "ev_ebitda_filing_lag": multiples["ev_ebitda_filing_lag"],
+                "earnings_yield_ep_filing_lag": yields["earnings_yield_ep_filing_lag"],
+                "sales_yield_sp_filing_lag": yields["sales_yield_sp_filing_lag"],
+                "ebitda_ev_yield_filing_lag": yields["ebitda_ev_yield_filing_lag"],
+                "recovered_via_yield_not_pe": recovered_loss_maker,
                 "net_debt_ebitda": fund.get("net_debt_ebitda"),
                 "interest_coverage": fund.get("interest_coverage"),
-                "lease_liab_assets": fund.get("lease_liab_assets"),
+                "lease_liab_assets": lease,
                 "log_mkt_cap": log_mcap,
                 "adv": float(adv_t[ticker].loc[asof]) if len(adv_t) and asof in adv_t.index and ticker in adv_t else np.nan,
                 "layer": layers.loc[ticker, "layer"] if ticker in layers.index else None,
@@ -260,6 +263,21 @@ def build_panel(
     panel = pd.DataFrame(rows)
     coverage = coverage_table(panel, blocks)
     spearman = spearman_ai_vs_layer_dummy(panel)
+    if "recovered_via_yield_not_pe" in panel.columns and len(panel):
+        recovered = (
+            panel.loc[
+                panel["listed_at_start"] & panel["recovered_via_yield_not_pe"],
+                ["episode", "ticker"],
+            ]
+            .groupby("episode")["ticker"]
+            .apply(lambda s: sorted(s.unique()))
+            .to_dict()
+        )
+    else:
+        recovered = {}
+    # E1 funding: lease structurally absent for ASC 842 — flag for PC1 builder
+    e1 = panel.loc[panel["episode"] == "E1"]
+    lease_e1_n = int(e1["lease_liab_assets"].notna().sum()) if len(e1) else 0
     meta_out = {
         "include_si": include_si,
         "si_status": si_status,
@@ -269,6 +287,12 @@ def build_panel(
         "yahoo_volume_dir": str(yahoo_dir),
         "block_cols": {k: list(v) for k, v in blocks.items()},
         "spearman_ai_vs_layer": spearman.to_dict(orient="records"),
+        "yield_recovered_names": {k: list(v) for k, v in recovered.items()},
+        "e1_lease_nonmissing": lease_e1_n,
+        "e1_funding_pc1_fields": ["net_debt_ebitda", "interest_coverage"]
+        if lease_e1_n < 5
+        else ["net_debt_ebitda", "interest_coverage", "lease_liab_assets"],
+        "valuation_transform": "yields_EP_SP_EBITDAEV",
     }
     return panel, coverage, meta_out
 
@@ -365,6 +389,17 @@ def run() -> dict:
     print(f"\nSI status: {meta['si_status']}")
     print(f"AI exposure: {meta['ai_exposure']}")
     print(f"Calendar scrub: {meta.get('calendar_scrub')}")
+    print(f"Valuation: {meta.get('valuation_transform')}")
+    print("Yield-recovered names (loss-makers with E/P, no legacy P/E):")
+    for ep, names in (meta.get("yield_recovered_names") or {}).items():
+        print(f"  {ep}: {names}")
+    rec_rows = []
+    for ep, names in (meta.get("yield_recovered_names") or {}).items():
+        for t in names:
+            rec_rows.append({"episode": ep, "ticker": t})
+    pd.DataFrame(rec_rows).to_csv(exhibits / "valuation_yield_recovered_names.csv", index=False)
+    print(f"E1 lease non-missing={meta.get('e1_lease_nonmissing')}; "
+          f"funding PC1 fields={meta.get('e1_funding_pc1_fields')}")
 
     # tests_run log
     tests_path = ROOT / "outputs" / "tests_run.csv"

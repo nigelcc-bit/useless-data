@@ -1,7 +1,7 @@
 # AI revenue exposure 0–3. Tag in every output: JUDGMENT_CODED_POST_OUTCOME
 # H3 must be run WITH and WITHOUT this regressor.
 
-status: PROPOSED_AWAITING_SIGNOFF
+status: SIGNED_OFF
 tag: JUDGMENT_CODED_POST_OUTCOME
 scale: "0=none, 1=low/indirect, 2=material AI revenue or AI-linked capex, 3=AI-core"
 
@@ -9,27 +9,25 @@ bands:
   e1_e4: "Episodes E1–E4 (labelled pre-2023 / oos band in human decision)"
   e5_e7: "Episodes E5–E7 (2023+ / AI-flush fit band); inherits prior single scores"
 
+sign_off: "Signed off by Nigel, 2026-11-11"
+
 human_decision:
-  name: Nigel Clark
-  date: "2026-11-08"
-  timezone: Australia/Sydney
+  name: Nigel
+  date: "2026-11-11"
+  timezone: Australia/Melbourne
   verbatim: |
-    Make scores time-varying: one score for E1-E4 (pre-2023) and one
-    for E5-E7 (2023+). Current scores apply to E5-E7.
-    Pre-2023 proposals for me to review (show the revenue-segment
-    evidence from 10-K/20-F for each): NVDA, MU, AVGO, MRVL, ANET, VRT,
-    LITE, FN, LRCX, AMAT, KLAC, ASML, TSM to 1 or 2 unless segment data
-    supports 3; IREN 0 for E3 (bitcoin miner), 1 for E4.
-    Report Spearman between the score and the AI/non-AI layer dummy.
-    If |rho| > 0.8 in an episode, note that the score is redundant there.
-    Status stays JUDGMENT_CODED_POST_OUTCOME.
+    Sign off the proposed scores (E1-E4 / E5-E7 table, IREN E3=0 E4=1).
+    Record: "Signed off by Nigel, 2026-11-11". Remove the surname "Clark",
+    which I never provided. Status -> SIGNED_OFF, tag stays
+    JUDGMENT_CODED_POST_OUTCOME. Note companyfacts had no segment data,
+    so scores are judgment without segment evidence.
 
 companyfacts_segment_note: >
   SEC XBRL companyfacts (data.sec.gov) for these issuers carry total revenue
   tags only — no product/segment USD members (segment field absent on
-  RevenueFromContractWithCustomer* / SalesRevenueNet). Therefore no name
-  below receives score_e1_e4=3 on segment evidence; proposals are 1 or 2
-  pending human review of 10-K/20-F narrative.
+  RevenueFromContractWithCustomer* / SalesRevenueNet). Scores are therefore
+  JUDGMENT_CODED_POST_OUTCOME without segment evidence. No name receives
+  score_e1_e4=3 on segment evidence.
 
 # score_e5_e7 = prior single "score" values (human: current scores apply to E5–E7).
 # score_e1_e4 = Cursor proposal for review unless score_by_episode overrides.

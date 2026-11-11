@@ -11,7 +11,7 @@
     "n_tickers": 45
   },
   "ai_exposure": {
-    "status": "PROPOSED_AWAITING_SIGNOFF",
+    "status": "SIGNED_OFF",
     "tag": "JUDGMENT_CODED_POST_OUTCOME",
     "time_varying": true,
     "bands": {
@@ -19,10 +19,10 @@
       "e5_e7": "Episodes E5\u2013E7 (2023+ / AI-flush fit band); inherits prior single scores"
     },
     "human_decision": {
-      "name": "Nigel Clark",
-      "date": "2026-11-08",
-      "timezone": "Australia/Sydney",
-      "verbatim": "Make scores time-varying: one score for E1-E4 (pre-2023) and one\nfor E5-E7 (2023+). Current scores apply to E5-E7.\nPre-2023 proposals for me to review (show the revenue-segment\nevidence from 10-K/20-F for each): NVDA, MU, AVGO, MRVL, ANET, VRT,\nLITE, FN, LRCX, AMAT, KLAC, ASML, TSM to 1 or 2 unless segment data\nsupports 3; IREN 0 for E3 (bitcoin miner), 1 for E4.\nReport Spearman between the score and the AI/non-AI layer dummy.\nIf |rho| > 0.8 in an episode, note that the score is redundant there.\nStatus stays JUDGMENT_CODED_POST_OUTCOME.\n"
+      "name": "Nigel",
+      "date": "2026-11-11",
+      "timezone": "Australia/Melbourne",
+      "verbatim": "Sign off the proposed scores (E1-E4 / E5-E7 table, IREN E3=0 E4=1).\nRecord: \"Signed off by Nigel, 2026-11-11\". Remove the surname \"Clark\",\nwhich I never provided. Status -> SIGNED_OFF, tag stays\nJUDGMENT_CODED_POST_OUTCOME. Note companyfacts had no segment data,\nso scores are judgment without segment evidence.\n"
     }
   },
   "calendar_scrub": {
@@ -48,9 +48,9 @@
       "short_interest_pct_float"
     ],
     "valuation": [
-      "trailing_ps_filing_lag",
-      "trailing_pe_filing_lag",
-      "ev_ebitda_filing_lag"
+      "earnings_yield_ep_filing_lag",
+      "sales_yield_sp_filing_lag",
+      "ebitda_ev_yield_filing_lag"
     ],
     "funding": [
       "net_debt_ebitda",
@@ -116,5 +116,75 @@
       "redundant_abs_rho_gt_0_8": false,
       "note": ""
     }
-  ]
+  ],
+  "yield_recovered_names": {
+    "E1": [
+      "CIEN",
+      "LITE",
+      "NOW",
+      "PANW"
+    ],
+    "E2": [
+      "CIEN",
+      "COHR",
+      "PANW",
+      "WDC"
+    ],
+    "E3": [
+      "MRVL",
+      "NVT",
+      "PANW",
+      "SNOW",
+      "VRT"
+    ],
+    "E4": [
+      "ALAB",
+      "AMZN",
+      "APLD",
+      "COHR",
+      "CORZ",
+      "GEV",
+      "LITE",
+      "MRVL",
+      "MU",
+      "SNDK",
+      "SNOW"
+    ],
+    "E5": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "LITE",
+      "PANW",
+      "SNDK",
+      "SNOW"
+    ],
+    "E6": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "LITE",
+      "SNOW",
+      "WDC"
+    ],
+    "E7": [
+      "APLD",
+      "CORZ",
+      "CRWV",
+      "INTC",
+      "IREN",
+      "SNDK",
+      "SNOW"
+    ]
+  },
+  "e1_lease_nonmissing": 1,
+  "e1_funding_pc1_fields": [
+    "net_debt_ebitda",
+    "interest_coverage"
+  ],
+  "valuation_transform": "yields_EP_SP_EBITDAEV"
 }
