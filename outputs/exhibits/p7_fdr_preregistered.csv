@@ -2,12 +2,12 @@ test_id,hypothesis,description,status,raw_p,bh_p,effect,n,notes,raw_p_num,family
 T000,meta,SPEC_LITERAL ETF fixture arithmetic,PASS,,,,,YAML close vectors only; P1 must re-verify via prices.parquet,,preregistered,False,status=PASS (no numeric p; decision/gate row)
 T000d,meta,quarantine: no CALIBRATED under data/config/src reads,PASS,,,,,test_quarantine_calibrated.py,,preregistered,False,status=PASS (no numeric p; decision/gate row)
 T000e,meta,P1 SPEC_LITERAL gate registry,PASS,,,,,runs against prices.parquet when present; else skip,,preregistered,False,status=PASS (no numeric p; decision/gate row)
-T003,H2,variance ratio beta-neutral spread,NOT_RUN,,,,,regime=HY OAS BAMLH0A0HYM2 for 2023-2024,,preregistered,False,NOT_RUN: regime=HY OAS BAMLH0A0HYM2 for 2023-2024
-T004,H2,event study -2.5σ spread days fwd 5/21/63,NOT_RUN,,,,,,,preregistered,False,NOT_RUN: nan
-T005,H3,crowding vs valuation horse race 7 episodes,NOT_RUN,,,,,includes layer dummy block,,preregistered,False,NOT_RUN: includes layer dummy block
-T006,H3,Romano-Wolf stepdown on regressor blocks,NOT_RUN,,,,,,,preregistered,False,NOT_RUN: nan
-T007,H4,SUR/Wald Oct vs Nov coefficient equality,NOT_RUN,,,,,vector includes layer dummies from H3,,preregistered,False,NOT_RUN: vector includes layer dummies from H3
-T008,H5,L5/L10 vs fwd 63d walk-forward OOS,NOT_RUN,,,,,trough=63d low + next close up; L after confirmation,,preregistered,False,NOT_RUN: trough=63d low + next close up; L after confirmation
+T003,H2,variance ratio beta-neutral spread,SUPERSEDED_BY H2_VR_q*/H2_CHOW_DENNING,,,,,was NOT_RUN; superseded by later IDs. regime=HY OAS BAMLH0A0HYM2 for 2023-2024,,preregistered,False,SUPERSEDED_BY H2_VR_q*/H2_CHOW_DENNING
+T004,H2,event study -2.5σ spread days fwd 5/21/63,SUPERSEDED_BY H2_FWD_*,,,,,was NOT_RUN; superseded by later IDs. ,,preregistered,False,SUPERSEDED_BY H2_FWD_*
+T005,H3,crowding vs valuation horse race 7 episodes,SUPERSEDED_BY H3_PRIMARY/H3_HORSE_RACE,,,,,was NOT_RUN; superseded by later IDs. includes layer dummy block,,preregistered,False,SUPERSEDED_BY H3_PRIMARY/H3_HORSE_RACE
+T006,H3,Romano-Wolf stepdown on regressor blocks,SUPERSEDED_BY romano_wolf_h3 (p7_romano_wolf_h3_blocks),,,,,was NOT_RUN; superseded by later IDs. ,,preregistered,False,SUPERSEDED_BY romano_wolf_h3 (p7_romano_wolf_h3_blocks)
+T007,H4,SUR/Wald Oct vs Nov coefficient equality,SUPERSEDED_BY H4_WALD_E6_E7,,,,,was NOT_RUN; superseded by later IDs. vector includes layer dummies from H3,,preregistered,False,SUPERSEDED_BY H4_WALD_E6_E7
+T008,H5,L5/L10 vs fwd 63d walk-forward OOS,SUPERSEDED_BY H5_WF_SPLIT,,,,,was NOT_RUN; superseded by later IDs. trough=63d low + next close up; L after confirmation,,preregistered,False,SUPERSEDED_BY H5_WF_SPLIT
 T009,D1,SOXX IBKR -12.1% vs press -12.8%,OPEN,,,,,discrepancy flagged; not papered over,,preregistered,False,status=OPEN (no numeric p; decision/gate row)
 T011,D6,PIT forward multiples unavailable,OPEN,,,,,fallback pre-registered as T005b,,preregistered,False,status=OPEN (no numeric p; decision/gate row)
 P1_FRED,meta,FRED BAMLH0A0HYM2 DGS10 FEDFUNDS VIXCLS,PASS,,,,17242.0,"['BAMLH0A0HYM2', 'DGS10', 'FEDFUNDS', 'VIXCLS']",,preregistered,False,status=PASS (no numeric p; decision/gate row)

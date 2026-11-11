@@ -41,13 +41,16 @@ Full magnitude table: `docs/gap_diagnosis.md` §6. Kill log: `outputs/killed_hyp
 
 **H1 / Call 5.** Classification settles the transfer question before forward returns. Deep-DD history: coin-flip next quarter, strong following year for SOX — not a base-rate for patience from the S&P first-shock cell.
 
-### Monitoring flips (operational; not H5-validated)
+### Monitoring flips (operational; H5 PRIOR ONLY / untested)
 
-- Suppliers &gt;2× builders over first five up days → flush bias; builders lead → thesis bias
-- Supplier–hyperscaler 21d corr &gt;0.8 rising together vs &lt;0.4
-- SOXX 5 Nov low 130.74 intraday / 131.90 close (split-adjusted)
-- CRWV 2032 notes &gt;85 vs &lt;70; loan auction 19 Nov &gt;90 vs &lt;80
-- Texas scope; S&P reclaim 7,500–7,600 vs ~6,618; VIX &lt;22 vs &gt;35; Dec FOMC
+Retired: “suppliers &gt;2× builders over the first five up days” — with a trailing beta ratio ≈2.3 that rule fires on almost any up market.
+
+Use the daily desk instead (`python -m src.monitor.daily_desk`, prior US close, before 5pm HKT):
+
+- **Beta-neutral spread z** (causal σ through t−1): ≤ −2.5 ≈ H2-style extreme; near 0 = no residual seesaw
+- **L(5) / trailing supplier–builder beta ratio**: L(5)&gt;0 after a confirmed cum-spread trough = suppliers leading on a beta-adjusted rebound window; L(5)&lt;0 = builders leading
+- Still watch: supplier–hyperscaler 21d corr &gt;0.8 rising together vs &lt;0.4; CRWV 2032 notes &gt;85 vs &lt;70; loan auction 19 Nov; Texas scope; S&P reclaim 7,500–7,600; VIX &lt;22 vs &gt;35; Dec FOMC
+- SOXX 5 Nov low 130.74 intraday / 131.90 close (split-adjusted) — reference level only
 
 ### Cross-section corrections (P1)
 

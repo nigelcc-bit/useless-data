@@ -74,6 +74,7 @@ def classify_row(row: pd.Series) -> str:
         return "exploratory"
     if tid.startswith("H3_REVIEW"):
         return "exploratory"
+    # SUPERSEDED_BY keeps the placeholder in the pre-registered ledger (no p)
     # Pre-registered family (includes NOT_RUN / underpowered / PRIOR_ONLY)
     return "preregistered"
 
@@ -99,6 +100,8 @@ def run_fdr(q: float = 0.10) -> dict:
         if np.isfinite(r["raw_p_num"]):
             return ""
         st = str(r["status"])
+        if st.startswith("SUPERSEDED_BY"):
+            return st  # placeholder retired; FDR family unchanged (no p)
         if st in ("NOT_RUN", "NOT_RUN_UNDERPOWERED"):
             return f"{st}: {r.get('notes', '') or r.get('description', '')}"
         if st in ("PRIOR_ONLY",):
@@ -199,13 +202,13 @@ def make_exhibits() -> list[Path]:
     ax.bar(labels, vals, color=ORANGE, edgecolor=DARK)
     ax.axhline(0, color=DARK, lw=0.8)
     ax.set_ylabel("5 Nov 2026 return (%)")
-    _style(ax, "5 Nov ETF moves (Yahoo = IBKR)", "descriptive frequency")
+    _style(ax, "5 Nov ETF moves (Yahoo = IBKR; N=1 day)", "descriptive frequency")
     save(fig, "fig01_etf_nov5.png")
 
     # 2. Builder vs supplier EW
     fig, ax = plt.subplots(figsize=(7, 4))
     ax.bar(
-        ["Builders EW", "Suppliers EW", "Neocloud EW"],
+        ["Builders EW\n(N=6)", "Suppliers EW\n(N=16 note book)", "Neocloud EW\n(N=3)"],
         [-2.98, -13.53, -13.91],
         color=[DARK, ORANGE, ORANGE],
         edgecolor=DARK,
@@ -215,27 +218,44 @@ def make_exhibits() -> list[Path]:
     _style(ax, "Builder–supplier gap larger than the note printed", "descriptive frequency")
     save(fig, "fig02_builder_supplier_ew.png")
 
-    # 3. H1b further-DD rates
-    h1b = pd.read_csv(EXHIBITS / "h1b_forward_summary.csv") if (EXHIBITS / "h1b_forward_summary.csv").exists() else None
-    fig, ax = plt.subplots(figsize=(7, 4))
-    if h1b is not None and "series" in h1b.columns:
-        # flexible column names
-        rate_col = next((c for c in h1b.columns if "rate" in c.lower() or "dd10" in c.lower()), None)
-        if rate_col is None and "n_dd10" in h1b.columns and "n" in h1b.columns:
-            h1b = h1b.copy()
-            h1b["rate"] = h1b["n_dd10"] / h1b["n"]
-            rate_col = "rate"
-        if rate_col:
-            ax.bar(h1b["series"], h1b[rate_col] * 100, color=ORANGE, edgecolor=DARK)
-            ax.axhline(25, color=DARK, ls="--", lw=0.8, label="≤25% patience")
-            ax.axhline(50, color=JUDGMENT, ls="--", lw=0.8, label="≥50% another leg")
-            ax.legend(frameon=False, fontsize=8)
-    else:
-        ax.bar(["SPX", "SOX", "IXIC"], [23.8, 40.0, 40.0], color=ORANGE, edgecolor=DARK)
-        ax.axhline(25, color=DARK, ls="--", lw=0.8)
-        ax.axhline(50, color=JUDGMENT, ls="--", lw=0.8)
+    # 3. H1b further-DD rates — SOX/SPX primary; others muted descriptive
+    h1b = pd.read_csv(EXHIBITS / "h1b_forward_summary.csv")
+    ep = pd.read_csv(EXHIBITS / "h1b_episodes.csv")
+    n_bear = ep.groupby("series").size().to_dict()
+    order = ["SPX", "SOX", "SMH", "SOXX", "IXIC"]
+    h1b = h1b.set_index("series").reindex(order).reset_index()
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    colors = []
+    for s in h1b["series"]:
+        if s in ("SOX", "SPX"):
+            colors.append(ORANGE if s == "SOX" else DARK)
+        else:
+            colors.append("#C8C0B4")  # muted cream-grey
+    rates = h1b["rate"] * 100
+    bars = ax.bar(h1b["series"], rates, color=colors, edgecolor=DARK)
+    for bar, (_, row) in zip(bars, h1b.iterrows()):
+        n_ev = int(row["n"])
+        n_bm = int(n_bear.get(row["series"], 0))
+        label = "primary" if row["series"] in ("SOX", "SPX") else "descriptive"
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 1.2,
+            f"N={n_ev} ev\n{n_bm} bears\n({label})",
+            ha="center",
+            va="bottom",
+            fontsize=7,
+            color=DARK if row["series"] in ("SOX", "SPX") else "#8A8074",
+        )
+    ax.axhline(25, color="#5A5A5A", ls="--", lw=1.2, label="≤25% patience (dashed)")
+    ax.axhline(50, color="#B85A2A", ls="--", lw=1.2, label="≥50% another leg (dashed)")
+    ax.set_ylim(0, max(rates.max() + 18, 60))
+    ax.legend(frameon=False, fontsize=8, loc="upper right")
     ax.set_ylabel("Further 10% DD within 63d (%)")
-    _style(ax, "H1b deep-DD cluster continuation rates", "conditional frequency")
+    _style(
+        ax,
+        "H1b deep-DD continuation — SOX vs SPX primary (N on bars)",
+        "conditional frequency",
+    )
     save(fig, "fig03_h1b_continuation.png")
 
     # 4. H3 Shapley
@@ -245,7 +265,7 @@ def make_exhibits() -> list[Path]:
     pivot.plot(kind="bar", ax=ax, color=[DARK, ORANGE, "#C45A1A"], edgecolor=DARK)
     ax.set_ylabel("Shapley R²")
     ax.legend(frameon=False, title="")
-    _style(ax, "H3 Shapley R² — layer dominates E5–E7", "panel regression")
+    _style(ax, "H3 Shapley R² — layer dominates E5–E7 (complete-case N≈35–36)", "panel regression")
     save(fig, "fig04_h3_shapley.png")
 
     # 5. H3 incremental adj-R2 horse race
@@ -263,20 +283,46 @@ def make_exhibits() -> list[Path]:
     ax.axhline(0, color=DARK, lw=0.8)
     ax.legend(frameon=False, fontsize=8)
     ax.set_ylabel("Incremental adj-R²")
+    ax.set_xticklabels(
+        [f"{r.episode}\nN={int(r.n_complete)}" for r in sub.itertuples()], fontsize=8
+    )
     _style(ax, "H3 horse race: incremental adj-R² by episode", "panel regression")
     save(fig, "fig05_h3_horse_race.png")
 
-    # 6. H4 slope × E7 interactions
+    # 6. H4 slope × E7 interactions — wild + CR2 CIs
     inter = pd.read_csv(EXHIBITS / "h4_slope_interactions_ci.csv")
-    fig, ax = plt.subplots(figsize=(9, 5))
+    inter = inter.copy()
+    inter["ci95_lo_cr2"] = inter["coef"] - 1.96 * inter["se_cr2"]
+    inter["ci95_hi_cr2"] = inter["coef"] + 1.96 * inter["se_cr2"]
+    fig, ax = plt.subplots(figsize=(9.5, 5.5))
     y = np.arange(len(inter))
-    ax.hlines(y, inter["ci95_lo_pct"], inter["ci95_hi_pct"], color=DARK, lw=1)
-    ax.plot(inter["coef"], y, "o", color=ORANGE, markersize=7)
+    ax.hlines(
+        y - 0.12,
+        inter["ci95_lo_pct"],
+        inter["ci95_hi_pct"],
+        color=ORANGE,
+        lw=1.6,
+        label="wild-boot 95% CI",
+    )
+    ax.hlines(
+        y + 0.12,
+        inter["ci95_lo_cr2"],
+        inter["ci95_hi_cr2"],
+        color=DARK,
+        lw=1.2,
+        label="CR2 95% CI",
+    )
+    ax.plot(inter["coef"], y, "o", color=ORANGE, markersize=7, zorder=3)
     ax.axvline(0, color=DARK, lw=0.8)
     ax.set_yticks(y)
     ax.set_yticklabels(inter["interaction"], fontsize=8)
-    ax.set_xlabel("Slope × E7 coefficient")
-    _style(ax, "H4 slope×E7 interactions (wild-boot 95% CI)", "panel regression")
+    ax.set_xlabel("Slope × E7 coefficient (N=72 stacked; 11 df)")
+    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    _style(
+        ax,
+        "H4 slope×E7 — Holm: no interaction @5%; joint Wald rejects (BH p=0.011)",
+        "panel regression",
+    )
     save(fig, "fig06_h4_interactions.png")
 
     # 7. Layer taxonomy (JUDGMENT)
@@ -297,7 +343,8 @@ def make_exhibits() -> list[Path]:
     ax.axhline(1.0, color=DARK, ls="--", lw=0.8)
     ax.set_xlabel("q (sessions)")
     ax.set_ylabel("Variance ratio")
-    _style(ax, "H2 Lo–MacKinlay VR (hetero-robust z* non-reject)", "event study")
+    n_vr = int(vr["n"].iloc[0]) if "n" in vr.columns else 965
+    _style(ax, f"H2 Lo–MacKinlay VR (hetero z*; N={n_vr} days; CD non-reject)", "event study")
     save(fig, "fig08_h2_variance_ratio.png")
 
     # 9. H2 forward net returns
@@ -340,7 +387,13 @@ def make_exhibits() -> list[Path]:
     ax.scatter(troughs["trough_date"], troughs["L5"], c=colors, edgecolors=DARK, s=40)
     ax.axhline(0, color=DARK, lw=0.8)
     ax.set_ylabel("L(5)")
-    _style(ax, "H5 L(5) at troughs (dark=train, orange=OOS) — PRIOR ONLY", "event study")
+    n_tr = int((troughs["walk_forward_split"] == "train").sum())
+    n_oos = int((troughs["walk_forward_split"] == "oos").sum())
+    _style(
+        ax,
+        f"H5 L(5) troughs (dark=train N={n_tr}, orange=OOS N={n_oos}) — PRIOR ONLY",
+        "event study",
+    )
     save(fig, "fig11_h5_L5_troughs.png")
 
     # 12. Outcomes scorecard
