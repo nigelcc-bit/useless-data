@@ -1,5 +1,5 @@
 {
-  "status": "COUNTS_AND_VR_ONLY",
+  "status": "VR_EVENTS_EXPLORATORY",
   "null": "After beta control, supplier-minus-builder spread is a random walk.",
   "falsifier": "Variance ratio \u2248 1 and no significant forward spread return.",
   "start": "2023-01-01",
@@ -50,8 +50,6 @@
   ],
   "beta_window": 126,
   "n_sample_days": 965,
-  "spread_mean": -0.00021943831976045558,
-  "spread_std": 0.01974582236356257,
   "ar1": {
     "intercept": -0.00020513660918678668,
     "phi": -0.009648508020665412,
@@ -61,52 +59,107 @@
     {
       "q": 2,
       "vr": 0.9902378038398532,
-      "z": -0.3032572460531887,
-      "p": 0.7616938256212242,
-      "n": 965,
-      "phi": 0.0010362694300518134
+      "z_homo": -0.3032572460531887,
+      "p_homo": 0.7616938256212242,
+      "z_star": -0.21683524223504455,
+      "p_star": 0.8283367459577595,
+      "theta": 1.9559720043437578,
+      "phi_homo": 0.0010362694300518134,
+      "n": 965
     },
     {
       "q": 5,
       "vr": 0.8911586228882478,
-      "z": -1.5432527730668746,
-      "p": 0.12276945744000463,
-      "n": 965,
-      "phi": 0.004974093264248704
+      "z_homo": -1.5432527730668746,
+      "p_homo": 0.12276945744000463,
+      "z_star": -1.111040903320314,
+      "p_star": 0.26655074335815254,
+      "theta": 9.26094433051821,
+      "phi_homo": 0.004974093264248704,
+      "n": 965
     },
     {
       "q": 10,
       "vr": 0.7860817664115033,
-      "z": -1.9681538078282739,
-      "p": 0.04905034329176545,
-      "n": 965,
-      "phi": 0.011813471502590673
+      "z_homo": -1.9681538078282739,
+      "p_homo": 0.04905034329176545,
+      "z_star": -1.4316002517764481,
+      "p_star": 0.15225825755149283,
+      "theta": 21.546631722652567,
+      "phi_homo": 0.011813471502590673,
+      "n": 965
     },
     {
       "q": 21,
       "vr": 0.6692695848254787,
-      "z": -2.013660001133459,
-      "p": 0.044045242223795134,
-      "n": 965,
-      "phi": 0.026975902623571017
+      "z_homo": -2.013660001133459,
+      "p_homo": 0.044045242223795134,
+      "z_star": -1.4865959425026063,
+      "p_star": 0.13712156010232734,
+      "theta": 47.762791279347866,
+      "phi_homo": 0.026975902623571017,
+      "n": 965
     }
   ],
+  "chow_denning": {
+    "cd_stat": 1.4865959425026063,
+    "m": 4,
+    "p_smm": 0.4456315946571986,
+    "argmax_q": 21
+  },
   "events": {
-    "n_events_total": 13,
+    "n_events_total": 14,
+    "n_events_classified": 13,
     "n_events_unclassified_warmup": 1,
     "n_events_by_regime": {
       "HY_OAS_above_median": 7,
       "HY_OAS_below_median": 6
     },
     "n_sample_days": 965,
-    "n_z_eligible_days": 840,
+    "n_z_eligible_days": 839,
     "threshold": -2.5,
     "sigma_window": 126,
+    "sigma_rule": "rolling mean/sd end at t-1 (shift 1); matches H1 rule B",
     "regime_series": "BAMLH0A0HYM2",
     "regime_rule": "above/below trailing 126d median of HY OAS (median lagged 1 day)",
-    "hy_oas_first_obs": "2023-11-07",
-    "stop_before_forward": true,
-    "forward_returns_computed": false
+    "hy_oas_first_obs": "2023-11-07"
   },
-  "note": "P5 stop gate: variance ratio + \u22122.5\u03c3 event counts by HY OAS regime only. Forward spread returns NOT computed."
+  "nov4_nov5_exploratory": [
+    {
+      "date": "2026-11-04",
+      "builder_ret": 0.034632662565430496,
+      "supplier_ret": -0.06385168369598307,
+      "spy_ret": 0.016517561312278106,
+      "builder_alpha_126d": -0.0006957973427585791,
+      "builder_beta_126d": 1.403405288343781,
+      "supplier_alpha_126d": -0.001906036300111047,
+      "supplier_beta_126d": 3.389717730638371,
+      "builder_resid": 0.012147627011995336,
+      "supplier_resid": -0.11793551784300751,
+      "spread": -0.13008314485500286,
+      "spread_z": -3.8076426128030514,
+      "is_h2_event": true,
+      "note": "day after midterm election; H2 \u22122.5\u03c3 event",
+      "status": "EXPLORATORY"
+    },
+    {
+      "date": "2026-11-05",
+      "builder_ret": -0.03395624812274339,
+      "supplier_ret": -0.13657446112672872,
+      "spy_ret": -0.044091753715052806,
+      "builder_alpha_126d": -0.0006043798207078494,
+      "builder_beta_126d": 1.430948311527653,
+      "supplier_alpha_126d": -0.0027355878660114685,
+      "supplier_beta_126d": 3.1368140205804145,
+      "builder_resid": 0.029741152228812393,
+      "supplier_resid": 0.004468757984638971,
+      "spread": -0.02527239424417342,
+      "spread_z": -0.5923632958079824,
+      "is_h2_event": false,
+      "note": "NOT an H2 event (causal z > \u22122.5)",
+      "status": "EXPLORATORY"
+    }
+  ],
+  "forward": null,
+  "compute_forwards": false
 }

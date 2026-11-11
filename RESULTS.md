@@ -12,7 +12,7 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 | ID | Hypothesis | Null | Decision rule / falsifier | Result | Decision |
 |---|---|---|---|---|---|
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
-| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | VR + −2.5σ counts run (P5); forward returns not yet | *pending fwd* |
+| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | VR hetero z* + Chow–Denning + causal −2.5σ counts; forwards per freeze below | *see H2 results* |
 | H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
 | H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
@@ -405,28 +405,43 @@ Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0
 
 Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`, `h4_robustness.json`.
 
-## H2 results (P5) — VR + event counts only
+## H2 design (frozen before forward returns)
 
-**Run:** 2026-11-12 (Australia/Melbourne). **Stop before forward returns.**
+**Frozen:** 2026-11-12 (Australia/Melbourne). **No forward returns have been loaded at freeze time.** Do not edit this design block after seeing forward-return results.
 
-### Construction
-- Sample: 2023-01-01 → 2026-11-05 (N=965 residual days).
-- EW builders (6) vs EW AI-chain suppliers (exclude builders + non_ai_control).
-- Beta-neutral: each basket residual vs SPY, trailing 126d OLS with intercept; spread = supplier residual − builder residual.
-- Regime: HY OAS (`BAMLH0A0HYM2`) above/below trailing 126d median (median lagged 1 day). Ingested HY OAS first obs **2023-11-07**.
+### Construction (already run)
+- Sample: 2023-01-01 → present. EW builders vs EW AI-chain suppliers (exclude `non_ai_control`).
+- Beta-neutral residual vs SPY (trailing 126d OLS with intercept); spread = supplier residual − builder residual.
+- −2.5σ events: rolling mean/sd of spread **end at t−1** (shift 1), matching H1 rule B.
+- Regime: HY OAS (`BAMLH0A0HYM2`) above/below lagged 126d median. FRED HY OAS history starts **2023-11-07**; events before the 126d warm-up are **unclassified**.
 
-### Variance ratio (Lo–MacKinlay, overlapping, homoskedastic)
+### Forward design (frozen now)
+- **De-cluster:** first event per non-overlapping **21-session** block (on the trading calendar).
+- **Primary:** pooled forward spread return at **5 / 21 / 63** sessions (sum of residual spread over t+1…t+h). Report hit rate and median. Inference: **Newey–West** (lag = horizon) and block bootstrap. **Mean reversion = positive** forward spread return.
+- **Regime split** (HY OAS above/below lagged 126d median) = **PRIOR ONLY** if either cell has **N &lt; 8**.
+- Report all forward results **net of 30bp round-trip cost**.
 
-| q | VR | z | p |
-|---:|---:|---:|---:|
-| 2 | 0.990 | −0.30 | 0.762 |
-| 5 | 0.891 | −1.54 | 0.123 |
-| 10 | 0.786 | −1.97 | **0.049** |
-| 21 | 0.669 | −2.01 | **0.044** |
+### Status at freeze
+VR (hetero-robust z*) + Chow–Denning + causal event counts + Nov 4/5 exploratory decomp are run. Forward module not yet executed.
 
-AR(1) φ ≈ −0.010 (near zero). VR &lt; 1 at q=10/21 rejects pure random walk at 5% (mean-reversion direction), but the falsifier also requires forward-return evidence — **not yet run**.
+---
 
-### −2.5σ event counts by HY OAS regime
+## H2 results (P5) — VR, events, exploratory (pre-forward)
+
+**Run:** 2026-11-12 (Australia/Melbourne). Forward block below filled only after freeze commit.
+
+### Variance ratio (Lo–MacKinlay, hetero-robust z*)
+
+| q | VR | z* | p* | z_homo (audit) | p_homo (audit) |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 0.990 | −0.22 | 0.828 | −0.30 | 0.762 |
+| 5 | 0.891 | −1.11 | 0.267 | −1.54 | 0.123 |
+| 10 | 0.786 | −1.43 | 0.152 | −1.97 | 0.049 |
+| 21 | 0.669 | −1.49 | 0.137 | −2.01 | 0.044 |
+
+**Chow–Denning** joint (q = 2,5,10,21): CD = **1.49**, SMM p = **0.446** — do not reject VR=1 jointly at 5%. Homoskedastic z inflated significance; hetero-robust does not. Each q is its own `tests_run` row (`H2_VR_q2`…`H2_VR_q21`) plus `H2_CHOW_DENNING`.
+
+### −2.5σ event counts (causal σ through t−1)
 
 | Regime | N events |
 |---|---:|
@@ -434,7 +449,14 @@ AR(1) φ ≈ −0.010 (near zero). VR &lt; 1 at q=10/21 rejects pure random walk
 | HY_OAS_below_median | 6 |
 | Unclassified (HY OAS median warm-up) | 1 |
 
-Total classified events: **13**. Event dates in `h2_events_m2p5sigma.csv` (includes 2026-11-04).
+Total raw events: **14**; classified: **13**. Includes **2026-11-04**.
 
-**Stop before forward returns.** Exhibits: `h2_spread_series.csv`, `h2_variance_ratio.csv`, `h2_events_m2p5sigma.csv`, `h2_event_counts_by_regime.csv`, `h2_vr_event_summary.json`.
+### EXPLORATORY (not in FDR family) — 4 Nov / 5 Nov 2026 beta decomposition
+
+| date | builder β | supplier β | builder resid | supplier resid | spread | z | H2 event? |
+|---|---:|---:|---:|---:|---:|---:|:---:|
+| 2026-11-04 (day after midterm) | 1.40 | 3.39 | +0.012 | −0.118 | −0.130 | **−3.81** | **yes** |
+| 2026-11-05 | 1.43 | 3.14 | +0.030 | +0.004 | −0.025 | **−0.59** | **no** |
+
+**5 Nov is not an H2 event** (causal z = −0.59 ≫ −2.5). **4 Nov is** (z = −3.81). Exhibit: `h2_nov4_nov5_beta_decomp.csv`.
 
