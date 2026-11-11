@@ -7,24 +7,24 @@
 - **If H1 shows semis have a materially worse continuation base rate than the S&P** → the 6 Nov "don't sell into the hole" inference does not apply to this book; size differently before the next leg.
 - **If H3 flips and valuation dominates** → crowding framework from July/October/November is wrong; three prior notes need retracting.
 
-### Outcomes scorecard (pre-registered)
+### Outcomes scorecard (pre-registered) — final
 
 | # | Pre-registered outcome | Status |
 |---|---|---|
-| 1 | H2 + H5 hold and L(5) > 0 → flush / patience | **Cannot trigger** — H2 killed (K004); H5 **PRIOR ONLY** (OOS N=4) |
+| 1 | H2 + H5 hold and L(5) > 0 → flush / patience | **Dead** — H2 killed (K004); H5 PRIOR ONLY |
 | 2 | H4 rejects + layer dominates November → profit pool to builders | **Triggered** |
-| 3 | H1 semis worse continuation than S&P → Call 5 does not apply | Settled via H1b/K002 (Call 5 does not transfer; H1b inconclusive) |
-| 4 | H3 flips, valuation dominates → retract crowding notes | **Not triggered** — H3 UNSUPPORTED (K003); neither block wins |
+| 3 | H1 semis worse continuation than S&P → Call 5 does not apply | **Inconclusive** (H1b 40%; Call 5 does not transfer — K002) |
+| 4 | H3 flips, valuation dominates → retract crowding notes | **Not triggered**; crowding unsupported (K003) |
 
 Fill **Result** and **Decision** only after code runs. Do not edit hypotheses after seeing results.
 
 | ID | Hypothesis | Null | Decision rule / falsifier | Result | Decision |
 |---|---|---|---|---|---|
-| H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
-| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | CD p=0.45; pooled fwd net 30bp p_NW 0.30–0.76 (N=9); 63d +3.5% net 7/9 = PRIOR | **K004** — seesaw is description, not signal; outcome #1 cannot trigger |
-| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
-| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
-| H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | Troughs=15; train=10 / OOS=5; OOS L10 N=4 | **PRIOR ONLY** (OOS N&lt;8); do not test |
+| H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock underpowered (T002); H1b SOX 40% vs SPX 24%, Fisher p=0.465 (BH 0.73) | **Inconclusive** (25–50%); Call 5 does not transfer (K002) |
+| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | CD p=0.45 (BH 0.73); fwd NW p 0.30–0.76; 63d +3.5% net 7/9 = PRIOR | **K004** — description, not signal; outcome #1 dead |
+| H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr ≤0 in 5/6; RW stepdown none | **UNSUPPORTED (K003)** — neither block wins within layers |
+| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Wild p &lt;0.001 (BH **0.011**, only BH reject); CR2 p=0.005; funding Shapley E6=0.011 | **REJECT** — outcome #2 triggered; do not pool |
+| H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | Troughs=15; train=10 / OOS=5; OOS L10 N=4 | **PRIOR ONLY** — do not test; monitor ships |
 
 ## Fixture reproduction (P0)
 
@@ -503,6 +503,27 @@ Logged as PRIOR ONLY; not used for the H2 decision. Exhibit: `h2_forward_summary
 - **Outcome #1 cannot trigger** (required H2). Call 2’s directional description still stands.
 
 Exhibits: `h2_forward_events.csv`, `h2_forward_summary.csv`, `h2_forward_meta.json`, `h2_variance_ratio.csv`, `h2_chow_denning.json`, `h2_events_m2p5sigma.csv`, `h2_nov4_nov5_beta_decomp.csv`.
+
+## P7 — FDR (final)
+
+**Run:** 2026-11-12 (Australia/Melbourne). `src/studies/p7_fdr_and_exhibits.py`.
+
+Benjamini–Hochberg **q=0.10** over the pre-registered family in `tests_run.csv`. Rows without numeric p (NOT_RUN, underpowered, PRIOR_ONLY, gates) listed with reason. Exploratory / DEVIATION / robustness rows in a **separate** table, unadjusted.
+
+| Family | N | With p | BH rejects @ q=0.10 |
+|---|---:|---:|---:|
+| Pre-registered | (see csv) | 11 | **1** (`H4_WALD_E6_E7`, BH≈0.011) |
+| Exploratory / deviation | (see csv) | — | not adjusted |
+
+**Romano–Wolf** stepdown on H3 crowding/valuation PC1 wild-bootstrap p-values (E3–E7): no test survives multiplicity (`p7_romano_wolf_h3_blocks.csv`).
+
+Exhibits: 14 house-style charts (`fig01`–`fig14`), each captioned with method tag; judgment charts use a distinct brown.
+
+### Monitor refresh (does not touch study results)
+
+- Study pin: `data/processed/study_pin.json` → **2026-11-05** (asserted by `tests/test_study_pin.py`).
+- Monitor snapshot: `data/processed/monitor_snapshots/2026-11-10/` (latest US close available at pull).
+- DESCRIPTIVE: 5 Nov cum-spread trough **confirmed 6 Nov**; L(5) not yet available; supplier cum +7.0% vs builder +2.4% through 10 Nov since confirmation; daily spread z in `h5_monitor_descriptive_since_nov5.csv`. **H5 untested.**
 
 ## H5 design / counts (P6) — stop before testing
 
