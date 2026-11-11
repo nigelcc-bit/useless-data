@@ -1,0 +1,10 @@
+{
+  "falsifier_triggered": false,
+  "falsifier_val_beats": 3,
+  "falsifier_counted": 6,
+  "crowding_incr_adj_r2_le_0": 5,
+  "crowding_incr_adj_r2_le_0_of": 6,
+  "decision": "H3 UNSUPPORTED: neither crowding nor valuation adds explanatory power within layers.",
+  "k003": "Call 3 (crowding, not valuation) not supported in multivariate panel; univariate crowding association (adj R\u00b2 0.37 E6, 0.23 E7) is absorbed by layer dummies.",
+  "exploratory_not_in_fdr": true
+}

@@ -2,7 +2,7 @@
 
 A pre-registered study of whether the November 2026 selloff in the AI supply chain was a **positioning flush** (crowded names sold, then bought back) or a **regime change** (the market moving the AI profit pool away from suppliers and toward the companies paying for the buildout).
 
-**Status (11 Nov 2026):** P0–P3 complete; AI exposure signed off; Pre-P4 revisions logged. P4 (H3) in progress. H2/H4/H5 still pending. Nothing in this README is a trading recommendation.
+**Status (11 Nov 2026):** P0–P4 done for H3/H4. **H3 UNSUPPORTED** (K003); **H4 rejects** pooling E6/E7. H2 and H5 still pending. Nothing in this README is a trading recommendation.
 
 ---
 
@@ -142,18 +142,26 @@ SOX vs S&P: Fisher raw p = **0.465**. Under the pre-registered rule (≥50% = ex
 
 *Post-hoc observation, not tested:* every SOX bear market with a further 10% drop (1997-98, 2000, 2008) was an earnings-led downturn. Shock- and rate-led episodes (2004, 2006, 2011, 2020, 2022, 2025) did not drop further. The variable this points to is supplier earnings revisions.
 
-### 5.3 H2 to H5
+### 5.3 H3: crowding vs valuation
 
-**Pending.** The H3 panel (45 names × 7 episodes, crowding / valuation / funding / layer / liquidity blocks) is built, look-ahead tests pass, and the AI-exposure scores are awaiting sign-off. See `RESULTS.md` for the frozen designs.
+**H3 UNSUPPORTED: neither crowding nor valuation adds explanatory power within layers.**
 
-### 5.4 Status of the 6 Nov note's seven calls
+Falsifier not triggered (valuation incremental adj-R² > crowding in 3/6 counted episodes; E1 N=8 excluded). Crowding's own null is also not rejected: crowding incremental adj-R² ≤ 0 in **5/6** counted episodes; wild-bootstrap p on crowding PC1 is **0.26–0.90** in E3–E7. Univariate crowding association (adj-R² **0.37** E6, **0.23** E7) is absorbed by layer dummies — kill log **K003**.
+
+Exploratory (not FDR): layer block dominates Shapley R² in E5–E7 (~0.36–0.41). Crowding PC1 loadings on vol and SI flip sign in E2/E3 vs other episodes. E1 saturated (**DEGENERATE**); E2 residual df=10 (**FRAGILE**); p=0.000 in E1/E2 marked DEGENERATE.
+
+### 5.4 H4: Oct vs Nov coefficient stability
+
+**REJECT stability @5% — do not pool E6 and E7.** Core Wald (PC1s + mcap) p≈0.012. Full-vector Wald with layer dummies is numerically degenerate (cond ~3e5); reported but not used for the decision. Residual df **24 / 24**. Low-power caveat logged in `h4_wald_summary.json`.
+
+### 5.5 Status of the 6 Nov note's seven calls
 
 | Call | Status |
 |---|---|
 | 1. Election was an accelerant, not the origin | Untested (out of scope) |
-| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H2/H4 pending |
-| 3. Sort was on crowding, not valuation | Sign intact, magnitude revised to -0.53; H3 pending |
-| 4. Policy exposure large, measured loss small | Pending (H4 funding block) |
+| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H2 pending; H4 rejects E6/E7 pool |
+| 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
+| 4. Policy exposure large, measured loss small | H4 rejects E6/E7 stability; funding coef differs (z≈−2.9) |
 | 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |
 | 6. S&P has paid less than a third of the median midterm drawdown | Descriptive only |
 | 7. Social feed not capitulating; tally miscounted | Survives as an audit finding |
