@@ -152,18 +152,22 @@ Exploratory (not FDR): layer block dominates Shapley R² in E5–E7 (~0.36–0.4
 
 ### 5.4 H4: Oct vs Nov coefficient stability
 
-**REJECT stability @5% — do not pool E6 and E7** (frozen stacked Wald, cluster by name; wild-bootstrap p on 11 slope×E7 interactions = 0; CR2 p≈0.005).
+**H4 null REJECTED** — do not pool E6 and E7 (frozen stacked Wald, cluster by name; wild-bootstrap p on 11 slope×E7 interactions = **&lt; 0.001 (0 of 999)**; CR2 p=**0.005**).
 
-The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific — H4 adjudicates which layers moved (compute_semis and neoclouds interactions exclude 0).
+Pre-registered alternative **"funding dominates October" NOT supported** (funding Shapley E6 = **0.011**). What rotated: **layer composition** — compute semis worse in E7 (survives ORCL-as-neocloud; not CI-robust under within-episode z-scores); neoclouds and funding borderline (percentile CI excludes 0; none Holm-significant @5%). Joint Wald carries the rejection.
+
+**Pre-registered outcome #2 triggered:** H4 rejects stability and the layer dummy dominates in November → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways.
+
+The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific.
 
 ### 5.5 Status of the 6 Nov note's seven calls
 
 | Call | Status |
 |---|---|
 | 1. Election was an accelerant, not the origin | Untested (out of scope) |
-| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H2 pending; H4 rejects E6/E7 pool |
+| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H4 rejects E6/E7 pool (**outcome #2**); H2 pending |
 | 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
-| 4. Policy exposure large, measured loss small | H4 rejects E6/E7 pool (stacked name-cluster Wald); funding + compute_semis / neoclouds move |
+| 4. Policy exposure large, measured loss small | H4 null rejected; funding-dominates-Oct **not** supported; layer composition rotated |
 | 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |
 | 6. S&P has paid less than a third of the median midterm drawdown | Descriptive only |
 | 7. Social feed not capitulating; tally miscounted | Survives as an audit finding |

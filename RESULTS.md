@@ -14,7 +14,7 @@ Fill **Result** and **Decision** only after code runs. Do not edit hypotheses af
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
 | H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | *pending* | |
 | H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
-| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald p_boot=0 (11 df); prior GICS Wald INVALID | **REJECT** stability — do not pool E6/E7 |
+| H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
 
 ## Fixture reproduction (P0)
@@ -350,7 +350,7 @@ episode          model  n_complete   adj_r2  coef_crowding_pc1  coef_valuation_p
 
 ## H4 results (P4) — frozen stacked Wald
 
-**Run:** 2026-11-11 (Australia/Melbourne).
+**Run:** 2026-11-11 (Australia/Melbourne); additions accepted 2026-11-12.
 
 ### Status
 - Prior separate-episode GICS-cluster Wald: **FROZEN TEST INVALID** (numerically degenerate).
@@ -358,48 +358,50 @@ episode          model  n_complete   adj_r2  coef_crowding_pc1  coef_valuation_p
 - **Primary (this run):** stacked E6+E7, H3 primary slopes + slope×E7, cluster by **name** (G=36), Webb wild bootstrap. Intercepts/episode levels free. `log_mkt_cap` centered+scaled.
 
 ### Degeneracy diagnosis (layer ⊃ GICS)
-Several layer dummies nest inside a single GICS sub-industry cluster, so a GICS-cluster sandwich cannot separately identify those layer effects (singular / explosive V):
-
-            layer  n_tickers  n_gics_clusters  nested_in_single_gics                                                                                                                 gics_clusters
-         builders          6                4                  False                  Broadline Retail; Interactive Media & Services; Systems Software; Technology Hardware, Storage & Peripherals
-    compute_semis          6                1                   True                                                                                                                Semiconductors
-   memory_storage          4                2                  False                                                                    Semiconductors; Technology Hardware, Storage & Peripherals
-        neoclouds          5                1                   True                                                                                                          Application Software
-   non_ai_control          6                3                  False                                                        Application Software; Investment Banking & Brokerage; Systems Software
-optics_networking          8                4                  False                            Communications Equipment; Electronic Components; Electronic Manufacturing Services; Semiconductors
-    power_cooling          5                4                  False Construction & Engineering; Electrical Components & Equipment; Electronic Equipment & Instruments; Heavy Electrical Equipment
-          semicap          5                1                   True                                                                                           Semiconductor Materials & Equipment
-
-Nested in one GICS cluster: **3/8** layers (compute_semis→Semiconductors; neoclouds→Application Software; semicap→Semiconductor Materials & Equipment). Confirmed cause of the invalid prior run.
+Several layer dummies nest inside a single GICS sub-industry cluster, so a GICS-cluster sandwich cannot separately identify those layer effects (singular / explosive V). Nested in one GICS cluster: **3/8** layers (compute_semis→Semiconductors; neoclouds→Application Software; semicap→Semiconductor Materials & Equipment). Confirmed cause of the invalid prior run. Full table: `h4_layer_gics_nesting.csv`.
 
 ### Primary Wald
 - N=72 (36 names × 2); interaction df=11
 - Design XtX cond=4.82e+03; interaction V cond (wild)=1.63e+03
-- Wald (wild) stat=39.51; p_chi2=4.337e-05; **p_wild_boot=0.0**
-- CR2 check: stat=26.71; p_chi2=0.005073
-- **Decision:** REJECT stability @5% — do not pool E6 and E7
-- **Power caveat:** Stacked N=72 (36 names × 2). k_slopes=11; interaction df=11. Name clusters=36. Design XtX cond=4.82e+03; interaction V cond (wild)=1.63e+03. A non-rejection does not prove equality with G≈36 clusters.
+- Wald (wild) stat=39.51; p_chi2=4.337e-05; **wald_p_wild_boot = &lt; 0.001 (0 of 999)**
+- CR2 check: stat=26.71; **p_chi2=0.005**
+- **Decision:** H4 null **REJECTED** (wild p&lt;0.001, CR2 p=0.005) — do not pool E6 and E7
+- **Power caveat:** Stacked N=72 (36 names × 2). k_slopes=11; interaction df=11. Name clusters=36. A non-rejection does not prove equality with G≈36 clusters.
 
-### Slope × E7 interactions (95% CI)
-               interaction      coef  se_wild   se_cr2  ci95_lo_pct  ci95_hi_pct  ci95_lo_normal  ci95_hi_normal  excludes_zero_pct
-           crowding_pc1:e7 -0.004905 0.024141 0.029474    -0.053171     0.039830       -0.052222        0.042412              False
-          valuation_pc1:e7  0.020894 0.011295 0.013709    -0.000117     0.041771       -0.001244        0.043031              False
-            funding_pc1:e7  0.028183 0.014757 0.017690     0.001290     0.059452       -0.000741        0.057107               True
-            log_mkt_cap:e7  0.060869 0.040115 0.048614    -0.017968     0.138845       -0.017757        0.139495              False
-    layer_compute_semis:e7 -0.113103 0.043470 0.053182    -0.199410    -0.029246       -0.198305       -0.027901               True
-   layer_memory_storage:e7 -0.023581 0.091618 0.111228    -0.194284     0.148256       -0.203152        0.155991              False
-        layer_neoclouds:e7  0.170630 0.087205 0.103844     0.006834     0.332623       -0.000292        0.341551               True
-   layer_non_ai_control:e7 -0.048310 0.095029 0.116551    -0.225966     0.126930       -0.234568        0.137947              False
-layer_optics_networking:e7 -0.029685 0.086331 0.105788    -0.195863     0.133521       -0.198893        0.139523              False
-    layer_power_cooling:e7  0.018531 0.059587 0.072688    -0.101988     0.134370       -0.098259        0.135321              False
-          layer_semicap:e7  0.032181 0.049183 0.059705    -0.063605     0.128039       -0.064217        0.128579              False
+### What rotated (pre-registered alternative)
+- Pre-registered alternative **"funding dominates October" NOT supported** (funding Shapley E6 = **0.011**).
+- What rotated: **layer composition** — compute semis worse in E7 (robust); neoclouds and funding borderline (percentile CI excludes 0; neither survives Holm @5%).
+- **Pre-registered outcome #2 triggered:** H4 rejects stability and the layer dummy dominates in November → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways.
 
-Interactions whose percentile CI excludes 0: funding_pc1:e7, layer_compute_semis:e7, layer_neoclouds:e7 — H4 adjudicates **which layers moved** between Oct and Nov.
+### Slope × E7 interactions (raw + Holm)
+
+| interaction | coef | p_raw_wild | p_holm | sig_holm_05 | pct CI excl 0 |
+|---|---:|---:|---:|:---:|:---:|
+| crowding_pc1:e7 | −0.0049 | 0.844 | 1.000 | no | no |
+| valuation_pc1:e7 | 0.0209 | 0.051 | 0.459 | no | no |
+| funding_pc1:e7 | 0.0282 | 0.058 | 0.464 | no | yes |
+| log_mkt_cap:e7 | 0.0610 | 0.132 | 0.925 | no | no |
+| layer_compute_semis:e7 | −0.1131 | 0.006 | 0.066 | no | yes |
+| layer_memory_storage:e7 | −0.0236 | 0.809 | 1.000 | no | no |
+| layer_neoclouds:e7 | 0.1706 | 0.038 | 0.380 | no | yes |
+| layer_non_ai_control:e7 | −0.0483 | 0.622 | 1.000 | no | no |
+| layer_optics_networking:e7 | −0.0297 | 0.744 | 1.000 | no | no |
+| layer_power_cooling:e7 | 0.0185 | 0.760 | 1.000 | no | no |
+| layer_semicap:e7 | 0.0322 | 0.530 | 1.000 | no | no |
+
+No individual interaction is Holm-significant @5%. Joint Wald (11 df) carries the rejection. Compute-semis is the strongest single move (raw p=0.006, Holm p=0.066).
+
+### Robustness (EXPLORATORY)
+
+| Check | Rejection survives? | compute_semis:e7 CI excl 0? |
+|---|---|---|
+| (a) ORCL coded as neocloud (spec dual-code) | **yes** (wild p &lt; 0.001) | **yes** (coef −0.141) |
+| (b) Within-episode z-scored returns | **yes** (wild p &lt; 0.001) | **no** (CI includes 0) |
+
+Logged as `H4_ROBUST_ORCL_NEOCLOUD` / `H4_ROBUST_ZSCORE_RETURNS` in `tests_run.csv`.
 
 ### Descriptive: layer Shapley is not November-specific
-Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0.41**, E7 **0.40** — so layer dominance alone is not November-specific. H4 tests which layer loadings changed.
+Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0.41**, E7 **0.40** — so layer dominance alone is not November-specific. H4 tests which layer loadings changed; funding did not dominate October.
 
-Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`.
-
-**Stop after H4.**
+Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`, `h4_robustness.json`.
 

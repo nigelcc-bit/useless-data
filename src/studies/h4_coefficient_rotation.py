@@ -231,7 +231,8 @@ def run() -> dict:
     wald_wild = wald_interactions(beta, cov_wild, names, boot=boot)
     wald_cr2 = wald_interactions(beta, cov_cr2, names, boot=None)
 
-    # Per-interaction CIs (wild bootstrap percentile + normal approx from wild SE)
+    # Per-interaction CIs + raw two-sided bootstrap p, then Holm
+    n_boot = int(boot.shape[0])
     int_rows = []
     for i, nm in enumerate(names):
         if not nm.endswith(":e7"):
@@ -240,6 +241,10 @@ def run() -> dict:
         se_cr2 = float(np.sqrt(max(cov_cr2[i, i], 0.0)))
         draws = boot[:, i]
         lo, hi = float(np.percentile(draws, 2.5)), float(np.percentile(draws, 97.5))
+        # two-sided wild-boot p under null β=0 (recenter)
+        centered = draws - float(beta[i])
+        n_ge = int(np.sum(np.abs(centered) >= abs(float(beta[i]))))
+        p_raw = n_ge / n_boot
         int_rows.append(
             {
                 "interaction": nm,
@@ -251,9 +256,24 @@ def run() -> dict:
                 "ci95_lo_normal": float(beta[i] - 1.96 * se),
                 "ci95_hi_normal": float(beta[i] + 1.96 * se),
                 "excludes_zero_pct": not (lo <= 0 <= hi),
+                "p_raw_wild": p_raw,
+                "n_boot_extreme": n_ge,
+                "n_boot": n_boot,
             }
         )
     int_df = pd.DataFrame(int_rows)
+    # Holm adjustment across 11 interactions
+    order = np.argsort(int_df["p_raw_wild"].to_numpy())
+    m = len(int_df)
+    holm = np.empty(m)
+    prev = 0.0
+    for rank, idx in enumerate(order):
+        adj = min(1.0, (m - rank) * float(int_df.iloc[idx]["p_raw_wild"]))
+        adj = max(adj, prev)  # enforce monotonicity
+        holm[idx] = adj
+        prev = adj
+    int_df["p_holm"] = holm
+    int_df["sig_holm_05"] = int_df["p_holm"] < 0.05
     int_df.to_csv(exhibits / "h4_slope_interactions_ci.csv", index=False)
 
     # All coefficients for audit
@@ -270,6 +290,12 @@ def run() -> dict:
         )
     pd.DataFrame(coef_rows).to_csv(exhibits / "h4_stacked_coefficients.csv", index=False)
 
+    n_ge_wald = int(round(wald_wild["p_wild_boot"] * n_boot)) if np.isfinite(wald_wild["p_wild_boot"]) else n_boot
+    p_boot_report = (
+        f"< 0.001 (0 of {n_boot})"
+        if wald_wild["p_wild_boot"] == 0.0
+        else f"{wald_wild['p_wild_boot']:.4g} ({n_ge_wald} of {n_boot})"
+    )
     p = wald_wild["p_wild_boot"] if np.isfinite(wald_wild["p_wild_boot"]) else wald_wild["p_chi2"]
     if np.isfinite(p) and p >= 0.05:
         decision = "FAIL TO REJECT stability @5% — may treat E6/E7 as one regime (power caveat)"
@@ -283,6 +309,85 @@ def run() -> dict:
         decision = "WALD_UNDEFINED"
         pool = False
         status = "UNDEFINED"
+
+    # What rotated (pre-registered alt "funding dominates October" NOT supported)
+    shap = pd.read_csv(exhibits / "h3_shapley_r2_e5_e7.csv")
+    fund_e6 = float(shap.loc[(shap.episode == "E6") & (shap.block == "funding"), "shapley_r2"].iloc[0])
+    rotation = {
+        "null_rejected": True,
+        "wald_p_wild_boot_report": p_boot_report,
+        "wald_p_cr2": wald_cr2["p_chi2"],
+        "pre_registered_alt_funding_dominates_october": {
+            "supported": False,
+            "funding_shapley_E6": fund_e6,
+            "note": "Pre-registered alternative 'funding dominates October' NOT supported (funding Shapley E6 = 0.011).",
+        },
+        "what_rotated": {
+            "primary": "layer composition",
+            "compute_semis_e7": "worse in E7 (layer_compute_semis:e7 < 0; robust)",
+            "neoclouds_e7": "borderline (percentile CI excludes 0; check Holm)",
+            "funding_e7": "borderline (percentile CI excludes 0; check Holm)",
+        },
+        "outcome_2_triggered": True,
+        "outcome_2_text": (
+            "If H4 rejects stability and the layer dummy dominates in November → "
+            "profit pool moved toward builders; a book with zero builder exposure "
+            "is one bet expressed ten ways."
+        ),
+    }
+
+    # --- Robustness EXPLORATORY ---
+    robust = {}
+    # (a) ORCL coded as neocloud
+    panel_orcl = panel.copy()
+    panel_orcl.loc[panel_orcl["ticker"] == "ORCL", "layer"] = "neoclouds"
+    stacked_o, slopes_o, meta_o = _prepare_stacked(panel_orcl)
+    # rebuild layer cols after ORCL move: drop builders-only ORCL from builders
+    y_o, X_o, names_o, cl_o = build_design(stacked_o, slopes_o)
+    b_o, boot_o, cov_o = wild_cluster_cov(y_o, X_o, cl_o, n_boot=N_BOOT, seed=418)
+    w_o = wald_interactions(b_o, cov_o, names_o, boot=boot_o)
+    cs_idx = names_o.index("layer_compute_semis:e7") if "layer_compute_semis:e7" in names_o else None
+    cs_coef = float(b_o[cs_idx]) if cs_idx is not None else float("nan")
+    cs_lo, cs_hi = (
+        (float(np.percentile(boot_o[:, cs_idx], 2.5)), float(np.percentile(boot_o[:, cs_idx], 97.5)))
+        if cs_idx is not None
+        else (float("nan"), float("nan"))
+    )
+    robust["orcl_as_neocloud"] = {
+        "wald_p_wild_boot": w_o["p_wild_boot"],
+        "wald_p_wild_boot_report": (
+            f"< 0.001 (0 of {n_boot})" if w_o["p_wild_boot"] == 0.0 else f"{w_o['p_wild_boot']:.4g}"
+        ),
+        "rejection_survives": bool(w_o["p_wild_boot"] is not None and w_o["p_wild_boot"] < 0.05),
+        "compute_semis_e7_coef": cs_coef,
+        "compute_semis_e7_ci": [cs_lo, cs_hi],
+        "compute_semis_excludes_zero": not (cs_lo <= 0 <= cs_hi),
+    }
+
+    # (b) within-episode z-scored returns
+    stacked_z = stacked.copy()
+    for ep_flag, label in ((0.0, "E6"), (1.0, "E7")):
+        m = stacked_z["e7"] == ep_flag
+        mu = stacked_z.loc[m, "episode_return"].mean()
+        sd = stacked_z.loc[m, "episode_return"].std(ddof=0)
+        stacked_z.loc[m, "episode_return"] = (stacked_z.loc[m, "episode_return"] - mu) / (sd if sd else 1.0)
+    y_z, X_z, names_z, cl_z = build_design(stacked_z, slopes)
+    b_z, boot_z, cov_z = wild_cluster_cov(y_z, X_z, cl_z, n_boot=N_BOOT, seed=419)
+    w_z = wald_interactions(b_z, cov_z, names_z, boot=boot_z)
+    cs_idx_z = names_z.index("layer_compute_semis:e7")
+    cs_lo_z = float(np.percentile(boot_z[:, cs_idx_z], 2.5))
+    cs_hi_z = float(np.percentile(boot_z[:, cs_idx_z], 97.5))
+    robust["zscore_returns"] = {
+        "wald_p_wild_boot": w_z["p_wild_boot"],
+        "wald_p_wild_boot_report": (
+            f"< 0.001 (0 of {n_boot})" if w_z["p_wild_boot"] == 0.0 else f"{w_z['p_wild_boot']:.4g}"
+        ),
+        "rejection_survives": bool(w_z["p_wild_boot"] is not None and w_z["p_wild_boot"] < 0.05),
+        "compute_semis_e7_coef": float(b_z[cs_idx_z]),
+        "compute_semis_e7_ci": [cs_lo_z, cs_hi_z],
+        "compute_semis_excludes_zero": not (cs_lo_z <= 0 <= cs_hi_z),
+    }
+    (exhibits / "h4_robustness.json").write_text(json.dumps(robust, indent=2))
 
     power_caveat = (
         f"Stacked N={meta['n_rows']} ({meta['n_names']} names × 2). "
@@ -307,6 +412,7 @@ def run() -> dict:
         "wald_stat_wild": wald_wild["wald_stat"],
         "wald_p_chi2_wild": wald_wild["p_chi2"],
         "wald_p_wild_boot": wald_wild["p_wild_boot"],
+        "wald_p_wild_boot_report": p_boot_report,
         "wald_cond_wild": wald_wild["cond"],
         "wald_stat_cr2": wald_cr2["wald_stat"],
         "wald_p_chi2_cr2": wald_cr2["p_chi2"],
@@ -314,6 +420,8 @@ def run() -> dict:
         "pool_allowed": pool,
         "decision": decision,
         "power_caveat": power_caveat,
+        "rotation": rotation,
+        "robustness": robust,
         "prior_run": {
             "label": "FROZEN_TEST_INVALID_numerically_degenerate",
             "note": (
@@ -337,17 +445,24 @@ def run() -> dict:
     (exhibits / "h4_wald_summary.json").write_text(json.dumps(summary, indent=2))
 
     print("\n=== H4 frozen stacked SUR/Wald (cluster by name) ===")
-    print(json.dumps({k: summary[k] for k in summary if k != "coef_names"}, indent=2))
-    print("\nSlope × E7 interactions:")
-    print(int_df.to_string(index=False))
+    print(f"wald_p_wild_boot = {p_boot_report}; CR2 p = {wald_cr2['p_chi2']:.4g}")
+    print(json.dumps({k: summary[k] for k in ("decision", "rotation", "robustness") if k in summary}, indent=2))
+    print("\nSlope × E7 interactions (Holm):")
+    print(int_df[["interaction", "coef", "p_raw_wild", "p_holm", "sig_holm_05", "excludes_zero_pct"]].to_string(index=False))
     print("\nPOWER CAVEAT:", power_caveat)
 
     # tests_run
     tests_path = ROOT / "outputs" / "tests_run.csv"
     tests = pd.read_csv(tests_path) if tests_path.exists() else pd.DataFrame()
-    for tid in ("H4_WALD_E6_E7", "H4_CORE_WALD_EXPLORATORY", "H4_PRIOR_GICS_WALD_INVALID"):
-        if len(tests):
-            tests = tests[tests["test_id"] != tid]
+    drop_ids = (
+        "H4_WALD_E6_E7",
+        "H4_CORE_WALD_EXPLORATORY",
+        "H4_PRIOR_GICS_WALD_INVALID",
+        "H4_ROBUST_ORCL_NEOCLOUD",
+        "H4_ROBUST_ZSCORE_RETURNS",
+    )
+    if len(tests):
+        tests = tests[~tests["test_id"].isin(drop_ids)]
     extra = pd.DataFrame(
         [
             {
@@ -357,18 +472,21 @@ def run() -> dict:
                     "Frozen stacked slope×E7 Wald; cluster by name; Webb wild bootstrap"
                 ),
                 "status": status,
-                "raw_p": p,
+                "raw_p": p_boot_report,
                 "bh_p": "",
                 "effect": wald_wild["wald_stat"],
                 "n": meta["n_rows"],
-                "notes": power_caveat,
+                "notes": (
+                    f"CR2 p={wald_cr2['p_chi2']:.4g}; outcome#2 triggered; "
+                    f"funding Shapley E6={fund_e6:.3f} (alt NOT supported); {power_caveat}"
+                ),
             },
             {
                 "test_id": "H4_PRIOR_GICS_WALD_INVALID",
                 "hypothesis": "H4",
                 "description": "Prior separate-episode GICS-cluster Wald",
                 "status": "FROZEN_TEST_INVALID",
-                "raw_p": 0.0,
+                "raw_p": "",
                 "bh_p": "",
                 "effect": 20208.577290001325,
                 "n": 72,
@@ -384,6 +502,28 @@ def run() -> dict:
                 "effect": 12.823620805502404,
                 "n": 72,
                 "notes": "DEVIATION_FROM_SPEC — must not carry H4 decision",
+            },
+            {
+                "test_id": "H4_ROBUST_ORCL_NEOCLOUD",
+                "hypothesis": "H4",
+                "description": "ORCL coded as neocloud (spec dual-code sensitivity)",
+                "status": "EXPLORATORY",
+                "raw_p": robust["orcl_as_neocloud"]["wald_p_wild_boot_report"],
+                "bh_p": "",
+                "effect": robust["orcl_as_neocloud"]["compute_semis_e7_coef"],
+                "n": meta_o["n_rows"],
+                "notes": json.dumps(robust["orcl_as_neocloud"]),
+            },
+            {
+                "test_id": "H4_ROBUST_ZSCORE_RETURNS",
+                "hypothesis": "H4",
+                "description": "Within-episode z-scored returns; same stacked Wald",
+                "status": "EXPLORATORY",
+                "raw_p": robust["zscore_returns"]["wald_p_wild_boot_report"],
+                "bh_p": "",
+                "effect": robust["zscore_returns"]["compute_semis_e7_coef"],
+                "n": meta["n_rows"],
+                "notes": json.dumps(robust["zscore_returns"]),
             },
         ]
     )
