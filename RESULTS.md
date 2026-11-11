@@ -2,17 +2,26 @@
 
 **What would change the book** (why this study exists):
 
-- **If H2 and H5 hold and L(5) is positive** → flush; supplier-heavy book is positioned correctly; patience.
-- **If H4 rejects stability and the layer dummy dominates in November** → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways.
+- **If H2 and H5 hold and L(5) is positive** → flush; supplier-heavy book is positioned correctly; patience. **Outcome #1 can no longer trigger:** H2 was required and is **killed (K004)** — seesaw is description, not signal.
+- **If H4 rejects stability and the layer dummy dominates in November** → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways. **Outcome #2 triggered (H4).**
 - **If H1 shows semis have a materially worse continuation base rate than the S&P** → the 6 Nov "don't sell into the hole" inference does not apply to this book; size differently before the next leg.
 - **If H3 flips and valuation dominates** → crowding framework from July/October/November is wrong; three prior notes need retracting.
+
+### Outcomes scorecard (pre-registered)
+
+| # | Pre-registered outcome | Status |
+|---|---|---|
+| 1 | H2 + H5 hold and L(5) > 0 → flush / patience | **Cannot trigger** — H2 killed (K004); H5 pending |
+| 2 | H4 rejects + layer dominates November → profit pool to builders | **Triggered** |
+| 3 | H1 semis worse continuation than S&P → Call 5 does not apply | Settled via H1b/K002 (Call 5 does not transfer; H1b inconclusive) |
+| 4 | H3 flips, valuation dominates → retract crowding notes | **Not triggered** — H3 UNSUPPORTED (K003); neither block wins |
 
 Fill **Result** and **Decision** only after code runs. Do not edit hypotheses after seeing results.
 
 | ID | Hypothesis | Null | Decision rule / falsifier | Result | Decision |
 |---|---|---|---|---|---|
 | H1 | Semis do not inherit S&P benign first-shock base rate | Conditional first-shock near-high fwd distribution indistinguishable from S&P | Further 10%+ DD frequency within bootstrap CI of S&P → Call 5 extends | Near-high first-shock cell underpowered (T002 NOT_RUN); **H1b** deep-DD: SOX 40% vs SPX 24% further-10% DD/63d, Fisher raw p=0.465 | H1b inconclusive (25–50%); book rests on H2/H5; Call 5 does not transfer (K002) |
-| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | *pending* | |
+| H2 | Builder–supplier spread is mean-reverting factor, not beta | Residual spread is random walk; extremes uninformative | VR≈1 and no sig. fwd spread return → seesaw is description only | CD p=0.45; pooled fwd net 30bp p_NW 0.30–0.76 (N=9); 63d +3.5% net 7/9 = PRIOR | **K004** — seesaw is description, not signal; outcome #1 cannot trigger |
 | H3 | Crowding dominates valuation across episodes | Crowding has no incremental R² over valuation+fundamentals | Valuation incremental R² > crowding in ≥4/7 episodes → retract crowding claim | Falsifier not triggered (3/6); crowding incr adj-R² ≤0 in 5/6; p 0.26–0.90 E3–E7 | **H3 UNSUPPORTED** (K003): neither crowding nor valuation adds power within layers |
 | H4 | Driver rotated Oct → Nov 2026 | Coefficient vector stable across E6 and E7 | Wald fails to reject @5% → one regime; may pool | Stacked name-cluster Wald wild p **&lt; 0.001 (0 of 999)**; CR2 p=0.005; funding Shapley E6=0.011 (alt NOT supported) | **REJECT** — outcome #2 triggered; do not pool E6/E7 |
 | H5 | Pre-open L(k) forecasts 63d relative supplier performance | L(5)/L(10) uninformative OOS | OOS R²≤0 or hit≤50% → demote to commentary | *pending* | |
@@ -404,4 +413,94 @@ Logged as `H4_ROBUST_ORCL_NEOCLOUD` / `H4_ROBUST_ZSCORE_RETURNS` in `tests_run.c
 Layer Shapley R² dominates in **all three** AI episodes — E5 **0.36**, E6 **0.41**, E7 **0.40** — so layer dominance alone is not November-specific. H4 tests which layer loadings changed; funding did not dominate October.
 
 Exhibits: `h4_wald_summary.json`, `h4_slope_interactions_ci.csv`, `h4_stacked_coefficients.csv`, `h4_layer_gics_nesting.csv`, `h4_robustness.json`.
+
+## H2 design (frozen before forward returns)
+
+**Frozen:** 2026-11-12 (Australia/Melbourne). **No forward returns have been loaded at freeze time.** Do not edit this design block after seeing forward-return results.
+
+### Construction (already run)
+- Sample: 2023-01-01 → present. EW builders vs EW AI-chain suppliers (exclude `non_ai_control`).
+- Beta-neutral residual vs SPY (trailing 126d OLS with intercept); spread = supplier residual − builder residual.
+- −2.5σ events: rolling mean/sd of spread **end at t−1** (shift 1), matching H1 rule B.
+- Regime: HY OAS (`BAMLH0A0HYM2`) above/below lagged 126d median. FRED HY OAS history starts **2023-11-07**; events before the 126d warm-up are **unclassified**.
+
+### Forward design (frozen now)
+- **De-cluster:** first event per non-overlapping **21-session** block (on the trading calendar).
+- **Primary:** pooled forward spread return at **5 / 21 / 63** sessions (sum of residual spread over t+1…t+h). Report hit rate and median. Inference: **Newey–West** (lag = horizon) and block bootstrap. **Mean reversion = positive** forward spread return.
+- **Regime split** (HY OAS above/below lagged 126d median) = **PRIOR ONLY** if either cell has **N &lt; 8**.
+- Report all forward results **net of 30bp round-trip cost**.
+
+### Status at freeze
+VR (hetero-robust z*) + Chow–Denning + causal event counts + Nov 4/5 exploratory decomp are run. Forward module not yet executed.
+
+---
+
+## H2 results (P5) — VR, events, exploratory (pre-forward)
+
+**Run:** 2026-11-12 (Australia/Melbourne). Forward block below filled only after freeze commit.
+
+### Variance ratio (Lo–MacKinlay, hetero-robust z*)
+
+| q | VR | z* | p* | z_homo (audit) | p_homo (audit) |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 0.990 | −0.22 | 0.828 | −0.30 | 0.762 |
+| 5 | 0.891 | −1.11 | 0.267 | −1.54 | 0.123 |
+| 10 | 0.786 | −1.43 | 0.152 | −1.97 | 0.049 |
+| 21 | 0.669 | −1.49 | 0.137 | −2.01 | 0.044 |
+
+**Chow–Denning** joint (q = 2,5,10,21): CD = **1.49**, SMM p = **0.446** — do not reject VR=1 jointly at 5%. Homoskedastic z inflated significance; hetero-robust does not. Each q is its own `tests_run` row (`H2_VR_q2`…`H2_VR_q21`) plus `H2_CHOW_DENNING`.
+
+### −2.5σ event counts (causal σ through t−1)
+
+| Regime | N events |
+|---|---:|
+| HY_OAS_above_median | 7 |
+| HY_OAS_below_median | 6 |
+| Unclassified (HY OAS median warm-up) | 1 |
+
+Total raw events: **14**; classified: **13**. Includes **2026-11-04**.
+
+### EXPLORATORY (not in FDR family) — 4 Nov / 5 Nov 2026 beta decomposition
+
+| date | builder β | supplier β | builder resid | supplier resid | spread | z | H2 event? |
+|---|---:|---:|---:|---:|---:|---:|:---:|
+| 2026-11-04 (day after midterm) | 1.40 | 3.39 | +0.012 | −0.118 | −0.130 | **−3.81** | **yes** |
+| 2026-11-05 | 1.43 | 3.14 | +0.030 | +0.004 | −0.025 | **−0.59** | **no** |
+
+**5 Nov is not an H2 event** (causal z = −0.59 ≫ −2.5). **4 Nov is** (z = −3.81). Exhibit: `h2_nov4_nov5_beta_decomp.csv`.
+
+## H2 results (P5) — forward returns (post-freeze)
+
+**Run:** 2026-11-12 (Australia/Melbourne). Design block above is immutable. Code: `src/studies/h2_spread_factor.py --forwards`.
+
+### De-cluster
+14 raw −2.5σ events → **10** after first-per-21-session block. **2026-11-04** is kept as an event but has no complete +5/+21/+63 window (sample ends 2026-11-05) → pooled N=**9** for all horizons.
+
+### Primary — pooled forward spread return (net 30bp round-trip)
+
+| h | N | mean_net | median_net | hit rate | NW SE | t_NW | p_NW | p_block_boot |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 5 | 9 | +0.006 | +0.007 | 67% | 0.0098 | 0.61 | 0.542 | 0.718 |
+| 21 | 9 | −0.011 | +0.016 | 56% | 0.0370 | −0.30 | 0.765 | 0.800 |
+| 63 | 9 | +0.035 | +0.038 | 78% | 0.0344 | 1.03 | 0.305 | 0.472 |
+
+No horizon rejects mean=0 at 5% (NW or block bootstrap). Hit rates &gt;50% but underpowered (N=9).
+
+### Regime split — PRIOR ONLY (both cells N &lt; 8)
+
+| Regime | N (fwd-eligible) |
+|---|---:|
+| HY_OAS_above_median | 3 |
+| HY_OAS_below_median | 5 |
+
+Logged as PRIOR ONLY; not used for the H2 decision. Exhibit: `h2_forward_summary.csv`.
+
+### Decision
+- VR (hetero-robust) + Chow–Denning: **fail to reject** VR=1 jointly (CD p=0.45).
+- Forward pooled: **no significant** positive mean-reversion net of 30bp at 5/21/63.
+- **K004:** Builder–supplier spread is **not** a mean-reverting factor. Seesaw is description, not signal.
+- **PRIOR (not a finding):** 63d mean_net +3.5%, hit 7/9 — point estimate only; do not cite as evidence.
+- **Outcome #1 cannot trigger** (required H2). Call 2’s directional description still stands.
+
+Exhibits: `h2_forward_events.csv`, `h2_forward_summary.csv`, `h2_forward_meta.json`, `h2_variance_ratio.csv`, `h2_chow_denning.json`, `h2_events_m2p5sigma.csv`, `h2_nov4_nov5_beta_decomp.csv`.
 
