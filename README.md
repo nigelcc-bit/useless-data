@@ -100,94 +100,52 @@ The governing rule: **this project is a false-discovery controller, not a patter
 
 ---
 
-## 5. Results so far
+## 5. Final results
 
-### 5.1 Reproducing the 6 Nov note
+Study as-of pin: **2026-11-05**. Tag: `flush-or-regime-v1`. Full table: [`RESULTS.md`](RESULTS.md). Kill log: [`outputs/killed_hypotheses.md`](outputs/killed_hypotheses.md). Addendum: [`docs/addendum_6nov_calls.md`](docs/addendum_6nov_calls.md). Exhibits: `outputs/exhibits/fig01_*.png` … `fig14_*.png`.
 
-ETF moves on 5 Nov reproduce from Yahoo and match IBKR: SOXX **-12.15%**, SPY **-4.41%**, QQQ **-6.49%**, SMH **-11.21%**. The note's per-name numbers did not all survive:
-
-| Figure | 6 Nov note | Re-derived | Status |
-|---|---|---|---|
-| Hyperscaler EW, 5 Nov | -3.0% | **-2.98%** | Pass |
-| Supplier EW, 5 Nov | -12.9% | **-13.53%** | Note error (neocloud layer) |
-| Neocloud EW, 5 Nov | -10.6% | **-13.91%** | Note error; IBKR confirms -13.91% |
-| Supplier EW, 28 Oct to 5 Nov | -26.5% | **-27.89%** | Superseded |
-| Spearman(5 Nov return, YTD return) | -0.69 | **-0.53** (p = 0.009) | Unreconciled; note inputs unrecoverable |
-| Spearman(5 Nov return, prior 5-day return) | +0.59 | **+0.62** | Pass |
-| Names >20% below 52-week high | 21/23 | **21/23** | Pass |
-
-**Reading:** the builder-supplier gap was **larger** than the note printed. The "most-run-up names fell hardest" relationship holds, but at about **-0.5**, not -0.7.
-
-### 5.2 H1: does the S&P's base rate apply to semis?
-
-**No. The question settles on classification alone, before any forward returns.**
-
-| Series on 5 Nov | Distance from 252-day high | -4% rule | -2.5σ rule |
-|---|---|---|---|
-| S&P 500 | -1.7% | First shock | Cluster day |
-| Nasdaq Composite | -6.8% | Cluster day | Cluster day |
-| **SOX** | **-29.8%** | **Cluster day** | **Cluster day** |
-
-The note's benign base rate came from S&P "first shocks near the high". On 5 Nov SOX was neither: it was 29.8% below its high, in its 21st -4% day in 12 months. Semis' own near-high first-shock cells have only N = 1 to 7, so that test (T002) is recorded as underpowered (kill log K002).
-
-**H1b (exploratory)** asks the matching question instead: what happened after past deep-drawdown cluster days?
-
-| Series | Events (bear markets) | Fell another 10% within 63 sessions | Median +63d | Median +252d |
-|---|---|---|---|---|
-| **SOX** | 15 (10) | **6/15 events, 3/10 bear markets** | **+1.5%** | **+30.6%** |
-| S&P 500 | 21 (14) | 5/21 | +9.6% | +19.7% |
-| Nasdaq | 10 (7) | 4/10 | -0.1% | +11.9% |
-
-SOX vs S&P: Fisher raw p = **0.465**. Under the pre-registered rule (≥50% = expect another leg, ≤25% = patience, between = inconclusive), SOX's 40% is **inconclusive**. Historically this state has meant a **coin-flip next quarter** and a **strong following year**. The book decision now rests on H2 and H5.
-
-*Post-hoc observation, not tested:* every SOX bear market with a further 10% drop (1997-98, 2000, 2008) was an earnings-led downturn. Shock- and rate-led episodes (2004, 2006, 2011, 2020, 2022, 2025) did not drop further. The variable this points to is supplier earnings revisions.
-
-### 5.3 H3: crowding vs valuation
-
-**H3 UNSUPPORTED: neither crowding nor valuation adds explanatory power within layers.**
-
-Falsifier not triggered (valuation incremental adj-R² > crowding in 3/6 counted episodes; E1 N=8 excluded). Crowding's own null is also not rejected: crowding incremental adj-R² ≤ 0 in **5/6** counted episodes; wild-bootstrap p on crowding PC1 is **0.26–0.90** in E3–E7. Univariate crowding association (adj-R² **0.37** E6, **0.23** E7) is absorbed by layer dummies — kill log **K003**.
-
-Exploratory (not FDR): layer block dominates Shapley R² in E5–E7 (~0.36–0.41). Crowding PC1 loadings on vol and SI flip sign in E2/E3 vs other episodes. E1 saturated (**DEGENERATE**); E2 residual df=10 (**FRAGILE**); p=0.000 in E1/E2 marked DEGENERATE.
-
-### 5.4 H4: Oct vs Nov coefficient stability
-
-**H4 null REJECTED** — do not pool E6 and E7 (frozen stacked Wald, cluster by name; wild-bootstrap p on 11 slope×E7 interactions = **&lt; 0.001 (0 of 999)**; CR2 p=**0.005**).
-
-Pre-registered alternative **"funding dominates October" NOT supported** (funding Shapley E6 = **0.011**). What rotated: **layer composition** — compute semis worse in E7 (survives ORCL-as-neocloud; not CI-robust under within-episode z-scores); neoclouds and funding borderline (percentile CI excludes 0; none Holm-significant @5%). Joint Wald carries the rejection.
-
-**Pre-registered outcome #2 triggered:** H4 rejects stability and the layer dummy dominates in November → profit pool moved toward builders; a book with zero builder exposure is one bet expressed ten ways.
-
-The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific.
-
-### 5.5 H2: beta-neutral supplier−builder spread (P5) — K004
-
-From 2023-01-01: EW supplier − EW builder, each beta-neutralised vs SPY (126d). **VR hetero-robust z\***: none individually sig; Chow–Denning CD=1.49 (p=0.45). **Pooled fwd net 30bp** at 5/21/63: not significant (N=9). **K004 — seesaw is description, not signal.** 63d +3.5% net (7/9) is a **PRIOR**, not a finding. **5 Nov is not an H2 event** (z=−0.59); **4 Nov is** (z=−3.81).
-
-### 5.6 H5: leadership troughs (P6 counts) — PRIOR ONLY
-
-63d lows on cum supplier−builder spread from 2023: **15** troughs (train 10 / OOS 5). OOS with complete L(10) = **4 &lt; 8** → **H5 PRIOR ONLY; do not test.** Daily monitor (`src.monitor.daily_desk`) prints L(5)/L(10), trough status, and beta-neutral spread z from the prior US close (before 5pm HKT).
-
-### 5.7 Pre-registered outcomes scorecard
+### Outcomes scorecard
 
 | # | Outcome | Status |
 |---|---|---|
-| 1 | H2+H5 hold, L(5)>0 → flush / patience | **Cannot trigger** (H2 killed; H5 PRIOR ONLY) |
+| 1 | H2+H5 hold, L(5)>0 → flush / patience | **Dead** (K004; H5 PRIOR ONLY) |
 | 2 | H4 rejects + layer dominates Nov → profit pool to builders | **Triggered** |
-| 3 | H1 semis worse than S&P → Call 5 does not apply | Settled (K002 / H1b inconclusive) |
-| 4 | H3 valuation dominates → retract crowding | **Not triggered** (K003) |
+| 3 | H1 semis worse than S&P → Call 5 does not apply | **Inconclusive** (H1b 40%; K002) |
+| 4 | H3 valuation dominates → retract crowding | **Not triggered**; crowding unsupported (K003) |
 
-### 5.8 Status of the 6 Nov note's seven calls
+### Hypotheses
+
+| ID | Decision |
+|---|---|
+| H1 / H1b | Call 5 does not transfer (K002). Deep-DD continuation **inconclusive** (SOX 40%). |
+| H2 | **K004** — seesaw is description, not a mean-reverting factor. |
+| H3 | **K003 / UNSUPPORTED** — neither crowding nor valuation wins within layers. |
+| H4 | **REJECT** stability (BH q=0.10: only family reject). Outcome #2. |
+| H5 | **PRIOR ONLY** (OOS N=4). Monitor ships; untested. |
+
+### FDR (Benjamini–Hochberg q=0.10)
+
+Pre-registered family with numeric p: 11 tests. **Only `H4_WALD_E6_E7` rejects** after BH (raw &lt;0.001 → BH≈0.011). NOT_RUN / underpowered / PRIOR_ONLY rows listed with reasons in `p7_fdr_preregistered.csv`. Exploratory / DEVIATION rows unadjusted in `p7_fdr_exploratory_unadjusted.csv`. Romano–Wolf on H3 E3–E7 crowding/valuation PC1: no block survives (`p7_romano_wolf_h3_blocks.csv`).
+
+### Note reproduction (still the baseline)
+
+ETF 5 Nov: SOXX **−12.15%**, SPY **−4.41%**, QQQ **−6.49%**, SMH **−11.21%**. Builder EW **−2.98%**, supplier EW **−13.53%**, neocloud **−13.91%** (note understated the gap). YTD Spearman **−0.53** (note −0.69 UNRECONCILED).
+
+### Seven calls
 
 | Call | Status |
 |---|---|
-| 1. Election was an accelerant, not the origin | Untested (out of scope) |
-| 2. Builder-supplier seesaw returned | Direction intact; **H2 killed (K004)** — description not signal; H4 outcome #2 stands |
-| 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
-| 4. Policy exposure large, measured loss small | H4 null rejected; funding-dominates-Oct **not** supported; layer composition rotated |
-| 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |
-| 6. S&P has paid less than a third of the median midterm drawdown | Descriptive only |
-| 7. Social feed not capitulating; tally miscounted | Survives as an audit finding |
+| 1. Election = accelerant | Untested |
+| 2. Seesaw returned | Direction yes; **not a factor (K004)**; H4 outcome #2 |
+| 3. Crowding not valuation | **K003** |
+| 4. Funding / policy channel | H4 reject; funding-dominates-Oct **no**; layer composition rotated |
+| 5. First-shock bounce base rate | **Does not apply to semis** |
+| 6. Midterm fee paid | Descriptive only |
+| 7. Feed / tally | Survives as audit |
+
+### Monitor refresh (DESCRIPTIVE — not a study result)
+
+Snapshot through **2026-11-10** (`data/processed/monitor_snapshots/`). Study pin unchanged. **5 Nov trough confirmed on 6 Nov**; L(5) not yet available; through 10 Nov suppliers +7.0% vs builders +2.4% since confirmation; spread z 6/9/10 Nov: +1.66 / +0.49 / +0.16. Label: single observation, H5 untested.
 
 ---
 

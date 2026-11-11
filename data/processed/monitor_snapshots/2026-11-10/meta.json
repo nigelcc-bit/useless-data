@@ -1,0 +1,9 @@
+{
+  "snapshot_asof": "2026-11-10",
+  "study_asof_pin": "2026-11-05",
+  "n_symbols": 53,
+  "n_rows": 2982,
+  "raw_dir": "data/raw/monitor_2026-11-11",
+  "label": "MONITOR_SNAPSHOT \u2014 does not mutate study results",
+  "pulled_at_utc": "2026-11-11T13:34:48.213883+00:00"
+}
