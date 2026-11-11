@@ -1,0 +1,17 @@
+{
+  "asof_hkt": "2026-11-11 21:27 HKT",
+  "prior_us_close": "2026-11-05",
+  "signal_cutoff": "prior_US_close_only",
+  "readable_before": "17:00 Asia/Hong_Kong",
+  "L5": -0.025124495804741274,
+  "L10": null,
+  "readout": "MIXED \u2014 wait for next rebound cluster",
+  "trough_rule": "63d_low_on_cum_supplier_minus_builder_confirmed_next_close_up",
+  "last_confirmed_trough": "2026-10-23",
+  "last_confirmation_date": "2026-10-26",
+  "prior_close_is_63d_low_on_cum_spread": true,
+  "prior_day_was_confirmed_trough": false,
+  "spread_beta_neutral": -0.02527239424417342,
+  "spread_z": -0.5923632958079824,
+  "spread_z_note": "causal z (mean/sd through t-1); 4-Nov-style H2 event used z\u2264\u22122.5"
+}
