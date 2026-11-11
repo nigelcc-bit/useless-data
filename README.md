@@ -152,7 +152,9 @@ Exploratory (not FDR): layer block dominates Shapley R² in E5–E7 (~0.36–0.4
 
 ### 5.4 H4: Oct vs Nov coefficient stability
 
-**REJECT stability @5% — do not pool E6 and E7.** Core Wald (PC1s + mcap) p≈0.012. Full-vector Wald with layer dummies is numerically degenerate (cond ~3e5); reported but not used for the decision. Residual df **24 / 24**. Low-power caveat logged in `h4_wald_summary.json`.
+**REJECT stability @5% — do not pool E6 and E7** (frozen stacked Wald, cluster by name; wild-bootstrap p on 11 slope×E7 interactions = 0; CR2 p≈0.005).
+
+The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific — H4 adjudicates which layers moved (compute_semis and neoclouds interactions exclude 0).
 
 ### 5.5 Status of the 6 Nov note's seven calls
 
@@ -161,7 +163,7 @@ Exploratory (not FDR): layer block dominates Shapley R² in E5–E7 (~0.36–0.4
 | 1. Election was an accelerant, not the origin | Untested (out of scope) |
 | 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H2 pending; H4 rejects E6/E7 pool |
 | 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
-| 4. Policy exposure large, measured loss small | H4 rejects E6/E7 stability; funding coef differs (z≈−2.9) |
+| 4. Policy exposure large, measured loss small | H4 rejects E6/E7 pool (stacked name-cluster Wald); funding + compute_semis / neoclouds move |
 | 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |
 | 6. S&P has paid less than a third of the median midterm drawdown | Descriptive only |
 | 7. Social feed not capitulating; tally miscounted | Survives as an audit finding |
