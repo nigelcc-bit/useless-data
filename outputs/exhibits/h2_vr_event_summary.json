@@ -1,5 +1,5 @@
 {
-  "status": "VR_EVENTS_EXPLORATORY",
+  "status": "FULL",
   "null": "After beta control, supplier-minus-builder spread is a random walk.",
   "falsifier": "Variance ratio \u2248 1 and no significant forward spread return.",
   "start": "2023-01-01",
@@ -160,6 +160,20 @@
       "status": "EXPLORATORY"
     }
   ],
-  "forward": null,
-  "compute_forwards": false
+  "forward": {
+    "regime_split_role": "PRIOR_ONLY_N_LT_8",
+    "regime_cell_n": {
+      "HY_OAS_above_median": 3,
+      "HY_OAS_below_median": 5
+    },
+    "n_declustered": 10,
+    "cost_rt": 0.003,
+    "horizons": [
+      5,
+      21,
+      63
+    ],
+    "decluster_block": 21
+  },
+  "compute_forwards": true
 }

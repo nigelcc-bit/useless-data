@@ -160,16 +160,16 @@ Pre-registered alternative **"funding dominates October" NOT supported** (fundin
 
 The earlier separate-episode GICS-cluster Wald is **FROZEN TEST INVALID** (numerically degenerate): 3/8 layer dummies nest inside a single GICS sub-industry. The post-hoc 4-df core Wald (p≈0.012) is **DEVIATION_FROM_SPEC / EXPLORATORY** and does not carry the decision. Layer Shapley R² is already dominant in E5–E7 (0.36 / 0.41 / 0.40), so layer dominance alone is not November-specific.
 
-### 5.5 H2: beta-neutral supplier−builder spread (P5, partial)
+### 5.5 H2: beta-neutral supplier−builder spread (P5)
 
-From 2023-01-01: EW supplier − EW builder, each beta-neutralised vs SPY (126d). **Variance ratio** (Lo–MacKinlay): VR(10)=0.79 (p=0.049), VR(21)=0.67 (p=0.044) — below 1 at longer horizons. **−2.5σ events** by HY OAS 126d-median regime: 7 above / 6 below (1 warm-up unclassified; HY OAS ingest starts 2023-11-07). **Stop before forward returns.**
+From 2023-01-01: EW supplier − EW builder, each beta-neutralised vs SPY (126d). **VR hetero-robust z\***: none individually sig; Chow–Denning CD=1.49 (p=0.45) — do not reject VR=1 jointly. Homoskedastic z had overstated significance. **−2.5σ events** (causal σ through t−1): 7 above / 6 below HY OAS median (1 warm-up). De-cluster 21 → N=10 (fwd N=9). **Pooled fwd net 30bp** at 5/21/63: no significant mean reversion (NW p 0.30–0.76). Regime split PRIOR ONLY (cells 3/5). **5 Nov is not an H2 event** (z=−0.59); **4 Nov is** (z=−3.81).
 
 ### 5.6 Status of the 6 Nov note's seven calls
 
 | Call | Status |
 |---|---|
 | 1. Election was an accelerant, not the origin | Untested (out of scope) |
-| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H4 rejects E6/E7 pool (**outcome #2**); H2 VR/counts run, fwd pending |
+| 2. Builder-supplier seesaw returned | Direction intact, gap larger than printed; H4 rejects E6/E7 pool (**outcome #2**); H2 does not promote seesaw to a mean-reverting factor (N=9) |
 | 3. Sort was on crowding, not valuation | **K003 — not supported in multivariate H3; layer absorbs univariate crowding** |
 | 4. Policy exposure large, measured loss small | H4 null rejected; funding-dominates-Oct **not** supported; layer composition rotated |
 | 5. First-shock base rate favours a bounce | **Does not apply to the semis book** |

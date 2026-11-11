@@ -460,3 +460,36 @@ Total raw events: **14**; classified: **13**. Includes **2026-11-04**.
 
 **5 Nov is not an H2 event** (causal z = −0.59 ≫ −2.5). **4 Nov is** (z = −3.81). Exhibit: `h2_nov4_nov5_beta_decomp.csv`.
 
+## H2 results (P5) — forward returns (post-freeze)
+
+**Run:** 2026-11-12 (Australia/Melbourne). Design block above is immutable. Code: `src/studies/h2_spread_factor.py --forwards`.
+
+### De-cluster
+14 raw −2.5σ events → **10** after first-per-21-session block. **2026-11-04** is kept as an event but has no complete +5/+21/+63 window (sample ends 2026-11-05) → pooled N=**9** for all horizons.
+
+### Primary — pooled forward spread return (net 30bp round-trip)
+
+| h | N | mean_net | median_net | hit rate | NW SE | t_NW | p_NW | p_block_boot |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 5 | 9 | +0.006 | +0.007 | 67% | 0.0098 | 0.61 | 0.542 | 0.718 |
+| 21 | 9 | −0.011 | +0.016 | 56% | 0.0370 | −0.30 | 0.765 | 0.800 |
+| 63 | 9 | +0.035 | +0.038 | 78% | 0.0344 | 1.03 | 0.305 | 0.472 |
+
+No horizon rejects mean=0 at 5% (NW or block bootstrap). Hit rates &gt;50% but underpowered (N=9).
+
+### Regime split — PRIOR ONLY (both cells N &lt; 8)
+
+| Regime | N (fwd-eligible) |
+|---|---:|
+| HY_OAS_above_median | 3 |
+| HY_OAS_below_median | 5 |
+
+Logged as PRIOR ONLY; not used for the H2 decision. Exhibit: `h2_forward_summary.csv`.
+
+### Decision
+- VR (hetero-robust) + Chow–Denning: **fail to reject** VR=1 jointly (CD p=0.45).
+- Forward pooled: **no significant** positive mean-reversion net of 30bp at 5/21/63.
+- **Falsifier direction:** seesaw is not yet a tradable mean-reverting signal on this sample. H2 remains **unsupported** at conventional size with N=9 de-clustered events (power caveat). Call 2’s directional description still stands; H2 does not promote it to a factor.
+
+Exhibits: `h2_forward_events.csv`, `h2_forward_summary.csv`, `h2_forward_meta.json`, `h2_variance_ratio.csv`, `h2_chow_denning.json`, `h2_events_m2p5sigma.csv`, `h2_nov4_nov5_beta_decomp.csv`.
+
