@@ -1,4 +1,4 @@
-"""Fail the build if any src/ module reads CALIBRATED-tagged data."""
+"""Fail the build if any module reads CALIBRATED-tagged data."""
 
 from __future__ import annotations
 
@@ -6,17 +6,17 @@ from pathlib import Path
 
 import pytest
 
-from src.config_io import ROOT
+from core.config_io import ROOT, study_root
 
 FORBIDDEN = ("CALIBRATED_CIRCULAR", "CALIBRATED", "ytd_source", "prior5_source")
-SRC = ROOT / "src"
+CODE_ROOTS = (ROOT / "core", study_root() / "src")
 DATA = ROOT / "data"
-CONFIG = ROOT / "config"
+CONFIG_ROOTS = (ROOT / "core" / "reference", study_root() / "config")
 
 
 def test_data_and_config_contain_no_calibrated_values():
     hits: list[str] = []
-    for root in (DATA, CONFIG):
+    for root in (DATA, *CONFIG_ROOTS):
         if not root.exists():
             continue
         for path in root.rglob("*"):
@@ -26,20 +26,25 @@ def test_data_and_config_contain_no_calibrated_values():
             for token in ("CALIBRATED_CIRCULAR", "CALIBRATED"):
                 if token in text:
                     hits.append(f"{path.relative_to(ROOT)}: contains {token}")
-    assert hits == [], "fabricated calibrated data must not live under data/ or config/:\n" + "\n".join(hits)
+    assert hits == [], (
+        "fabricated calibrated data must not live under data/ or config roots:\n"
+        + "\n".join(hits)
+    )
 
 
 def test_src_modules_do_not_reference_calibrated_columns_or_files():
     hits: list[str] = []
-    for path in SRC.rglob("*.py"):
-        text = path.read_text()
-        for token in FORBIDDEN:
-            if token in text:
-                hits.append(f"{path.relative_to(ROOT)}: references {token}")
-        # Explicit ban on the quarantined panel filename if reintroduced with calibrated cols
-        if "nov5_cross_section" in text and "CALIBRATED" in text:
-            hits.append(f"{path.relative_to(ROOT)}: reads quarantined panel")
-    assert hits == [], "src/ must not read CALIBRATED columns/files:\n" + "\n".join(hits)
+    for root in CODE_ROOTS:
+        if not root.exists():
+            continue
+        for path in root.rglob("*.py"):
+            text = path.read_text()
+            for token in FORBIDDEN:
+                if token in text:
+                    hits.append(f"{path.relative_to(ROOT)}: references {token}")
+            if "nov5_cross_section" in text and "CALIBRATED" in text:
+                hits.append(f"{path.relative_to(ROOT)}: reads quarantined panel")
+    assert hits == [], "code must not read CALIBRATED columns/files:\n" + "\n".join(hits)
 
 
 def test_quarantined_panel_file_absent():

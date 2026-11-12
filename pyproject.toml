@@ -1,7 +1,7 @@
 [project]
 name = "ai-selloff-study"
 version = "0.1.0"
-description = "Pre-registered tests: was 5 Nov 2026 a flush or a regime change?"
+description = "Pre-registered equity research programme (core library + dated studies)"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -21,17 +21,17 @@ dev = ["pytest>=8.0", "linearmodels>=6.0", "arch>=7.0"]
 
 [project.scripts]
 ai-selloff-monitor = "src.monitor.leadership:main"
-reproduce-fixtures = "src.studies.reproduce_nov5:main"
+reproduce-fixtures = "src.reproduce_nov5:main"
 
 [build-system]
 requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+where = [".", "studies/2026-11-flush-or-regime"]
+include = ["core*", "src*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
+testpaths = ["tests", "studies/2026-11-flush-or-regime/tests"]
+pythonpath = [".", "studies/2026-11-flush-or-regime"]
 addopts = "-q"

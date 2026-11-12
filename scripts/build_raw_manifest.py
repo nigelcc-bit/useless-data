@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config_io import ROOT
+from core.config_io import ROOT
 
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "raw_manifest.csv"

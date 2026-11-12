@@ -1,0 +1,9 @@
+# Reference data versions pinned for this study. Do not retarget mid-study.
+reference:
+  universe: universe_v2026-11
+  ai_exposure: ai_exposure_v2026-11
+  gics_subindustry: gics_subindustry_v2026-11
+  corporate_actions: corporate_actions_v2026-11
+  large_move_reasons: large_move_reasons_v2026-11
+study_asof: "2026-11-05"
+tag: flush-or-regime-v1

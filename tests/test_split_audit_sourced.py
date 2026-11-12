@@ -5,12 +5,12 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from src.adjust.splits import (
+from core.adjust.splits import (
     ALLOWED_REASON_CATEGORIES,
     audit_large_moves,
     load_large_move_reasons,
 )
-from src.config_io import ROOT
+from core.config_io import ROOT
 
 
 def test_reasons_catalog_covers_known_critical_moves():

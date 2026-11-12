@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.features.crowding import distance_from_high, prior_return, realised_vol
+from core.features.crowding import distance_from_high, prior_return, realised_vol
 from src.monitor.leadership import (
     confirmed_trough_flags,
     leadership_stat,
@@ -87,7 +87,7 @@ def test_distance_from_high_uses_only_history_through_t():
 
 
 def test_crowding_module_has_no_negative_shifts():
-    from src.features import crowding
+    from core.features import crowding
 
     source = open(crowding.__file__).read()
     assert "shift(-" not in source

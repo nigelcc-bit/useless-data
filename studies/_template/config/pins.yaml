@@ -1,0 +1,9 @@
+# Reference data versions this study uses (files live under core/reference/).
+reference:
+  universe: universe_v2026-11
+  ai_exposure: ai_exposure_v2026-11
+  gics_subindustry: gics_subindustry_v2026-11
+  corporate_actions: corporate_actions_v2026-11
+  large_move_reasons: large_move_reasons_v2026-11
+study_asof: null
+tag: null
