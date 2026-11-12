@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.panel_quality import (
+from core.panel_quality import (
     assert_episode_nan_gates,
     episode_missingness_report,
     episode_windows,

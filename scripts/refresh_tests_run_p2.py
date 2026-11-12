@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from src.config_io import ROOT
+from core.config_io import ROOT, study_outputs
 
 
 def upsert(df: pd.DataFrame, row: dict) -> pd.DataFrame:
@@ -14,7 +14,7 @@ def upsert(df: pd.DataFrame, row: dict) -> pd.DataFrame:
 
 
 def main() -> None:
-    path = ROOT / "outputs" / "tests_run.csv"
+    path = study_outputs() / "tests_run.csv"
     df = pd.read_csv(path)
 
     # T001: H1 power check completed in P2 (counts)
