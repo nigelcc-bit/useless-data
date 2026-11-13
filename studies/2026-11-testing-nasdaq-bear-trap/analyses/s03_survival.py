@@ -18,9 +18,9 @@ from lifelines import KaplanMeierFitter, CoxPHFitter
 from lifelines.statistics import logrank_test, proportional_hazard_test
 
 from common import out_dir, style, plt, SERIES, INK2, NEUTRAL, md_table, write_json
-from src.data import load_index
-from src.events import detect_events, PRIMARY
-from src.nulls import make_block
+from bear_trap.data import load_index
+from bear_trap.events import detect_events, PRIMARY
+from bear_trap.nulls import make_block
 
 CAP = 120                       # analysis horizon (trading days)
 CHECKPOINTS = [0, 5, 10, 20, 30, 40]

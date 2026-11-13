@@ -1,9 +1,10 @@
 # Pins for this study.
-# Index history: prefer data/clean/ndx_1985_2026.csv and spx_1950_2026.csv
-# (Study 1 validated splices). Yahoo fallback is not the validated splice.
+# Index history: require data/clean/ndx_1985_2026.csv and spx_1950_2026.csv
+# (Study 1 validated splices). Primary loads fail if missing — no silent Yahoo fallback.
+# Yahoo panel downloads use core.ingest.yahoo into data/raw/.
 reference: {}
 study_asof: "2026-11-11"
 tag: null
 status: interim
-tier1: filed_not_run_on_full_data
-note: "Study 1 report + Tier 1 runnable package filed; full-data Tier 1 pending clean CSVs."
+tier1: registered_1ff80ed_real_data_pending
+note: "PREREG frozen at 1ff80ed; real-data Tier 1 pending clean CSVs + manifest update."

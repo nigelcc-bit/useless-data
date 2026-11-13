@@ -22,7 +22,7 @@ is `studies/2026-11-flush-or-regime`.
 | Name | Question | Status | Tag |
 |---|---|---|---|
 | [2026-11-flush-or-regime](studies/2026-11-flush-or-regime/) | After a violent AI-supply-chain decline, does the cross-section mean-revert (flush) or does leadership rotate (regime change)? | **Complete** — H2 killed (K004); H3 unsupported (K003); H4 rejects; H5 prior only; P7 FDR/exhibits done | `flush-or-regime-v1` |
-| [2026-11-testing-nasdaq-bear-trap](studies/2026-11-testing-nasdaq-bear-trap/) | Does reclaiming a broken swing low (Nasdaq "bear trap") predict better-than-normal returns vs drawdown-matched days? | **Interim** — Study 1 filed; Tier 1 code filed (A–D); full-data run pending clean CSVs | — |
+| [2026-11-testing-nasdaq-bear-trap](studies/2026-11-testing-nasdaq-bear-trap/) | Does reclaiming a broken swing low (Nasdaq "bear trap") predict better-than-normal returns vs drawdown-matched days? | **Interim** — Tier 1 registered (`1ff80ed`); real-data run pending | — |
 
 ## Layout
 
@@ -39,5 +39,7 @@ RESEARCH_PROTOCOL.md  programme rules
 
 ```bash
 python3 -m pip install -e ".[dev]"
-PYTHONPATH=.:studies/2026-11-flush-or-regime pytest
+# optional: Tier 1 bear-trap extras (lifelines, arch)
+python3 -m pip install -e ".[dev,bear-trap]"
+pytest
 ```

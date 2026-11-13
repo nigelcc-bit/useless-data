@@ -12,9 +12,9 @@ rates of about 73-76% and retest rates of about 77-81%, against observed NDX
 the norm" is a property of volatility, not of support.
 
 ## Design
-- Engine: Study 1 primary spec, unchanged (src/events.py, regression-tested).
+- Engine: Study 1 primary spec, unchanged (bear_trap/events.py, regression-tested).
 - Sample: NDX 1985-09-26 to 2026-11-09, SPX 1950-01-03 to 2026-11-09 (Study 1 data).
-- Null models (src/nulls.py), each fitted to the full-sample log returns:
+- Null models (bear_trap/nulls.py), each fitted to the full-sample log returns:
   - **block (primary)**: stationary bootstrap, mean block 20 days. Keeps fat
     tails, vol clustering and short-range autocorrelation; destroys any
     dependence on price relative to a prior low.

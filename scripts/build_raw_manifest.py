@@ -3,6 +3,10 @@
 
 Raw payloads stay on disk under data/raw/ (gitignored); only the manifest
 is committed for reproducibility.
+
+Also registers Study 1 clean splices when present under
+studies/2026-11-testing-nasdaq-bear-trap/data/clean/
+(ndx_1985_2026.csv, spx_1950_2026.csv).
 """
 
 from __future__ import annotations
@@ -16,11 +20,27 @@ import pandas as pd
 from core.config_io import ROOT
 
 RAW = ROOT / "data" / "raw"
+BEAR_TRAP_CLEAN = (
+    ROOT / "studies" / "2026-11-testing-nasdaq-bear-trap" / "data" / "clean"
+)
 OUT = ROOT / "data" / "raw_manifest.csv"
+
+STUDY1_CLEAN_SOURCES = {
+    "ndx_1985_2026.csv": (
+        "Study 1 validated NDX splice (Investing.com + Yahoo mirror); "
+        "see studies/2026-11-testing-nasdaq-bear-trap/docs/Study1_Bear_Trap_Full_Report.md"
+    ),
+    "spx_1950_2026.csv": (
+        "Study 1 validated SPX splice (gt R package + Investing.com); "
+        "see studies/2026-11-testing-nasdaq-bear-trap/docs/Study1_Bear_Trap_Full_Report.md"
+    ),
+}
 
 
 def source_url(rel: str) -> str:
     name = Path(rel).name
+    if name in STUDY1_CLEAN_SOURCES:
+        return STUDY1_CLEAN_SOURCES[name]
     if name.startswith("yahoo_"):
         sym = name[len("yahoo_") : -len(".json")].replace("_", "^", 1) if name.startswith("yahoo__") else name[len("yahoo_") : -len(".json")]
         if name.startswith("yahoo__"):
@@ -52,24 +72,34 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def _row(path: Path, pull_date: str = "") -> dict:
+    rel = path.relative_to(ROOT).as_posix()
+    return {
+        "file": rel,
+        "sha256": sha256_file(path),
+        "bytes": path.stat().st_size,
+        "source_url": source_url(rel),
+        "pull_date": pull_date,
+    }
+
+
 def main() -> None:
     rows = []
     for path in sorted(RAW.rglob("*")):
         if not path.is_file() or path.name == ".gitkeep":
             continue
-        rel = path.relative_to(ROOT).as_posix()
-        # pull date = parent folder name if YYYY-MM-DD
         parent = path.parent.name
         pull_date = parent if re.fullmatch(r"\d{4}-\d{2}-\d{2}", parent) else ""
-        rows.append(
-            {
-                "file": rel,
-                "sha256": sha256_file(path),
-                "bytes": path.stat().st_size,
-                "source_url": source_url(rel),
-                "pull_date": pull_date,
-            }
-        )
+        rows.append(_row(path, pull_date))
+
+    if BEAR_TRAP_CLEAN.is_dir():
+        for name in STUDY1_CLEAN_SOURCES:
+            path = BEAR_TRAP_CLEAN / name
+            if path.is_file():
+                # mtime date as pull_date until a dedicated stamp is recorded
+                pull_date = pd.Timestamp(path.stat().st_mtime, unit="s").strftime("%Y-%m-%d")
+                rows.append(_row(path, pull_date))
+
     df = pd.DataFrame(rows)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUT, index=False)

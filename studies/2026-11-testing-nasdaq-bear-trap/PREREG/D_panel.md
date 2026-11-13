@@ -7,7 +7,7 @@ fact that crashes are global?
 
 ## Universe (fixed before running)
 **Primary**: SPX, NDX, RUT, DAX, CAC, FTSE, STOXX50, N225, HSI, KOSPI, ASX200,
-TSX. Requires at least 15 years of data (src/data.py PANEL_PRIMARY). DJI is
+TSX. Requires at least 15 years of data (bear_trap/data.py PANEL_PRIMARY). DJI is
 excluded as a near-duplicate of SPX.
 
 **Secondary (descriptive only)**: DJI, 9 SPDR sector ETFs, gold futures, BTC.

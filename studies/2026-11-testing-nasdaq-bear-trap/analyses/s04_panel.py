@@ -16,9 +16,9 @@ import numpy as np
 import pandas as pd
 
 from common import out_dir, style, plt, SERIES, INK2, NEUTRAL, md_table
-from src.data import load_panel, PANEL_PRIMARY, PANEL_SECONDARY
-from src.events import detect_events, PRIMARY
-from src.inference import (drawdown_pool, stratified_placebo_p, cluster_bootstrap_ci, wilson)
+from bear_trap.data import load_panel, PANEL_PRIMARY, PANEL_SECONDARY
+from bear_trap.events import detect_events, PRIMARY
+from bear_trap.inference import (drawdown_pool, stratified_placebo_p, cluster_bootstrap_ci, wilson)
 
 H = PRIMARY.horizons
 

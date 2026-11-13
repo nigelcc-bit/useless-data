@@ -16,10 +16,10 @@ import numpy as np
 import pandas as pd
 
 from common import out_dir, style, plt, SERIES, INK2, md_table, write_json
-from src.data import load_index
-from src.events import path_stats, PRIMARY
-from src.inference import two_sided_percentile_p
-from src.nulls import MODELS
+from bear_trap.data import load_index
+from bear_trap.events import path_stats, PRIMARY
+from bear_trap.inference import two_sided_percentile_p
+from bear_trap.nulls import MODELS
 
 METRICS = ["reclaim_rate", "retest_rate", "breaks_per_year", "deep_share"]
 QUANTS = ["q05", "q10", "q20"]
