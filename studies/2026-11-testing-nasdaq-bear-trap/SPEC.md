@@ -1,41 +1,36 @@
 # Study specification — testing-nasdaq-bear-trap
 
-**Governing rules:** see repository root `RESEARCH_PROTOCOL.md`.
+**Governing rules:** repository root `RESEARCH_PROTOCOL.md` and local [`AGENTS.md`](AGENTS.md).
 
-**Status:** interim. This SPEC captures the Study 1 design already run in Claude chat.
-It will be re-frozen before the extended study computes. Do not treat the interim
-report as a final pre-registration for programme purposes until that freeze.
+**Status:** interim. Study 1 design captured below; Tier 1 pre-registration lives in [`PREREG/`](PREREG/) and must not be silently edited after the first real-data run.
 
 ## Question
 
 > Does a mechanical reclaim of a broken swing low (Nasdaq "bear trap") predict
-> better-than-normal forward returns versus drawdown-matched days?
+> better-than-normal forward returns versus drawdown-matched days — and do
+> null models, second sweeps, survival curves, or a multi-index panel change that?
 
-## Hypotheses
+## Study 1 hypotheses
 
 | ID | Claim | Test | Kill condition |
 |---|---|---|---|
-| H1 | Returns after reclaim of a broken swing low exceed returns on comparable drawdown days | Placebo: mean forward return after reclaim vs 5,000 draws from days 5–20% below 120d high; horizons 20/60/120d; N∈{60,120,250}, K∈{5,10}; Nasdaq and S&P | Placebo p ≥ 0.05 on primary and robustness grid (or after FDR) |
-| H0 | No edge — reclaim returns match drawdown-matched days | Same as H1 | Rejected only if H1 survives |
+| H1 | Returns after reclaim exceed drawdown-matched days | Placebo vs days 5–20% below 120d high; 36-test grid | Placebo p ≥ 0.05 (or after FDR) |
+| H0 | No edge | Same | Rejected only if H1 survives |
 
-Secondary (descriptive, not edge tests): reclaim rate; retest rate within 60d; analog band (10–20% off 120d high at break).
+## Study 1 primary specification
 
-## Primary specification (Study 1)
+- Support lookback **N = 120**; low age ≥ **10**; cooldown **20**; reclaim **K = 10**
+- Retest window 60; horizons 20/60/120; placebo B = 5,000, seed 7
+- Implemented in `src/events.py` (`PRIMARY`); regression-tested against Appendix B/C fixtures
 
-- Support lookback **N = 120** trading days; low must be ≥ **10** days old
-- Break: first close below support; **20**-day cooldown
-- Reclaim window **K = 10** trading days
-- Forward returns from reclaim close (or K-day mark if no reclaim)
-- Benchmark: all days closed 5–20% below 120-day high
-- Placebo seed **7**, **5,000** draws with replacement
+## Tier 1 (see PREREG/)
 
-## Fixtures
+20 primary tests across A–D; within-study Bonferroni and across-tier BH q = 0.05.
+Parameters inherited from Study 1 are not re-tuned. B1 20-day window is a
+documented deviation (`PREREG/B_second_sweep.md`).
 
-Hard-code verified closes and event counts in `config/fixtures.yaml` when porting
-code into this repo. Do not adjust fixtures to make a test pass.
+## Fixtures / data
 
-## Decision rules
-
-Freeze thresholds and windows in this file and `RESULTS.md` **before** the
-extended-study code runs. Study 1 numbers in `docs/` are historical findings from
-the Claude workspace, not yet reproduced under this repository's ledger.
+- `tests/fixtures/expected_ndx_events.csv`, `expected_spx_events.csv` — Study 1 event tables
+- Clean series (not in git by default): `data/clean/ndx_1985_2026.csv`, `data/clean/spx_1950_2026.csv`
+- Do not adjust fixtures to make a test pass; fix the engine instead

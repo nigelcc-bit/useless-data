@@ -1,8 +1,9 @@
-# Reference / as-of pins for this study.
-# Index history for Study 1 lived in the Claude workspace (Investing.com / gt / mirror).
-# Freeze core/reference versions here when the extended study uses shared panel data.
+# Pins for this study.
+# Index history: prefer data/clean/ndx_1985_2026.csv and spx_1950_2026.csv
+# (Study 1 validated splices). Yahoo fallback is not the validated splice.
 reference: {}
-study_asof: "2026-11-09"
+study_asof: "2026-11-11"
 tag: null
 status: interim
-note: "Study 1 filed from Claude chat; extended study not yet frozen."
+tier1: filed_not_run_on_full_data
+note: "Study 1 report + Tier 1 runnable package filed; full-data Tier 1 pending clean CSVs."

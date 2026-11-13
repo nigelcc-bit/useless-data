@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+data/raw/
+# Keep data/clean out of git unless you are happy publishing the spliced series
+data/clean/*.csv
+results/**/sim_paths.csv
+.DS_Store
