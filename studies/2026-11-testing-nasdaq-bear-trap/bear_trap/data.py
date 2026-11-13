@@ -1,11 +1,11 @@
 """Data loading.
 
-Priority for the two Study 1 indices:
-  1. data/clean/ndx_1985_2026.csv and data/clean/spx_1950_2026.csv  (the validated Study 1 splices)
-  2. Yahoo Finance via yfinance (^NDX, ^GSPC), cached to data/raw/
+Primary NDX/SPX loads require Study 1 validated splices in data/clean/:
+  ndx_1985_2026.csv, spx_1950_2026.csv
 
-Everything else (Study D panel) comes from yfinance and is cached. Run
-`python -m src.data --refresh` to re-download.
+Yahoo downloads go through core.ingest.yahoo (disk-cached under data/raw/).
+Missing clean files for a primary NDX/SPX load raise FileNotFoundError —
+there is no silent Yahoo fallback for those series.
 
 Closing prices only (price index, no dividends), matching Study 1.
 """
@@ -13,8 +13,11 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
+
+from core.ingest.yahoo import fetch_yahoo_ohlcv
 
 ROOT = Path(__file__).resolve().parents[1]
 CLEAN = ROOT / "data" / "clean"
@@ -23,7 +26,7 @@ RAW = ROOT / "data" / "raw"
 STUDY1_FILES = {"NDX": "ndx_1985_2026.csv", "SPX": "spx_1950_2026.csv"}
 STUDY1_TICKERS = {"NDX": "^NDX", "SPX": "^GSPC"}
 
-# Study D universe. Start dates are what I believe Yahoo carries; the loader
+# Study D universe. Start dates are what Yahoo carries; the loader
 # reports actual coverage, so treat these as unverified until the first run.
 PANEL_PRIMARY = {             # broad equity indices (primary, pre-registered)
     "SPX": "^GSPC", "NDX": "^NDX", "RUT": "^RUT",
@@ -42,7 +45,10 @@ PANEL_SECONDARY = {           # descriptive only (DJI excluded from primary: nea
 def _read_close_csv(path: Path) -> pd.Series:
     df = pd.read_csv(path)
     date_col = next(c for c in df.columns if "date" in c.lower())
-    close_col = next((c for c in df.columns if c.lower() in ("close", "price", "adj close", "close_price")), None)
+    close_col = next(
+        (c for c in df.columns if c.lower() in ("close", "price", "adj close", "close_price")),
+        None,
+    )
     if close_col is None:
         raise ValueError(f"No close column in {path}: {list(df.columns)}")
     s = df[[date_col, close_col]].copy()
@@ -54,48 +60,56 @@ def _read_close_csv(path: Path) -> pd.Series:
     return s.astype(float)
 
 
-def fetch_yahoo(ticker: str, refresh: bool = False) -> pd.Series:
+def fetch_yahoo(ticker: str, refresh: bool = False, start: str = "1950-01-01") -> pd.Series:
+    """Download (or load cache) via core.ingest.yahoo; return a Close series."""
     RAW.mkdir(parents=True, exist_ok=True)
-    cache = RAW / f"{ticker.replace('^', '').replace('=', '_')}.csv"
-    if cache.exists() and not refresh:
-        return _read_close_csv(cache)
-    import yfinance as yf
-    h = yf.Ticker(ticker).history(period="max", auto_adjust=False, actions=False)
-    if h.empty:
-        raise RuntimeError(f"yfinance returned no data for {ticker}")
-    h.index = pd.DatetimeIndex(h.index).tz_localize(None).normalize()
-    out = h[["Close"]].rename_axis("Date").reset_index()
-    out.to_csv(cache, index=False)
-    return _read_close_csv(cache)
+    end = (pd.Timestamp.today() + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+    df = fetch_yahoo_ohlcv(ticker, start, end, RAW, use_cache=not refresh)
+    if df.empty or "Close" not in df.columns:
+        raise RuntimeError(f"Yahoo returned no Close data for {ticker}")
+    s = df["Close"].dropna().astype(float)
+    s.index = pd.DatetimeIndex(s.index).tz_localize(None).normalize()
+    s = s[~s.index.duplicated(keep="last")].sort_index()
+    s.name = ticker
+    return s
 
 
-def load_index(name: str, refresh: bool = False, allow_yahoo: bool = True) -> pd.Series:
-    """NDX or SPX: prefer the Study 1 clean file, else yfinance."""
+def load_index(name: str, refresh: bool = False, *, require_clean: bool = True) -> pd.Series:
+    """NDX or SPX from Study 1 clean files. Fails loudly if clean file is missing.
+
+    When the clean file exists, newer bars may be appended from Yahoo (explicit
+    extension, not a substitute for the validated splice).
+    """
+    if name not in STUDY1_FILES:
+        raise KeyError(f"load_index primary names are {list(STUDY1_FILES)}; got {name!r}")
     f = CLEAN / STUDY1_FILES[name]
-    if f.exists():
-        s = _read_close_csv(f)
-        src = f"clean:{f.name}"
-        if allow_yahoo:   # append any newer bars (needed to track the live Nov 2026 event)
-            try:
-                y = drop_incomplete_last_bar(fetch_yahoo(STUDY1_TICKERS[name], refresh))
-                new = y[y.index > s.index[-1]]
-                overlap = y.reindex(s.index[-20:]).dropna()
-                if len(overlap):
-                    gap = float((overlap / s.reindex(overlap.index) - 1).abs().max())
-                    if gap > 0.002:
-                        print(f"[data] WARNING {name}: Yahoo vs clean differ by {gap:.3%} on overlap; not extending")
-                        new = new.iloc[0:0]
-                if len(new):
-                    s = pd.concat([s, new])
-                    src += f"+yahoo({len(new)} bars to {new.index[-1].date()})"
-            except Exception as e:  # noqa: BLE001
-                print(f"[data] {name}: could not extend with Yahoo ({e}); using clean file only")
-        s.attrs["source"] = src
-        return s
-    if not allow_yahoo:
-        raise FileNotFoundError(f)
-    s = fetch_yahoo(STUDY1_TICKERS[name], refresh)
-    s.attrs["source"] = f"yahoo:{STUDY1_TICKERS[name]}"
+    if not f.exists():
+        raise FileNotFoundError(
+            f"Missing Study 1 clean file: {f}. "
+            f"Copy {STUDY1_FILES[name]} into data/clean/ before a primary run. "
+            f"Yahoo is not a silent fallback for NDX/SPX."
+        )
+    del require_clean  # API retained; missing clean always raises (no silent fallback)
+    s = _read_close_csv(f)
+    src = f"clean:{f.name}"
+    try:
+        y = drop_incomplete_last_bar(fetch_yahoo(STUDY1_TICKERS[name], refresh))
+        new = y[y.index > s.index[-1]]
+        overlap = y.reindex(s.index[-20:]).dropna()
+        if len(overlap):
+            gap = float((overlap / s.reindex(overlap.index) - 1).abs().max())
+            if gap > 0.002:
+                print(
+                    f"[data] WARNING {name}: Yahoo vs clean differ by {gap:.3%} "
+                    f"on overlap; not extending"
+                )
+                new = new.iloc[0:0]
+        if len(new):
+            s = pd.concat([s, new])
+            src += f"+yahoo({len(new)} bars to {new.index[-1].date()})"
+    except Exception as e:  # noqa: BLE001
+        print(f"[data] {name}: could not extend with Yahoo ({e}); using clean file only")
+    s.attrs["source"] = src
     return s
 
 
@@ -126,11 +140,14 @@ def load_panel(universe: dict, refresh=False, min_years=15) -> dict[str, pd.Seri
     for name, tk in universe.items():
         try:
             if name in STUDY1_FILES:
+                # FileNotFoundError must propagate — no silent skip/fallback for NDX/SPX
                 s = load_index(name, refresh)
             else:
                 s = fetch_yahoo(tk, refresh)
             s = drop_incomplete_last_bar(s)
             s = s[s > 0]
+        except FileNotFoundError:
+            raise
         except Exception as e:  # noqa: BLE001
             print(f"[data] {name} ({tk}) failed: {e}")
             continue

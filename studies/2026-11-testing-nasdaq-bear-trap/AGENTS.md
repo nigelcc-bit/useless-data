@@ -1,19 +1,19 @@
-# Instructions for coding agents (Cursor, Claude Code, etc.)
+# Instructions for coding agents (this study only)
 
-This is a pre-registered empirical study. Follow these rules when editing.
+Programme rules are in repository root [`RESEARCH_PROTOCOL.md`](../../RESEARCH_PROTOCOL.md).
+If anything here conflicts with that file, **the protocol wins**.
 
-1. **Do not change parameters in `src/events.py` `Spec` defaults, `PREREG/`, or
-   the primary test definitions in `studies/` without being asked.** Any such
-   change must add a `DEVIATION:` line to the relevant `PREREG/*.md` explaining
-   what changed and why, in the same commit.
-2. `python -m pytest -q` must pass before and after any change to `src/`. The
-   Appendix B/C regression test is the anchor. If it fails, fix the engine and
-   leave the fixtures alone.
-3. No look-ahead: every outcome uses data strictly after the entry close, and
-   is NaN unless its full window exists.
-4. New analyses go in new scripts under `studies/` with their own `PREREG/`
-   file written first. Count their tests in `PREREG/README.md`.
-5. Report every test that is run, including null results. Never delete a result
-   because it looks bad.
-6. Do not recall prices or statistics from memory. Fetch the data, then check
-   it against known anchors (for example NDX close 27,907.63 on 2026-11-09).
+Study-specific constraints:
+
+1. **Do not change** `bear_trap/events.py` `Spec` defaults, `PREREG/`, or the
+   primary test definitions in `analyses/s01`–`s04` / `s99` without being asked.
+   Any such change must add a `DEVIATION:` line to the relevant `PREREG/*.md`
+   explaining what changed and why, in the same commit. Tier 1 registration
+   timestamp is commit `1ff80ed`.
+2. Root `pytest` (including `studies/2026-11-testing-nasdaq-bear-trap/tests`)
+   must pass before and after any change to `bear_trap/`. The Appendix B/C
+   regression fixtures are the anchor — fix the engine, leave the fixtures alone.
+3. New analyses go under `analyses/` with a new `PREREG/` file written first;
+   count their tests in `PREREG/README.md`.
+4. Do not recall prices or statistics from memory. Fetch the data, then check
+   known anchors (for example NDX close 27,907.63 on 2026-11-09).

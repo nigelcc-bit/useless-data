@@ -1,6 +1,6 @@
 # Results — testing-nasdaq-bear-trap
 
-**Status:** interim (not final). Tier 1 code filed; **no full-data Tier 1 result yet**.
+**Status:** interim — Tier 1 registered at commit `1ff80ed`; **real-data run pending**.
 
 Date every revision; keep the original text.
 
@@ -15,7 +15,7 @@ Date every revision; keep the original text.
 | Retest rates | Nasdaq 72%; S&P 79% within 60 days |
 | Repo ledger | engine fixtures in `tests/fixtures/`; full 43+86 regression pending clean CSVs |
 
-## Tier 1 — pre-registered, not yet run on full data
+## Tier 1 — registered, not yet run on full data
 
 | Study | Pre-reg | Decision | Date |
 |---|---|---|---|
@@ -23,6 +23,6 @@ Date every revision; keep the original text.
 | B Second sweep | [`PREREG/B_second_sweep.md`](PREREG/B_second_sweep.md) | *pending* | — |
 | C Survival | [`PREREG/C_survival.md`](PREREG/C_survival.md) | *pending* | — |
 | D Panel | [`PREREG/D_panel.md`](PREREG/D_panel.md) | *pending* | — |
-| Tier BH (20 tests) | [`PREREG/README.md`](PREREG/README.md) | *pending* → `results/TIER1_SUMMARY.md` | — |
+| Tier BH (20 tests) | [`PREREG/README.md`](PREREG/README.md) | *pending* → `outputs/TIER1_SUMMARY.md` + `outputs/tests_run.csv` | — |
 
-Verified before full run: Appendix B #33–43 exact match on 2019–2026 NDX mirror; four scripts smoke-tested on that slice / synthetic panel only.
+Registration freeze: commit `1ff80ed`. Verified before full run: Appendix B #33–43 exact match on 2019–2026 NDX mirror; four scripts smoke-tested on that slice / synthetic panel only.

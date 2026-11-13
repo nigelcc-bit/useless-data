@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "linearmodels>=6.0", "arch>=7.0"]
+bear-trap = ["lifelines>=0.29", "arch>=7.0"]
 
 [project.scripts]
 ai-selloff-monitor = "src.monitor.leadership:main"
@@ -28,10 +29,18 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = [".", "studies/2026-11-flush-or-regime"]
-include = ["core*", "src*"]
+where = [".", "studies/2026-11-flush-or-regime", "studies/2026-11-testing-nasdaq-bear-trap"]
+include = ["core*", "src*", "bear_trap*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "studies/2026-11-flush-or-regime/tests"]
-pythonpath = [".", "studies/2026-11-flush-or-regime"]
+testpaths = [
+    "tests",
+    "studies/2026-11-flush-or-regime/tests",
+    "studies/2026-11-testing-nasdaq-bear-trap/tests",
+]
+pythonpath = [
+    ".",
+    "studies/2026-11-flush-or-regime",
+    "studies/2026-11-testing-nasdaq-bear-trap",
+]
 addopts = "-q"

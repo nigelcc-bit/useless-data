@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.events import detect_events, find_breaks, path_stats, PRIMARY, Spec
-from src.inference import wilson, placebo_p
+from bear_trap.events import detect_events, find_breaks, path_stats, PRIMARY, Spec
+from bear_trap.inference import wilson, placebo_p
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = ROOT / "tests" / "fixtures"
@@ -84,6 +84,14 @@ def test_wilson_and_placebo():
     assert 0.05 < placebo_p(pool[:50], pool) < 0.95
 
 
+def test_load_index_fails_loudly_without_clean_file(tmp_path, monkeypatch):
+    """Primary NDX/SPX must not silently fall back to Yahoo."""
+    import bear_trap.data as data
+    monkeypatch.setattr(data, "CLEAN", tmp_path)
+    with pytest.raises(FileNotFoundError, match="Yahoo is not a silent fallback"):
+        data.load_index("NDX")
+
+
 # ----------------------------------------------------------------------------
 # Regression against the Study 1 appendices
 # ----------------------------------------------------------------------------
@@ -96,7 +104,7 @@ def test_reproduces_study1(name, datafile, fixture):
     f = CLEAN / datafile
     if not f.exists():
         pytest.skip(f"{f} not present; copy the Study 1 cleaned series into data/clean/")
-    from src.data import _read_close_csv
+    from bear_trap.data import _read_close_csv
     s = _read_close_csv(f)
     s = s[s.index <= "2026-11-09"]
     got = detect_events(s, PRIMARY).reset_index(drop=True)
@@ -116,11 +124,11 @@ def test_reproduces_study1(name, datafile, fixture):
 
 def test_ndx_recent_events_from_yahoo_cache():
     """Events #33-43 (2020-2026) from the Yahoo cache, for users without the clean files."""
-    f = ROOT / "data" / "raw" / "NDX.csv"
-    if not f.exists():
-        pytest.skip("run `python -m src.data` first to cache ^NDX")
-    from src.data import _read_close_csv
-    s = _read_close_csv(f)
+    from bear_trap.data import fetch_yahoo
+    cache = ROOT / "data" / "raw" / "yahoo__NDX.json"
+    if not cache.exists():
+        pytest.skip("no Yahoo ^NDX cache yet; run fetch_yahoo('^NDX') or a panel download first")
+    s = fetch_yahoo("^NDX", refresh=False)
     s = s[(s.index >= "2019-01-01") & (s.index <= "2026-11-09")]
     got = detect_events(s, PRIMARY).reset_index(drop=True)
     exp = pd.read_csv(FIX / "expected_ndx_events.csv", parse_dates=["break_date", "entry_date"])

@@ -1,13 +1,17 @@
-"""Shared helpers for study scripts: paths, output, chart style."""
+"""Shared helpers for analysis scripts: paths, output, chart style."""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
-import json
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+# Repo root for core.*
+REPO = ROOT.parents[1]
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
 
 import matplotlib
 matplotlib.use("Agg")
@@ -20,7 +24,7 @@ NEUTRAL = "#9a998f"
 
 
 def out_dir(study: str) -> Path:
-    d = ROOT / "results" / study
+    d = ROOT / "outputs" / study
     d.mkdir(parents=True, exist_ok=True)
     return d
 
