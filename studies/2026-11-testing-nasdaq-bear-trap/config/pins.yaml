@@ -1,0 +1,8 @@
+# Reference / as-of pins for this study.
+# Index history for Study 1 lived in the Claude workspace (Investing.com / gt / mirror).
+# Freeze core/reference versions here when the extended study uses shared panel data.
+reference: {}
+study_asof: "2026-11-09"
+tag: null
+status: interim
+note: "Study 1 filed from Claude chat; extended study not yet frozen."
