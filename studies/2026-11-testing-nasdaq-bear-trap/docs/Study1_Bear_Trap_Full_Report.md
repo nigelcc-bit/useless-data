@@ -7,7 +7,7 @@
 | **Authors** | Nigel (question, data sourcing), Claude (design, code, analysis) |
 | **Run date** | 10 Nov 2026 (write-up compiled 13 Nov 2026) |
 | **Project** | AI selloff programme — separate study from flush-or-regime |
-| **Repo study** | `studies/testing-nasdaq-bear-trap` |
+| **Repo study** | `studies/2026-11-testing-nasdaq-bear-trap` (slug `testing-nasdaq-bear-trap`) |
 | **Status** | Interim — Study 1 complete on full data in Claude chat; **not final**. Extended study to follow in this folder. |
 | **Companion studies** | `2026-11-flush-or-regime`; Study 2 (macro and valuation scorecard); midterm-election side study |
 | **Code** | Claude workspace: `trap_study.py`, `trap_pool.py`, `trap_drill.py`, `trap_tail.py`, `make_charts.py` (not yet ported to this repo) |
