@@ -38,3 +38,6 @@ N = 120 and the 10-20% analog band were chosen with the Nov 2026 event in view
 DEVIATION (2026-11-15): support-window ties now use the oldest occurrence, matching
 Study 1 (Appendix C events #11-12, SPX 1962-04-16 and 1962-06-14). Fixes a reproduction
 bug; Spec parameters unchanged.
+
+DEVIATION (2026-11-15): N225 flagged by validate() (20-day flat run) after results were
+viewed; primary D kept as pre-registered, N225-excluded run reported as sensitivity.
