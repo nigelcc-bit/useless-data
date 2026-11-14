@@ -97,3 +97,19 @@ may be quoted as an out-of-sample confirmation.
 - mu0 carries sampling error and is rounded to 0.1 point; treated as fixed.
 - Returns are heavy-tailed (e.g. NDX 2000-02); the Normal DGP is an
   approximation.
+
+## ADDENDUM 2026-11-14: cluster-bootstrap MDE (DESCRIPTIVE, no new tests)
+Requested by the study owner after the first N01 run, to show how optimistic
+the iid MDEs are. Adds no hypothesis test; the 12-test TOST family and the
+iid MDE table above are unchanged.
+
+- Clusters: calendar year of `break_date`. Same samples as Analysis 1.
+- SE_cluster: standard deviation of the event mean over B = 5,000 cluster
+  bootstrap resamples (draw G years with replacement, pool their events),
+  seed 7. SE_iid = sd / sqrt(n).
+- Reported per index and horizon: G, SE_iid, SE_cluster, ratio
+  SE_cluster / SE_iid, MDE_cluster = (z_0.95 + z_0.80) x SE_cluster, the same
+  normal-approximation MDE from SE_iid for a like-for-like comparison, and
+  MDE_cluster with t quantiles on G - 1 df as a small-cluster variant.
+- Limitation: year clusters do not capture windows that span a year end
+  (e.g. Dec 2000 / Jan 2001), so even the cluster MDE may be optimistic.
