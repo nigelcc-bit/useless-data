@@ -1,0 +1,64 @@
+{
+  "NDX": {
+    "min": {
+      "n_breaks": 43,
+      "reclaim_rate": 0.8604651162790697,
+      "retest_rate": 0.7222222222222222,
+      "deep_share": 0.43243243243243246,
+      "breaks_per_year": 1.046248913778121
+    },
+    "q05": {
+      "n_breaks": 71,
+      "reclaim_rate": 0.7464788732394366,
+      "retest_rate": 0.660377358490566,
+      "deep_share": 0.5283018867924528,
+      "breaks_per_year": 1.727527276238293
+    },
+    "q10": {
+      "n_breaks": 69,
+      "reclaim_rate": 0.6666666666666666,
+      "retest_rate": 0.6521739130434783,
+      "deep_share": 0.41304347826086957,
+      "breaks_per_year": 1.6788645360625665
+    },
+    "q20": {
+      "n_breaks": 77,
+      "reclaim_rate": 0.7662337662337663,
+      "retest_rate": 0.6206896551724138,
+      "deep_share": 0.4406779661016949,
+      "breaks_per_year": 1.8735154967654726
+    },
+    "source": "yahoo:^NDX"
+  },
+  "SPX": {
+    "min": {
+      "n_breaks": 117,
+      "reclaim_rate": 0.6923076923076923,
+      "retest_rate": 0.7901234567901234,
+      "deep_share": 0.32098765432098764,
+      "breaks_per_year": 1.1873389175257731
+    },
+    "q05": {
+      "n_breaks": 198,
+      "reclaim_rate": 0.6717171717171717,
+      "retest_rate": 0.7045454545454546,
+      "deep_share": 0.3007518796992481,
+      "breaks_per_year": 2.0093427835051547
+    },
+    "q10": {
+      "n_breaks": 215,
+      "reclaim_rate": 0.6604651162790698,
+      "retest_rate": 0.6879432624113475,
+      "deep_share": 0.38028169014084506,
+      "breaks_per_year": 2.1818621134020617
+    },
+    "q20": {
+      "n_breaks": 236,
+      "reclaim_rate": 0.6779661016949152,
+      "retest_rate": 0.6918238993710691,
+      "deep_share": 0.28125,
+      "breaks_per_year": 2.3949742268041234
+    },
+    "source": "yahoo:^GSPC"
+  }
+}
