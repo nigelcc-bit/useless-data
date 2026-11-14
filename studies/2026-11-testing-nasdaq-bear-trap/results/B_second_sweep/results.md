@@ -1,3 +1,5 @@
+> **SUPERSEDED** by clean-data A–C on `claude/lucid-turing-nuuzwt` (`4bc34ee`). Kept for audit only.
+
 # Study B results
 
 B1 window 20 days. 12 primary tests; Bonferroni alpha = 0.0042.

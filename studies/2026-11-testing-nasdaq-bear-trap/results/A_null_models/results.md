@@ -1,3 +1,5 @@
+> **SUPERSEDED** by clean-data A–C on `claude/lucid-turing-nuuzwt` (`4bc34ee`). Kept for audit only.
+
 # Study A results
 
 Paths per model: 500. Seed 7. Sample end 2026-11-09.

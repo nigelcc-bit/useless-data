@@ -1,3 +1,5 @@
+> **SUPERSEDED** by clean-data A–C on `claude/lucid-turing-nuuzwt` (`4bc34ee`). Kept for audit only.
+
 # Study C results
 
 ## Kaplan-Meier: P(event by day 60 | none by day d)
