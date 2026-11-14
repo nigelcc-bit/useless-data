@@ -8,9 +8,10 @@
 
 Validated Study 1 clean files were **not** available in this Cloud Agent
 workspace (`data/clean/ndx_1985_2026.csv`, `data/clean/spx_1950_2026.csv` are
-gitignored and were not uploaded). Loaders therefore used Yahoo Finance via
-`yfinance` (`^NDX`, `^GSPC`, and the Study D panel tickers), cached under
-`data/raw/`.
+gitignored). An env-setup request to upload them was **skipped by the owner**
+on 2026-11-14; Yahoo remains the working path for this environment. Loaders
+used Yahoo Finance via `yfinance` (`^NDX`, `^GSPC`, and the Study D panel
+tickers), cached under `data/raw/`.
 
 ```
 DEVIATION: first Tier 1 real-data run used Yahoo fallback, not the Study 1
