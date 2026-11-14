@@ -58,6 +58,18 @@ def test_cooldown():
     assert t == [150, 200]
 
 
+def test_tied_minimum_uses_oldest_occurrence():
+    """Tied support lows: age is measured from the OLDEST tie (Study 1 / Appendix C)."""
+    c = np.full(200, 110.0)
+    c[50] = 100.0                      # first occurrence of the low
+    c[145] = 100.0                     # tie, only 5 days before the break
+    c[150] = 99.0                      # break
+    c[151] = 101.0
+    br = find_breaks(c, PRIMARY)
+    assert [b[0] for b in br] == [150]
+    assert br[0][2] == 100             # age from day 50, not 5 from day 145 (which fails min_age)
+
+
 def test_path_stats_matches_detect_events():
     rng = np.random.default_rng(0)
     c = 100 * np.exp(np.cumsum(rng.normal(0, 0.012, 5000)))
