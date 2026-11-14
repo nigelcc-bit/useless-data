@@ -15,9 +15,10 @@ needs future data is NaN unless the full window exists (no partial windows).
 
 Design choices that Appendix A does not pin down (documented so the
 regression test can arbitrate):
-  * Ties in the support window: the MOST RECENT occurrence of the minimum is
-    used for the age rule (conservative). Ties are essentially absent in
-    index closes.
+  * Ties in the support window: the OLDEST occurrence of the minimum sets the
+    age (numpy argmin default: argmin = np.argmin(W, axis=1), age = N - argmin).
+    Verified against Appendix C: SPX 1962-04-16 and 1962-06-14 are tied lows
+    (two-decimal prices) and only appear under this rule.
   * Cooldown: a break at t is accepted only if t - last_accepted_break > cooldown.
 """
 from __future__ import annotations
@@ -59,7 +60,7 @@ def support_levels(C: np.ndarray, spec: Spec):
     """Return (L, age, valid) arrays aligned to t.
 
     L[t]   level computed from C[t-N .. t-1]
-    age[t] t minus the index of the (most recent) minimum; NaN for quantile levels
+    age[t] t minus the index of the (oldest) minimum; NaN for quantile levels
     valid  True where the level is defined
     """
     n, N = len(C), spec.N
@@ -71,8 +72,8 @@ def support_levels(C: np.ndarray, spec: Spec):
     t_idx = np.arange(N, n)
     if spec.level == "min":
         L[N:] = W.min(axis=1)
-        last_argmin = N - 1 - np.argmin(W[:, ::-1], axis=1)   # most recent occurrence
-        age[N:] = N - last_argmin                              # t - (i + argmin)
+        first_argmin = np.argmin(W, axis=1)                    # oldest occurrence (matches Study 1)
+        age[N:] = N - first_argmin                             # t - (i + argmin)
     elif spec.level.startswith("q"):
         q = int(spec.level[1:]) / 100.0
         L[N:] = np.quantile(W, q, axis=1)

@@ -32,3 +32,9 @@ N = 120, K = 10, min age 10, cooldown 20, retest window 60, horizons 20/60/120,
 drawdown-matched pool 5-20% below the 120-day high, placebo B = 5,000, seed 7.
 N = 120 and the 10-20% analog band were chosen with the Nov 2026 event in view
 (Study 1, sections 6.2 and 6.6); Tier 1 inherits that and does not re-tune them.
+
+## Deviations
+
+DEVIATION (2026-11-15): support-window ties now use the oldest occurrence, matching
+Study 1 (Appendix C events #11-12, SPX 1962-04-16 and 1962-06-14). Fixes a reproduction
+bug; Spec parameters unchanged.
