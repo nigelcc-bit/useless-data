@@ -7,3 +7,9 @@ arch>=7.0
 lifelines>=0.29
 yfinance>=0.2.50
 pytest>=8.0
+# notebooks (notebooks/, paired with jupytext percent .py; outputs stripped by nbstripout)
+jupytext>=1.16
+nbstripout>=0.7
+nbconvert>=7.0
+ipykernel>=6.0
+tabulate>=0.9

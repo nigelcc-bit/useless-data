@@ -1,0 +1,5 @@
+# Strip outputs and execution metadata from notebooks on commit (nbstripout).
+# Enable locally once per clone:  nbstripout --install
+*.ipynb filter=nbstripout diff=ipynb
+# Executed copies are deliberate artefacts: keep their outputs.
+studies/*/results/notebooks/*.ipynb -filter -diff
