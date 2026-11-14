@@ -63,6 +63,16 @@ ledger = P.update_ledger(tost)
 print(f"saved to {out.relative_to(ROOT)}; ledger rows for N01: {(ledger['family'] == 'N01_TOST').sum()}")
 
 # %% [markdown]
+# ## DESCRIPTIVE: MDE under a cluster bootstrap by calendar year (no tests)
+#
+# PREREG/N01_power.md addendum. Resamples whole calendar years (B = 5,000,
+# seed 7) to show how optimistic the iid MDEs are. Not a hypothesis test.
+
+# %%
+cl_mde = P.cluster_mde_table(events)
+print(P.format_cluster_mde_table(cl_mde).to_markdown(index=False))
+
+# %% [markdown]
 # ## Charts
 
 # %%

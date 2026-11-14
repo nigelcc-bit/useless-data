@@ -153,3 +153,27 @@ def test_price_window_rebased_and_truncated():
     assert w.loc[w["day"] == 0, "rel"].iloc[0] == pytest.approx(c.iloc[90] / 100 - 1)
     with pytest.raises(KeyError):
         G.price_window(c, "1999-01-01", 100.0)
+
+
+# ---------------------------------------------------------------- cluster MDE (descriptive)
+def test_cluster_se_singletons_matches_iid_bootstrap():
+    x = np.random.default_rng(5).normal(0, 0.1, 200)
+    se, G = P.cluster_bootstrap_se(x, np.arange(200), B=4000, seed=1)
+    assert G == 200
+    assert se == pytest.approx(x.std(ddof=1) / np.sqrt(200), rel=0.06)
+
+
+def test_cluster_se_grows_with_within_cluster_correlation():
+    rng = np.random.default_rng(6)
+    cl = np.repeat(np.arange(20), 5)
+    x = np.repeat(rng.normal(0, 0.1, 20), 5) + rng.normal(0, 0.01, 100)   # strong cluster effect
+    se, G = P.cluster_bootstrap_se(x, cl, B=3000)
+    assert G == 20 and se > 1.8 * x.std(ddof=1) / np.sqrt(100)
+
+
+def test_cluster_mde_table(events):
+    t = P.cluster_mde_table(events, B=500)
+    assert len(t) == 6
+    assert (t["G"] < t["n"]).all()
+    assert (t["mde_cluster_t"] > t["mde_cluster_z"]).all()
+    np.testing.assert_allclose(t["mde_cluster_z"] / t["mde_iid_z"], t["se_ratio"])

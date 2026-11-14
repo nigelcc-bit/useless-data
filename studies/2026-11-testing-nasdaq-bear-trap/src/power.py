@@ -253,3 +253,54 @@ def update_ledger(tst: pd.DataFrame, path: Path | None = None) -> pd.DataFrame:
     new = pd.concat([old, ledger_rows(tst).astype(str)], ignore_index=True)[LEDGER_COLS]
     new.to_csv(path, index=False)
     return new
+
+
+# ----------------------------------------------------------------------------
+# DESCRIPTIVE: cluster-bootstrap MDE (PREREG/N01_power.md addendum; no tests)
+# ----------------------------------------------------------------------------
+def reclaim_returns_with_year(events: pd.DataFrame, h: int) -> tuple[np.ndarray, np.ndarray]:
+    """Same sample as reclaim_returns, plus calendar year of the break for clustering."""
+    m = events["reclaimed"] & events[f"r{h}"].notna()
+    return events.loc[m, f"r{h}"].to_numpy(float), events.loc[m, "break_date"].dt.year.to_numpy()
+
+
+def cluster_bootstrap_se(x, clusters, B: int = 5000, seed: int = SEED) -> tuple[float, int]:
+    """SD of the pooled event mean when whole clusters are resampled with replacement."""
+    x = np.asarray(x, float)
+    codes, uniq = pd.factorize(np.asarray(clusters))
+    G = len(uniq)
+    sums = np.bincount(codes, weights=x, minlength=G)
+    sizes = np.bincount(codes, minlength=G).astype(float)
+    rng = np.random.default_rng(seed)
+    counts = np.stack([np.bincount(rng.integers(0, G, G), minlength=G) for _ in range(B)])
+    means = (counts @ sums) / (counts @ sizes)
+    return float(means.std(ddof=1)), G
+
+
+def cluster_mde_table(events_by_index: dict[str, pd.DataFrame], B: int = 5000, seed: int = SEED,
+                      alpha: float = ALPHA, power: float = POWER) -> pd.DataFrame:
+    zsum = stats.norm.ppf(1 - alpha) + stats.norm.ppf(power)
+    rows = []
+    for ix, ev in events_by_index.items():
+        for h in HORIZONS:
+            x, yr = reclaim_returns_with_year(ev, h)
+            se_cl, G = cluster_bootstrap_se(x, yr, B, seed)
+            se_iid = x.std(ddof=1) / np.sqrt(x.size)
+            tsum = stats.t.ppf(1 - alpha, G - 1) + stats.t.ppf(power, G - 1)
+            rows.append(dict(index=ix, horizon=f"r{h}", n=x.size, G=G, se_iid=se_iid,
+                             se_cluster=se_cl, se_ratio=se_cl / se_iid,
+                             mde_iid_z=zsum * se_iid, mde_cluster_z=zsum * se_cl,
+                             mde_cluster_t=tsum * se_cl))
+    return pd.DataFrame(rows)
+
+
+def format_cluster_mde_table(t: pd.DataFrame) -> pd.DataFrame:
+    pts = lambda v: f"{v * 100:.2f}"   # noqa: E731
+    return pd.DataFrame({
+        "Index": t["index"], "Horizon": t["horizon"], "n": t["n"], "Years (G)": t["G"],
+        "SE iid (pts)": t["se_iid"].map(pts), "SE cluster (pts)": t["se_cluster"].map(pts),
+        "SE ratio": t["se_ratio"].map(lambda v: f"{v:.2f}"),
+        "MDE iid z (pts)": t["mde_iid_z"].map(pts),
+        "MDE cluster z (pts)": t["mde_cluster_z"].map(pts),
+        "MDE cluster t(G-1) (pts)": t["mde_cluster_t"].map(pts),
+    })
