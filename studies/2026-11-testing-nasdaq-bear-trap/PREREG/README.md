@@ -15,6 +15,13 @@ timestamp is the proof. Any change after first run goes in a new commit with a
 | D Panel | 2 (pooled mean excess r60, r120) | Bonferroni, alpha 0.025 |
 | **Total** | **20** | Across Tier 1: Benjamini-Hochberg q = 0.05 on all 20 p-values |
 
+## Notebook analyses (separate families, outside the Tier 1 budget)
+
+| Analysis | Tests | Correction |
+|---|---|---|
+| N01 power and equivalence (`N01_power.md`) | 12 TOST (2 bounds x 3 horizons x 2 indices); MDE is descriptive, not a test | Per-test alpha 0.05 (TOST, intersection-union); BH q = 0.10 over the 12 reported |
+| N03 event gallery | 0 (descriptive only) | n/a |
+
 Everything else (other null models, pseudo-level DiD, Cox hazard ratios,
 per-market rows, analog shares, secondary universe) is **descriptive** and is
 not to be quoted as a finding without a new pre-registered test on fresh data.

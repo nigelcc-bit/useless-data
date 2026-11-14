@@ -57,6 +57,19 @@ Without the clean files, loaders fall back to Yahoo `^NDX` / `^GSPC` (not the va
 
 Outputs: `results/<study>/` and `results/TIER1_SUMMARY.md` (BH across 20 primary p-values).
 
+### Notebooks
+
+`notebooks/` holds `n01_power_and_equivalence` (MDE and TOST, pre-registered in
+[`PREREG/N01_power.md`](PREREG/N01_power.md)) and `n03_event_gallery`
+(descriptive). All logic lives in `src/power.py` and `src/gallery.py` with tests
+in `tests/test_power_gallery.py`; notebooks only import, call and plot. Each
+`.ipynb` is paired with a jupytext percent `.py`; outputs are stripped on commit
+by nbstripout (run `nbstripout --install` once per clone). Executed copies:
+
+```bash
+jupyter nbconvert --to notebook --execute notebooks/n01_power_and_equivalence.ipynb --output-dir results/notebooks
+```
+
 ### Known design note
 
 B1’s 20-day window was chosen knowing the Apr 2025 episode — recorded as a pre-registration deviation; 10-day and 40-day sensitivity runs are the clean ones (`PREREG/B_second_sweep.md`).
@@ -72,7 +85,8 @@ src/                    event engine, nulls, inference, data loaders
 studies/s01…s04*.py     Tier 1 study scripts + s99 summary
 tests/                  engine unit + Appendix B/C fixtures
 data/clean/             put ndx_1985_2026.csv + spx_1950_2026.csv here
-results/                Tier 1 outputs (after run_all)
+notebooks/              n01/n03 notebooks (+ paired jupytext .py)
+results/                Tier 1 outputs (after run_all); results/notebooks = executed copies
 AGENTS.md / run_all.sh / requirements.txt / pytest.ini
 ```
 

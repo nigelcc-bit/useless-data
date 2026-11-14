@@ -1,0 +1,2 @@
+# Pair every notebook in this folder with a percent-format .py script.
+formats = "ipynb,py:percent"
