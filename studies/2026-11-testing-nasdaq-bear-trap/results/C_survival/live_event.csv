@@ -1,0 +1,3 @@
+index,outcome,status,km_conditional,cox_conditional
+NDX,retest of sweep low by day 60,"not yet, 4 trading days after reclaim",0.5652173913043478,0.5919091808533901
+NDX,regain 120d high by day 60,"not yet, 4 trading days after reclaim",0.2222222222222222,0.3046558245905078
