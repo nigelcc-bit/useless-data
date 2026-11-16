@@ -78,6 +78,40 @@ def cond_mean(x_train, y_train, x_eval, h) -> np.ndarray:
     return out
 
 
+def cond_mean_binned(x_train, y_train, x_eval, h, n_grid: int = 4096) -> np.ndarray:
+    """Fast approximation of `cond_mean` by linear binning (Wand 1994 style).
+
+    Training points are linearly binned onto `n_grid` equally spaced nodes; the
+    numerator sum K(.) y and denominator sum K(.) are formed at every node by
+    direct (not FFT) convolution with the Gaussian kernel, truncated at 8 h, so
+    small tail weights carry no FFT round-off. Values at `x_eval` are linearly
+    interpolated between nodes. Cost is O(n + n_grid * kernel width).
+    The kernel normalising constant cancels in the ratio.
+    """
+    xt = np.asarray(x_train, dtype=float)
+    yt = np.asarray(y_train, dtype=float)
+    xe = np.asarray(x_eval, dtype=float).ravel()
+    hx, _ = _pair(h)
+    lo = min(xt.min(), xe.min())
+    hi = max(xt.max(), xe.max())
+    grid = np.linspace(lo, hi, n_grid)
+    delta = grid[1] - grid[0]
+    pos = (xt - lo) / delta
+    i0 = np.clip(np.floor(pos).astype(int), 0, n_grid - 2)
+    w1 = pos - i0
+    w0 = 1.0 - w1
+    cnt = np.bincount(i0, w0, n_grid) + np.bincount(i0 + 1, w1, n_grid)
+    ysum = np.bincount(i0, w0 * yt, n_grid) + np.bincount(i0 + 1, w1 * yt, n_grid)
+    half = min(int(np.ceil(8.0 * hx / delta)), n_grid - 1)
+    ker = np.exp(-0.5 * (np.arange(-half, half + 1) * delta / hx) ** 2)
+    den = np.convolve(cnt, ker, mode="full")[half : half + n_grid]
+    num = np.convolve(ysum, ker, mode="full")[half : half + n_grid]
+    with np.errstate(invalid="ignore", divide="ignore"):
+        m_grid = num / den
+    ok = np.isfinite(m_grid) & (den > 0)
+    return np.interp(xe, grid[ok], m_grid[ok])
+
+
 def loo_loglik(x, y, hs) -> np.ndarray:
     """Mean leave-one-out log-likelihood of the 2D KDE for each common bandwidth in `hs`.
 
