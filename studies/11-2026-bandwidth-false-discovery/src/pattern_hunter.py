@@ -137,3 +137,48 @@ def _factorize(a: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Codes in sorted order of unique labels (so the series is in time order)."""
     uniq, codes = np.unique(a, return_inverse=True)
     return codes, uniq
+
+
+class PocketSearcher:
+    """best_pocket with x and dates fixed: the sort order of x, the bin layout per
+    min_frac and the period codes are computed once and reused across many y
+    (e.g. placebo shuffles). Results are identical to best_pocket(..., m_obs=...).
+    """
+
+    def __init__(self, x, dates):
+        self.x = np.asarray(x, dtype=float)
+        self.n = self.x.size
+        self.order = np.argsort(self.x, kind="stable")
+        self.codes, self.periods = _factorize(np.asarray(dates))
+        self.k = self.periods.size
+        self._bins: dict[int, np.ndarray] = {}
+
+    def _bin_of_rank(self, n_bins: int) -> np.ndarray:
+        if n_bins not in self._bins:
+            self._bins[n_bins] = np.minimum((np.arange(self.n) * n_bins) // self.n, n_bins - 1)
+        return self._bins[n_bins]
+
+    def best(self, y, m_obs, min_frac: float = 0.05, n_bins: int | None = None,
+             lags: int = 5) -> Pocket:
+        y = np.asarray(y, dtype=float)
+        m_obs = np.asarray(m_obs, dtype=float)
+        if n_bins is None:
+            n_bins = default_n_bins(min_frac)
+        bor = self._bin_of_rank(n_bins)
+        m_sorted = m_obs[self.order]
+        bin_sum = np.bincount(bor, weights=m_sorted, minlength=n_bins)
+        bin_cnt = np.bincount(bor, minlength=n_bins)
+        i, j = _best_run(bin_sum, bin_cnt, int(np.ceil(min_frac * self.n)))
+        inside = np.zeros(self.n, dtype=bool)
+        inside[self.order[(bor >= i) & (bor <= j)]] = True
+        xs_in = self.x[inside]
+        c, k = self.codes, self.k
+        s_in = np.bincount(c, weights=y * inside, minlength=k)
+        c_in = np.bincount(c, weights=inside.astype(float), minlength=k)
+        s_out = np.bincount(c, weights=y * ~inside, minlength=k)
+        c_out = np.bincount(c, weights=(~inside).astype(float), minlength=k)
+        ok = (c_in > 0) & (c_out > 0)
+        r = s_in[ok] / c_in[ok] - s_out[ok] / c_out[ok]
+        return Pocket(lo=float(xs_in.min()), hi=float(xs_in.max()), frac=float(inside.mean()),
+                      score=float(m_obs[inside].mean()), returns=r, periods=self.periods[ok],
+                      t_nw=nw_tstat(r, lags), mean=float(r.mean()))
