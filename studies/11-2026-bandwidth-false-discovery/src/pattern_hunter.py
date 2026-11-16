@@ -11,8 +11,9 @@ Procedure (PREREG.md, Method):
    mean(y inside) - mean(y outside). The t-stat is the Newey-West (Bartlett,
    5 lags) t of the mean of that series.
 
-E[y | x] is evaluated at `n_eval` quantiles of x and linearly interpolated to
-the observations; this keeps the cost at O(n_eval * n) instead of O(n^2).
+By default E[y | x] is evaluated exactly at `n_eval` quantiles of x and linearly
+interpolated to the observations (O(n_eval * n) instead of O(n^2)); a
+precomputed fit at every observation can be passed instead via `m_obs`.
 Costs are not applied here (estimator only).
 """
 
@@ -60,8 +61,14 @@ def _best_run(bin_sum: np.ndarray, bin_cnt: np.ndarray, min_count: int) -> tuple
     return divmod(k, bin_sum.size)
 
 
+def default_n_bins(min_frac: float) -> int:
+    """PREREG deviation (16 Nov 2026): n_bins = max(200, 4 / min_frac)."""
+    return int(max(200, int(np.ceil(4.0 / min_frac - 1e-9))))
+
+
 def best_pocket(x, y, h, min_frac: float = 0.05, dates=None,
-                n_bins: int = 200, n_eval: int = 400, lags: int = 5) -> Pocket:
+                n_bins: int | None = None, n_eval: int = 400, lags: int = 5,
+                m_obs=None) -> Pocket:
     """Find the best x-pocket in-sample and return its long-short series and NW t.
 
     `dates`: period label per observation (e.g. trading date). The long-short
@@ -70,14 +77,25 @@ def best_pocket(x, y, h, min_frac: float = 0.05, dates=None,
     If `dates` is None, each observation is its own period and the series is
     r_i = n * y_i * (1[in]/n_in - 1[out]/n_out), whose mean equals the
     inside-minus-outside spread.
+
+    `n_bins`: None means the deviation rule max(200, 4 / min_frac); for
+    min_frac = 0.05 this is 200, the value used before the deviation.
+    `m_obs`: optional precomputed fitted E[y|x] at every observation (e.g. from
+    kde.cond_mean_binned), so one fit can be shared across pocket sizes. If
+    None, the exact cond_mean at `n_eval` quantiles is interpolated, as before.
     """
+    if n_bins is None:
+        n_bins = default_n_bins(min_frac)
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
     n = x.size
 
     # 1. Fitted E[y|x] at quantiles of x, interpolated to every observation.
-    q = np.quantile(x, np.linspace(0.0, 1.0, n_eval))
-    m_obs = np.interp(x, q, cond_mean(x, y, q, h))
+    if m_obs is None:
+        q = np.quantile(x, np.linspace(0.0, 1.0, n_eval))
+        m_obs = np.interp(x, q, cond_mean(x, y, q, h))
+    else:
+        m_obs = np.asarray(m_obs, dtype=float)
 
     # 2. Equal-count bins in x order.
     order = np.argsort(x, kind="stable")
