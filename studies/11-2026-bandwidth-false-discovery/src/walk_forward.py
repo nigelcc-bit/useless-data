@@ -289,17 +289,28 @@ def summarise() -> pd.DataFrame:
     pl = pd.read_csv(PL_CSV)
     rows = []
     for r in real.itertuples():
-        t = pl.loc[(pl["mult"] == r.mult) & (pl["min_frac"] == r.min_frac), "t_nw_net"].to_numpy()
+        cell = pl[(pl["mult"] == r.mult) & (pl["min_frac"] == r.min_frac)]
+        t = cell["t_nw_net"].to_numpy()
+        tg = cell["t_nw_gross"].to_numpy()
         rows.append({"mult": r.mult, "min_frac": r.min_frac, "real_t_net": r.t_nw_net,
                      "real_ann_mean_net": r.ann_mean_net, "real_sharpe_net": r.sharpe_net,
                      "n_placebo": t.size, "placebo_share_t_gt_2": float((t > 2).mean()),
                      "placebo_share_t_gt_3": float((t > 3).mean()),
                      "placebo_median_t": float(np.median(t)),
-                     "emp_p": float((1 + (t >= r.t_nw_net).sum()) / (1 + t.size))})
+                     "emp_p": float((1 + (t >= r.t_nw_net).sum()) / (1 + t.size)),
+                     # Gross comparison: placebo pays the same ~10%/yr cost on ~zero gross, so
+                     # the net-t p mainly tests gross > 0. Gross t vs placebo gross t isolates
+                     # the signal from the common cost drag.
+                     "real_t_gross": r.t_nw_gross, "real_ann_mean_gross": r.ann_mean_gross,
+                     "placebo_share_gross_t_gt_2": float((tg > 2).mean()),
+                     "placebo_share_gross_t_gt_3": float((tg > 3).mean()),
+                     "emp_p_gross": float((1 + (tg >= r.t_nw_gross).sum()) / (1 + tg.size))})
     s = pd.DataFrame(rows)
     s.to_csv(VS_CSV, index=False)
     log_run(SCRIPT, {"step": "wf_summary", "n_placebo": int(s["n_placebo"].min())}, "per-year h_cv",
-            {cell_key(r.mult, r.min_frac): {"t_net": round(r.real_t_net, 3), "emp_p": round(r.emp_p, 4)}
+            {cell_key(r.mult, r.min_frac): {"t_net": round(r.real_t_net, 3), "emp_p": round(r.emp_p, 4),
+                                             "t_gross": round(r.real_t_gross, 3),
+                                             "emp_p_gross": round(r.emp_p_gross, 4)}
              for r in s.itertuples()})
     return s
 
