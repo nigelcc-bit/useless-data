@@ -122,12 +122,12 @@ def permute_within_date(XN: np.ndarray, rng) -> np.ndarray:
 
 # ---------------------------------------------------------------- pipeline
 
-def fit_years(XN, dates, tr_t, tr_n, tr_y, log_label=None):
+def fit_years(XN, dates, tr_t, tr_n, tr_y, log_label=None, years_test=None):
     """Per test year: training h_cv and frozen pocket bounds for every cell."""
     years = pd.DatetimeIndex(dates).year.values
     pockets = []
     hcv = {}
-    for Y in YEARS:
+    for Y in (YEARS if years_test is None else years_test):
         win = np.flatnonzero((years >= Y - TRAIN_YEARS) & (years <= Y - 1))
         purge_from = win[-HORIZON]  # last HORIZON trading dates of Y-1: target ends in Y
         sel = (tr_t >= win[0]) & (tr_t < purge_from)
@@ -153,10 +153,15 @@ def fit_years(XN, dates, tr_t, tr_n, tr_y, log_label=None):
     return pd.DataFrame(pockets), hcv
 
 
-def trade(XN, R, dates, pockets: pd.DataFrame):
-    """Daily gross, net and turnover for every cell, on the stitched OOS period."""
+def trade(XN, R, dates, pockets: pd.DataFrame, years_test=None, form_ok=None):
+    """Daily gross, net and turnover for every cell, on the stitched OOS period.
+
+    `years_test` (default YEARS) sets the OOS years. `form_ok` (bool per date in
+    `dates`, default all True) restricts the days on which cohorts may be formed.
+    """
+    yt = YEARS if years_test is None else years_test
     years = pd.DatetimeIndex(dates).year.values
-    oos = np.flatnonzero((years >= YEARS[0]) & (years <= YEARS[-1]))
+    oos = np.flatnonzero((years >= yt[0]) & (years <= yt[-1]))
     d0 = oos[0]
     Xo = XN[d0:]
     Ro = np.nan_to_num(R[d0:], nan=0.0)
@@ -178,6 +183,8 @@ def trade(XN, R, dates, pockets: pd.DataFrame):
         with np.errstate(invalid="ignore", divide="ignore"):
             C = np.where(inside, 1.0 / n_in, 0.0) - np.where(outside, 1.0 / n_out, 0.0)
         C[~has[:, 0]] = 0.0
+        if form_ok is not None:
+            C[~np.asarray(form_ok)[d0:]] = 0.0
         cs = np.vstack([np.zeros((1, C.shape[1])), np.cumsum(C, axis=0)])
         # W_d = (1/5) * sum of cohorts formed on d-1..d-5
         idx = np.arange(T)
