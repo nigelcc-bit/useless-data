@@ -64,3 +64,5 @@ How much of the "edge" found in conditional stock-return densities comes from th
 **Implementation notes (numerical, not design).**
 - For the grid runs, E[y | x] is computed by `kde.cond_mean_binned` (linear binning onto 4,096 nodes, direct convolution with the Gaussian kernel truncated at 8h) and evaluated at every observation. On a synthetic check against the exact `kde.cond_mean` (n = 50,000; 1,000 evaluation points including both tails) the largest absolute difference was 7.6e-5 at h = 0.06 and below 5e-6 at h >= 0.24.
 - Periods with no observation inside the pocket (or none outside) are dropped from the long-short series. With small pockets and few names per period this removes many periods; the number of periods used is recorded per run.
+
+Holdout unlocked 17 Nov 2026 by Nigel, after walk-forward results (commit on main). Single run only; no parameter changes.
