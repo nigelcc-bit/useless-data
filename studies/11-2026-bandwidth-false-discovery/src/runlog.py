@@ -14,11 +14,15 @@ FIELDS = ["timestamp", "script", "params", "bandwidth", "result", "git_hash"]
 
 
 def git_hash() -> str:
-    """Short HEAD hash, suffixed '-dirty' if tracked files under the study have uncommitted changes."""
+    """Short HEAD hash, suffixed '-dirty' if tracked files under the study, outside out/,
+    have uncommitted changes. (Before 16 Nov 2026 12:35 UTC the check also counted out/,
+    so runs.csv itself flagged every row after the first in a multi-row run as dirty.)"""
     try:
         h = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=STUDY_DIR,
                            capture_output=True, text=True, check=True).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no", "--", "."],
+        # Outputs under out/ (including runs.csv itself) do not make the code dirty.
+        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no", "--", ".",
+                                ":(exclude)out"],
                                cwd=STUDY_DIR, capture_output=True, text=True).stdout.strip()
         return h + ("-dirty" if dirty else "")
     except (OSError, subprocess.CalledProcessError):
