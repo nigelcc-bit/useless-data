@@ -83,3 +83,16 @@ D1 share = abs(ΔTP10) / (abs(ΔTP10) + abs(ΔRNY10)), ACM. Benchmark: 1994-2025
 ## Exhibits (`out/exhibits/`, PNG plus CSV)
 
 E1 decomposition 1990-2026; E2 H1 attribution; E3 hike-window paths; E4 yearly R²; E5 rolling oil β; E6 FOMC-day scatter; E7 real vs breakeven 2026; E8 2026 timeline; E9 ACM minus KW TP10; E10 current TP percentile.
+
+## Addendum, 20 Nov 2026: term-premium level percentiles (descriptive)
+
+Descriptive only. This is not a test and nothing above changes. The original E10 line in "Model disagreement" ranked ACM on 2026-11-17 (44th, 1990-2026) and is kept as written. E10 has been redrawn to show the windows below, all measured on the common date **2026-11-13** within windows that end on that date. Percentile is the share of days in the window at or below the value. Source: `out/exhibits/E10_tp_percentile.csv`.
+
+| Model | Date | TP10 (%) | 1990-2026 | 2009-2026 | 2015-2026 |
+|---|---|---|---|---|---|
+| ACM | 2026-11-13 | 0.72 | **43rd** | **73rd** | **96th** |
+| Kim-Wright | 2026-11-13 | 0.99 | **62nd** | **96th** | **99th** |
+| ACM | 2025-12-31 | 0.75 | 44th | 74th | 97th |
+| Kim-Wright | 2025-12-31 | 0.57 | 41st | 82nd | 90th |
+
+The level is high for the post-2008 era. The full-sample percentile understates it because term premia have trended down since 1990. The ACM level was already at the 97th percentile since 2015 on 31 Dec 2025 and barely changed in 2026, consistent with H1 (ACM ΔTP10 -2.4bp).
