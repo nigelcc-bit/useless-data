@@ -81,3 +81,8 @@ Four tested p-values (H3, H4a, H4b, H5a), one decision rule (H1), two priors (H2
 ## Deviations
 
 None yet. Any change after this commit goes here, dated, with the original text kept.
+
+### 20 Nov 2026: D1-D2 (definitions only, committed before any result was computed)
+
+- **D1 (H5b day-level share).** The term-premium share of a single day's move is defined as |ΔTP10| / (|ΔTP10| + |ΔRNY10|), using ACM. It lies in [0, 1] and stays stable when ΔY10 is near zero. The 1994-2025 benchmark is the mean of this share over scheduled announcement days. Reason: ΔTP/ΔY is unstable on days with small moves, and PREREG did not define the day-level share.
+- **D2 (H2 small windows).** The H1 rule "share not reported if |Δy10| < 25bp" also applies to each H2 window. ΔTP10 and ΔRNY10 are always reported, in bp, alongside the share. Reason: the same ratio instability.
