@@ -248,25 +248,45 @@ def e9(a, kw):
                   f"Daily, common dates 1990-01-02 to 2026-11-13. Source: {SRC_ACM}; {SRC_FRED}. {PULLED}", d)
 
 
+E10_WINDOWS = [("1990-2026", "1990-01-01"), ("2009-2026", "2009-01-01"), ("2015-2026", "2015-01-01")]
+E10_DATES = [pd.Timestamp("2025-12-31"), END_2026]
+
+
 def e10(a, kw):
-    rows, data = [], {}
-    fig, axes = fig_ax(10, 4.6, ncols=2, sharey=False)
-    for ax, (name, s, color) in zip(axes, [("ACM TP10", a["ACMTP10"].dropna(), BLUE),
-                                           ("Kim-Wright TP10", kw["KWTP10"].dropna(), ORANGE)]):
-        cur, cur_d = float(s.iloc[-1]), s.index[-1]
-        pct = float((s <= cur).mean() * 100)
-        ax.hist(s, bins=60, color=color, edgecolor=SURFACE, linewidth=0.4)
-        ax.axvline(cur, color=INK, lw=1.2)
-        ax.annotate(f"{cur_d.date()}: {cur:.2f}\n{pct:.0f}th percentile", (cur, ax.get_ylim()[1]), xytext=(4, -22),
-                    textcoords="offset points", fontsize=8, color=INK)
-        ax.set_title(f"{name}, daily 1990-{cur_d.year}", color=INK, fontsize=9.5, loc="left")
-        ax.set_xlabel("Term premium, percent", color=INK, fontsize=9)
-        rows.append({"model": name, "date": cur_d.date(), "current": cur, "percentile": pct, "n_days": len(s),
-                     "min": s.min(), "median": s.median(), "max": s.max()})
-    axes[0].set_ylabel("Number of days", color=INK, fontsize=9)
-    out = pd.DataFrame(rows).set_index("model")
-    return finish(fig, "E10_tp_percentile", "E10. Where the current 10-year term premium sits in its 1990-2026 distribution",
-                  f"Percentile = share of days at or below the latest value. Source: {SRC_ACM}; {SRC_FRED}. {PULLED}", out)
+    """Percentile of the 10y term premium on 31 Dec 2025 and 13 Nov 2026, within three windows ending 13 Nov 2026.
+    Percentile = share of days in the window at or below the value. Descriptive (dated addendum, 20 Nov 2026)."""
+    rows = []
+    for model, s in [("ACM", a["ACMTP10"].dropna()), ("Kim-Wright", kw["KWTP10"].dropna())]:
+        s = s[s.index <= END_2026]
+        for d in E10_DATES:
+            v = float(s.loc[d])
+            for wname, wstart in E10_WINDOWS:
+                w = s[s.index >= wstart]
+                rows.append({"model": model, "date": d.date(), "tp10": v, "window": wname, "n_days": len(w),
+                             "percentile": float((w <= v).mean() * 100), "window_median": float(w.median())})
+    t = pd.DataFrame(rows)
+    fig, ax = fig_ax(9.5, 4.8)
+    x = np.arange(len(E10_WINDOWS))
+    wdt = 0.36
+    for i, (model, color) in enumerate([("ACM", BLUE), ("Kim-Wright", ORANGE)]):
+        now = t[(t.model == model) & (t.date == END_2026.date())].set_index("window").loc[[w for w, _ in E10_WINDOWS]]
+        then = t[(t.model == model) & (t.date == E10_DATES[0].date())].set_index("window").loc[[w for w, _ in E10_WINDOWS]]
+        xs = x + (i - 0.5) * wdt
+        bars = ax.bar(xs, now.percentile, wdt - 0.03, color=color,
+                      label=f"{model}, 13 Nov 2026 ({now.tp10.iloc[0]:.2f}%)")
+        ax.scatter(xs, then.percentile, marker="_", s=420, color=INK, linewidths=2.0, zorder=3,
+                   label="31 Dec 2025 level" if i == 0 else None)
+        for b, v in zip(bars, now.percentile):
+            ax.annotate(f"{v:.0f}th", (b.get_x() + b.get_width() / 2, v), xytext=(0, -16), textcoords="offset points",
+                        ha="center", fontsize=9, color=SURFACE, fontweight="bold")
+    ax.set_xticks(x, [f"{w} window" for w, _ in E10_WINDOWS])
+    ax.set_ylim(0, 112)
+    ax.set_ylabel("Percentile of daily values in window", color=INK, fontsize=9)
+    ax.legend(frameon=False, fontsize=8, loc="upper left")
+    return finish(fig, "E10_tp_percentile", "E10. The 10-year term premium is high for the post-2008 era, middling for 1990-2026",
+                  "Percentile = share of days in the window (ending 13 Nov 2026) at or below the value. Black ticks: the "
+                  "percentile of each model's 31 Dec 2025 level in the same window. ACM 0.72% and Kim-Wright 0.99% on "
+                  f"13 Nov 2026. Source: {SRC_ACM}; {SRC_FRED}. {PULLED}", t.set_index(["model", "date", "window"]))
 
 
 def main() -> list[str]:
@@ -280,6 +300,15 @@ def main() -> list[str]:
     fit = json.loads((OUT / "h5a_fit.json").read_text())
     made = [e1(a, kw), e2(h1), e3(paths), e4(h3), e5(rb), e6(days, fit), e7(f), e8(f), e9(a, kw), e10(a, kw)]
     log_run("src/exhibits.py", {"out": "out/exhibits"}, {"exhibits": made})
+
+
+def rerender_e10() -> str:
+    """Redraw E10 only (descriptive addendum, 20 Nov 2026)."""
+    made = e10(load.acm(), load.kim_wright())
+    t = pd.read_csv(EX / "E10_tp_percentile.csv")
+    log_run("src/exhibits.py:rerender_e10", {"windows": [w for w, _ in E10_WINDOWS], "dates": [str(d.date()) for d in E10_DATES]},
+            {"percentiles": t[["model", "date", "window", "tp10", "percentile"]].round(4).to_dict("records")})
+    return made
     print("\n".join(made))
     return made
 
