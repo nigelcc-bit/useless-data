@@ -1,0 +1,49 @@
+# Verified against the original source files in the browser. Never adjust.
+# If tests/test_data.py cannot reproduce these, the pipeline stops.
+
+files:
+  fred_daily.csv:
+    sha256: d0ea085ae9b135f9d56b47d98a3e76759e559579dc801a3633414fa0b7a427b4
+    rows: 9624
+  acm_daily.csv:
+    sha256: b480474168c466aa01cd40759b25b65e04324697b83d211edcb2109f4012cd4d
+    rows: 9206
+
+fred:
+  tolerance: 0
+  values:
+    - {series: DGS10, date: 2026-11-17, value: 5.10}
+    - {series: DGS2, date: 2026-11-17, value: 4.80}
+    - {series: DGS30, date: 2026-11-17, value: 5.46}
+    - {series: THREEFYTP10, date: 2026-11-13, value: 0.9864}
+    - {series: THREEFY10, date: 2026-11-13, value: 5.1332}
+    - {series: DFII10, date: 2026-11-17, value: 2.89}
+    - {series: T10YIE, date: 2026-11-18, value: 2.19}
+    - {series: DCOILWTICO, date: 2026-11-17, value: 89.53}
+    - {series: DFEDTARU, date: 2026-11-19, value: 4.00}
+
+acm:
+  tolerance: 1.0e-8
+  values:
+    - {series: ACMY10, date: 2026-11-17, value: 5.070217152}
+    - {series: ACMTP10, date: 2026-11-17, value: 0.7475178596}
+    - {series: ACMY10, date: 2026-10-28, value: 5.016092003}
+    - {series: ACMTP10, date: 2026-10-28, value: 0.6935506444}
+    - {series: ACMY01, date: 1990-01-02, value: 7.792330777}
+
+# Financial Datasets par curve vs FRED
+cross_source:
+  tolerance: 0
+  values:
+    - {series: DGS10, date: 1990-01-02, value: 7.94}
+    - {series: DGS2, date: 1990-01-02, value: 7.87}
+
+# Announcement dates
+first_hikes:
+  - 1994-02-04
+  - 1997-03-25
+  - 1999-06-30
+  - 2004-06-30
+  - 2015-12-16
+  - 2022-03-16
+  - 2026-09-16
