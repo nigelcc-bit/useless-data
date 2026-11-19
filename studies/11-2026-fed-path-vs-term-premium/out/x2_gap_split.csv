@@ -1,0 +1,8 @@
+component,bp
+"dDGS10 (par, CMT)",97
+less: residual DGS10 vs ACM-implied par,-4.32642
+less: curve shape (ACM par minus ACM zero),-6.08583
+"dACMY10 (zero, fitted)",86.5878
+"memo: dKWY10 (zero, fitted)",89.31
+memo: curve shape if ACM yields were annual-compounded,1.88841
+memo: residual if ACM yields were annual-compounded,8.52384

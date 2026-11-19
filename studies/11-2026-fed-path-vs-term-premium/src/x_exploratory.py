@@ -172,11 +172,23 @@ def e12(comp: pd.DataFrame, summary: dict) -> str:
     lc = summary["lag_corr_2026"]
     ax.annotate(f"Kim-Wright zero (THREEFY10): {summary['d_kwy10_bp']:+.1f}bp\n"
                 f"Date check: daily-change correlation lag -1 / 0 / +1 = {lc[-1]:.2f} / {lc[0]:.2f} / {lc[1]:.2f}",
-                (0.98, 0.97), xycoords="axes fraction", ha="right", va="top", fontsize=8, color=INK)
+                (0.5, 0.40), xycoords="axes fraction", ha="center", va="top", fontsize=8, color=INK)
     return finish(fig, "E12_x2_par_vs_zero_gap", "E12. Why the 10-year par yield rose 10bp more than the ACM zero yield (X2, exploratory)",
                   "ACM par = 10y semiannual par yield implied by ACM 1-10y zero yields (treated as continuously compounded; "
                   "linear interpolation, flat below 1y). Curve shape = change in (ACM par minus ACM zero). Residual = change in "
                   f"(DGS10 minus ACM par). Source: {SRC_ACM}; {SRC_FRED}. {PULLED}", comp)
+
+
+def rerender_e12() -> str:
+    """Redraw E12 from saved outputs (out/x2_gap_split.csv and the last X2 run in out/runs.csv), without re-running tests."""
+    import json
+    comp = pd.read_csv(OUT / "x2_gap_split.csv")
+    runs = pd.read_csv(OUT / "runs.csv")
+    last = json.loads(runs[runs.script == "src/x_exploratory.py"].iloc[-1]["result"])["x2"]
+    last["lag_corr_2026"] = {int(k): v for k, v in last["lag_corr_2026"].items()}
+    made = e12(comp, last)
+    log_run("src/x_exploratory.py:rerender_e12", {"source": "out/x2_gap_split.csv + last X2 run"}, {"exhibits": [made]})
+    return made
 
 
 def main() -> None:

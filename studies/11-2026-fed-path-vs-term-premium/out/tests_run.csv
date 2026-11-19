@@ -14,3 +14,8 @@ R3-H4b,H4b,H4b excluding weekly changes with an endpoint in 2020-03-01 to 2020-0
 H5a,H5a,"dACMTP10 on dDGS2, scheduled announcement days 1994-02-04 to 2025-12-31, HC1, two-sided",killed: BH p 0.7912 > 0.1,0.6334,0.7912,"beta 0.0421 bp TP per bp dDGS2 (positive), t 0.48",255,HC1; R2 0.002,0.6333634494576843,primary
 R1-H5a,H5a,H5a with dTHREEFYTP10,p <= 0.10,2.726e-38,,"beta 0.3253 bp TP per bp dDGS2 (positive), t 12.94",255,HC1; R2 0.598,2.726243898675702e-38,robustness
 H5b,H5b,2026 announcement days: D1 TP share vs 1994-2025 mean D1 share (ACM),"prior only (N = 7 < 8), not tested",,,2026 mean D1 0.487 vs 1994-2025 mean 0.525; 3 of 7 days above,7,descriptive; every day printed in out/h5_fomc_days.csv,,prior
+X1-KW-1990-2026,X1,"Daily dKW TP10 on dKW Y10, OLS HC1, 1990-2026","exploratory, descriptive",0,,"beta 0.497, R2 0.964, t 293.9",9202,not in BH family,0.0,exploratory
+X1-KW-2026,X1,"Daily dKW TP10 on dKW Y10, OLS HC1, 2026","exploratory, descriptive",0,,"beta 0.505, R2 0.988, t 128.5",218,not in BH family,0.0,exploratory
+X1-ACM-1990-2026,X1,"Daily dACM TP10 on dACM Y10, OLS HC1, 1990-2026","exploratory, descriptive",0,,"beta 0.689, R2 0.608, t 72.7",9203,not in BH family,0.0,exploratory
+X1-ACM-2026,X1,"Daily dACM TP10 on dACM Y10, OLS HC1, 2026","exploratory, descriptive",8.059e-56,,"beta 0.578, R2 0.537, t 15.7",218,not in BH family,8.058571904837017e-56,exploratory
+X2,X2,"dDGS10 vs dACMY10 gap, 2025-12-31 to 2026-11-13: curve shape vs residual vs date mismatch","exploratory, descriptive",,,gap 10.4bp = curve shape 6.1 + residual 4.3; lag corr -1/0/+1: -0.07/0.96/-0.06,2,ACM yields treated as continuously compounded (annual-compounding split in out/x2_gap_split.csv),,exploratory
