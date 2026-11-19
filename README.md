@@ -23,7 +23,7 @@ is `studies/2026-11-flush-or-regime`.
 |---|---|---|---|
 | [2026-11-flush-or-regime](studies/2026-11-flush-or-regime/) | After a violent AI-supply-chain decline, does the cross-section mean-revert (flush) or does leadership rotate (regime change)? | **Complete** — H2 killed (K004); H3 unsupported (K003); H4 rejects; H5 prior only; P7 FDR/exhibits done | `flush-or-regime-v1` |
 | [2026-11-testing-nasdaq-bear-trap](studies/2026-11-testing-nasdaq-bear-trap/) | Does reclaiming a broken swing low (Nasdaq "bear trap") predict better-than-normal returns vs drawdown-matched days? | **Interim** — Study 1 filed; Tier 1 code filed (A–D); full-data run pending clean CSVs | — |
-| [11-2026-fed-path-vs-term-premium](studies/11-2026-fed-path-vs-term-premium/) | Study 4: how much of the 2026 rise in the 10-year yield is the expected Fed path versus the term premium (ACM primary, Kim-Wright secondary), and is the mix unusual against past hiking cycles? | **Pre-registered**, data validated, analysis not started | — |
+| [11-2026-fed-path-vs-term-premium](studies/11-2026-fed-path-vs-term-premium/) | Study 4: how much of the 2026 rise in the 10-year yield is the expected Fed path versus the term premium (ACM primary, Kim-Wright secondary), and is the mix unusual against past hiking cycles? | **Results** — H1 path driven; H3, H4a, H4b, H5a killed (BH); H2, H5b prior only; H4a and H5a model-dependent under Kim-Wright | — |
 
 ## Layout
 

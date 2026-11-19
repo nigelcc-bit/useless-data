@@ -1,0 +1,7 @@
+test_id,family,model,exclude_covid,beta,t,p_one,n,first_week,last_week,b_base,d_inter,n_2026
+H4a,primary,ACM,False,16.4314,1.46715,0.0711678,46,2026-01-02,2026-11-13,,,
+H4b,primary,ACM,False,,-0.810648,0.791216,1917,1990-01-12,,28.685,-12.2535,46
+R1-H4a,robustness,KW,False,21.7109,3.21903,0.000643134,46,2026-01-02,2026-11-13,,,
+R1-H4b,robustness,KW,False,,1.29173,0.0982259,1917,1990-01-12,,11.3072,10.4037,46
+R3-H4a,robustness,ACM,True,16.4314,1.46715,0.0711678,46,2026-01-02,2026-11-13,,,
+R3-H4b,robustness,ACM,True,,-1.37984,0.916182,1908,1990-01-12,,36.7388,-20.3074,46
