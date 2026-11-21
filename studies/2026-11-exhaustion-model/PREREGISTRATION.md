@@ -279,3 +279,47 @@ the rerun with the same seed reproduced the ledger exactly before these edits.
 (`results/verdicts_train.md`). The hold-out (events 2018-01-01 to 2026-11-20) is run once, next,
 by `python src/evaluate.py --holdout`, with models fitted on training rows only and the training
 credit medians. Nothing is refit or reselected after it.
+
+---
+
+## Post-hoc diagnostics (added 21 Nov 2026, after the hold-out run)
+
+Requested follow-up. **None of these changes a pre-registered result**: the ledger, BH values,
+training verdicts and hold-out scorecard are untouched. The new outputs are in `results/posthoc/`
+(`src/posthoc.py`) and the REPORT section "Post-hoc diagnostics". D3 was already used for the
+hold-out unlock, so these are numbered D4 to D9.
+
+**D4 (power / MDE, post-hoc).** For each asset x target x layer, effective N = clusters formed by
+chaining training events whose [t, t+252]-session windows overlap. Pooled N counts SPX/NDX/SOX
+events on the same calendar window once. Minimum detectable Brier-skill gain vs Layer 0 at 80%
+power and two-sided alpha 0.05: MDE = (1.96 + 0.84)^2 p(1-p) / (N_eff x Brier_L0). This follows
+from the resolution term of the Brier decomposition for a two-proportion difference (same result
+for a continuous feature via r). It ignores fitting cost and overlap with Layer 0, so it is a lower
+bound. Any pre-registered KILL with MDE > 0.05 gets a new column, `posthoc_label` = "UNDERPOWERED";
+the pre-registered verdict column is kept. Greedy non-overlapping and raw episode counts are
+reported alongside. Chaining is transitive, so long runs of events collapse into one cluster
+(SOX training: 4).
+
+**D5 (hold-out listing, post-hoc).** Hold-out events per asset, with Layer 0 vs constant
+(training base rate) Brier. Per-asset uncertainty comes from a cluster bootstrap (4,999 draws,
+seed 20261121) on the D4 clusters; a cluster count below 5 is reported as not testable.
+Episode-cluster bootstrap CIs are shown as a looser comparison.
+
+**D6 (H5 descriptive table).** Pre/post-2018 sessions to trough and T1 at the B10 crossing,
+excluding open episodes. The H5 figures written in the original REPORT exhibit 6 included open
+episodes (trough not final). The corrected values are in the post-hoc section; the original text
+is kept, with a pointer added.
+
+**D7 (data checks).** MANIFEST shows the raw Yahoo VIX3M file starting **2006-07-17**, not
+2007-12-04. The cut to 2007-12-04 is made in `src/ingest.py` and enforced by `tests/test_data.py`.
+Processed VIX3M, every VIX/VIX3M ratio and every H2b signal start on or after 2007-12-04. Korean
+exports enter only the H4-total layers and the H4 incremental check: not Layer 0, and not any
+live frozen model.
+
+**D8 (Step 0 rescoring, post-hoc, not pre-registered).**
+- Loan auction: "no clear = failed financing, thesis-side, provisional (single source)".
+- Rebound leadership: "inconclusive (3 up days < 5 required)".
+
+**D9 (limitations added).**
+- H1 measured past Fed stance (lagged 6-month change), not a real-time policy reversal.
+- A credit x policy interaction for H3 is post-hoc, so it cannot be tested on this sample.

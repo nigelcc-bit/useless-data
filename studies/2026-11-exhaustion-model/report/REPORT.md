@@ -28,9 +28,9 @@ What survives is descriptive: the escalation ladder, which matters by asset (exh
 
 | # | Prior flip / call | Reading | Status | Source |
 |---|---|---|---|---|
-| 1 | $500M data-centre loan auction, bids 19 Nov: >90 flush, <80 thesis | ING's competitive sale of about a dozen data-centre loans **stalled on low bids**, with no clearing price published. ING moved to bilateral sales. Pre-auction FT price talk was >90c for the Wisconsin/Texas loans and mid-80s for New Mexico (indications, not a result). | **Neither flip triggered (no print).** A failed competitive process is qualitatively a stress signal, but it is not the pre-registered reading. | Bloomberg, 20 Nov 2026 ("ING's $500 million data center loan auction stalls on low bids"). **Single source**, read via search snippet only; verify. |
+| 1 | $500M data-centre loan auction, bids 19 Nov: >90 flush, <80 thesis | ING's competitive sale of about a dozen data-centre loans **stalled on low bids**, with no clearing price published. ING moved to bilateral sales. Pre-auction FT price talk was >90c for the Wisconsin/Texas loans and mid-80s for New Mexico (indications, not a result). | **Neither flip triggered (no print).** *Rescored post-hoc (D8): see Post-hoc diagnostics.* A failed competitive process is qualitatively a stress signal, but it is not the pre-registered reading. | Bloomberg, 20 Nov 2026 ("ING's $500 million data center loan auction stalls on low bids"). **Single source**, read via search snippet only; verify. |
 | 2 | Fear Cycle flip: "any top-4 capex cut" | AMZN kept ~$220B (29 Oct). GOOGL kept $195-205B (28 Oct). META narrowed to $135-145B, raising the low end (21 Oct, outside the 28-30 Oct window). MSFT Q1 capex was $45.2B vs its own >$50B guide; the full-year figure was reportedly trimmed ~$175B to ~$170B, framed as a delivery delay. | **Not triggered on a strict reading** (no formal cut). MSFT is the borderline case. Its ~$5bn shortfall was first reported by The Information: a miss against the company's own guide, not a guidance cut. | CNBC 28-29 Oct; Meta IR; Motley Fool transcripts; Blockspace and 24/7 Wall St on the MSFT/IREN item. The "$175B to $170B" figure is **secondary-source only**; sources conflict on whether it is FY27 or CY26. |
-| 3 | Rebound leadership: suppliers > 2x builders over the first five up days after 5 Nov = flush | SPX had only **3 up days** from 6 Nov to 20 Nov (6, 9, 11 Nov). Over those 3: suppliers EW **+24.7%**, builders EW **+2.1%** (ratio ~12x). | **Incomplete (3 of 5 up days).** Leaning flush on the days available, but the rebound reversed: SPX fell on 7 straight sessions to 20 Nov. | `src/step0.py`, Yahoo closes, 23-name Blue Tsunami list (16 suppliers, 4 builders; 3 non-AI controls excluded) |
+| 3 | Rebound leadership: suppliers > 2x builders over the first five up days after 5 Nov = flush | SPX had only **3 up days** from 6 Nov to 20 Nov (6, 9, 11 Nov). Over those 3: suppliers EW **+24.7%**, builders EW **+2.1%** (ratio ~12x). | **Incomplete (3 of 5 up days).** *Rescored post-hoc (D8).* Leaning flush on the days available, but the rebound reversed: SPX fell on 7 straight sessions to 20 Nov. | `src/step0.py`, Yahoo closes, 23-name Blue Tsunami list (16 suppliers, 4 builders; 3 non-AI controls excluded) |
 | 4a | Fear Cycle falsifier "SMH new high by ~Nov 2026" | **FAILED** | Recorded as scored in chat; not recomputed | prompt |
 | 4b | Holding-the-List "close below 29-Jul low" | **FIRED** (ETF level) | Recorded; not recomputed | prompt |
 | 4c | v14 credit trigger CRWV CDS > 1,000bp | **Fired.** Search results show ~1,278-1,289bp on 5 Nov, ~1,155bp on 6 Nov, ~1,152bp on 10 Nov, "1,100-1,200bp" mid-Nov | Fired; multiple CNBC reports, but via search snippets only | CNBC 6, 10, 18 Nov 2026 |
@@ -227,7 +227,7 @@ Source: `results/holdout_scorecard.csv` and `results/holdout_predictions.csv`. S
   - It failed BH, and it is a proxy for the series that was actually pre-registered.
   - The current reading, **+84.7% YoY (Sep 2026)**, has been exceeded only in 1973-74 since 1970, which is far outside the NDX/SOX training range. Any live use of it is extrapolation.
 
-**H5 (descriptive only, structural break):**
+**H5 (descriptive only, structural break):** *The figures below include open episodes; corrected in Post-hoc diagnostics, item 3 (D6).*
 - Median sessions from the -10% crossing to the trough:
   - SPX: 26 before 2018 vs 17 after.
   - NDX: 9 vs 3.5.
@@ -313,3 +313,241 @@ On that baseline, the live reading is:
 4. **Method-level:** if a fresh pre-registered test in the next study finds any of H1-H4 with BH-surviving skill >= 0.02 that also holds out of sample, this study's null is wrong for that layer. The obvious candidates are H4 on the true non-semis series once it is obtained, and the H4-total YoY lead in exhibit 6.
 
 The live rows get rescored by rerunning `python src/live.py` after 2027-02-24, and again after 2027-05-25 for the 126-session T2 check from 20 Nov.
+
+
+---
+
+## Post-hoc diagnostics (added after the hold-out; deviations D4-D9)
+
+Nothing in this section changes a pre-registered result. The ledger, BH values, training verdicts and hold-out scorecard above stand as computed. Code: `src/posthoc.py`. Outputs: `results/posthoc/`.
+
+### 1. Power: minimum detectable Brier-skill gain (D4)
+
+**Method.**
+- **Effective N:** training events are chained into one cluster whenever their [t, t+252]-session windows overlap.
+- **Formula:** MDE = (1.96 + 0.84)^2 x p(1-p) / (N_eff x Brier_L0), at 80% power and two-sided alpha 0.05, where p is the training base rate. It comes from the Brier resolution term for the smallest detectable hit-rate difference.
+- **Lower bound:** it ignores the cost of fitting the layer and any overlap with Layer 0, so the true MDE is higher.
+
+**Effective N per asset** (training rows include the H2a signal rows):
+
+| Asset | Event rows | Episodes | N_eff (252 chained) | Greedy non-overlapping 252 windows | N_eff (63 chained, T1 horizon) |
+|---|---|---|---|---|---|
+| SPX | 143 | 49 | **21** | 28 | 45 |
+| NDX | 159 | 61 | **10** | 21 | 29 |
+| SOX | 248 | 94 | **4** | 18 | 23 |
+| Pooled, all three, same windows counted once | 416 (329 distinct dates) | | **21** | | |
+
+**Pooling adds nothing.** The pooled N_eff of 21 equals SPX alone. NDX and SOX do add 11 clusters that start outside any SPX cluster, but their long chains (e.g. SOX 1995-2007 is one cluster) bridge separate SPX clusters by about as many, so the net count is unchanged.
+
+**MDE (skill vs Layer 0) on N_eff** (full table with all 54 cells in `results/posthoc/power_mde.csv`):
+
+| Layer | SPX T1 | SPX T2 | NDX T1 | NDX T2 | SOX T1 | SOX T2 |
+|---|---|---|---|---|---|---|
+| H1 | 0.40 | 0.38 | 1.01 | 0.94 | 2.10 | 2.10 |
+| H2a | 0.40 | 0.37 | 1.09 | 1.00 | 2.11 | 2.18 |
+| H2b | 2.61 | 2.48 | 1.76 | 2.05 | 3.20 | 3.62 |
+| H2c | 2.01 | 1.82 | 1.58 | 1.44 | 2.10 | 2.10 |
+| H3 | 0.40 | 0.38 | 1.01 | 0.94 | 2.10 | 2.10 |
+| H4-total YoY | 0.56 | 0.54 | 1.01 | 0.94 | 2.10 | 2.10 |
+
+An MDE above 1 means no achievable skill gain (skill can't exceed 1) could be detected at 80% power.
+
+**Results.**
+- **Every one of the 48 testable cells has MDE > 0.05.**
+  - The smallest MDE on N_eff is **0.37**.
+  - On greedy non-overlapping windows it is **0.28**.
+  - Even treating every episode as independent, it is **0.089** (SOX).
+- **Relabels:**
+  - **40 pre-registered KILLs become "UNDERPOWERED"** in a new `posthoc_label` column.
+  - The 8 pre-registered UNDERPOWERED cells stay as they are.
+  - The 6 robustness rows are unchanged.
+- **What the pre-registered bar implies:** the survival bar (skill >= 0.02) needed roughly 20 times more independent episodes than history provides.
+
+**Reading.** The kills are absence of evidence, not evidence of absence. The one exception is the scale of the hold-out reversals (H3 SPX T1 at -0.24, H4-total d3 NDX T2 at -0.19). Those are large enough to matter, but they too sit inside the MDE.
+
+### 2. Hold-out: Layer 0 vs constant, per asset (D5)
+
+The constant is the training base rate for that asset and target. "Diff" = Brier(Layer 0) - Brier(constant); positive means the baseline is worse.
+
+| Asset | Target | Rows | Episodes | N_eff (252) | Brier L0 | Brier const | Diff | 90% CI on N_eff clusters | 90% CI on episodes | Does "worse than constant" survive? |
+|---|---|---|---|---|---|---|---|---|---|---|
+| SPX | T1 | 20 | 8 | 5 | 0.193 | 0.188 | +0.005 | -0.014 to +0.030 | -0.018 to +0.032 | **No.** Point estimate only. |
+| SPX | T2 | 20 | 8 | 5 | 0.239 | 0.230 | +0.009 | -0.043 to +0.066 | -0.044 to +0.068 | **No.** Point estimate only. |
+| NDX | T1 | 30 | 17 | **1** | 0.247 | 0.243 | +0.004 | not testable | -0.049 to +0.065 | **No.** One cluster; episode CI includes 0. |
+| NDX | T2 | 28 | 15 | **1** | 0.270 | 0.265 | +0.005 | not testable | -0.051 to +0.068 | **No.** One cluster; episode CI includes 0. |
+| SOX | T1 | 58 | 30 | **1** | 0.303 | 0.265 | +0.038 | not testable | +0.002 to +0.075 | **Only on episode clusters**, which ignore 252-day overlap. Not testable on N_eff. |
+| SOX | T2 | 50 | 26 | **1** | 0.347 | 0.287 | +0.060 | not testable | +0.028 to +0.090 | **Only on episode clusters.** Not testable on N_eff. |
+
+**Statement.**
+- The Layer 0 point estimate is worse than the constant in all six cells.
+- **On N_eff the claim does not survive:**
+  - SPX: N_eff 5, CI includes 0.
+  - NDX and SOX: the 2018-2026 hold-out is one chained cluster, so N_eff = 1 and it can't be tested.
+- **On episode clustering, only SOX** (T1 and T2) is significantly worse than constant. That is consistent with the level shift in exhibit 3 (hold-out T1 63% vs training 49%).
+- **Correct wording:** "worse than constant" is a point-estimate observation for SPX and NDX, and a weak, overlap-sensitive result for SOX.
+
+**Hold-out events, all of them** (Layer 0 and constant predictions; `results/posthoc/holdout_events.csv`). Censored targets are blank.
+
+**SPX** (20 events)
+
+| Date       | Event   |   Episode |   T1 |   L0 P(T1) |   Const P(T1) |   T2 |   L0 P(T2) |   Const P(T2) |
+|:-----------|:--------|----------:|-----:|-----------:|--------------:|-----:|-----------:|--------------:|
+| 2018-02-05 | A       |        49 |    1 |       0.91 |          0.74 |    1 |       0.81 |          0.56 |
+| 2018-02-08 | B10     |        49 |    1 |       0.91 |          0.74 |    1 |       0.81 |          0.56 |
+| 2018-11-23 | B10     |        50 |    0 |       0.80 |          0.74 |    0 |       0.40 |          0.56 |
+| 2018-12-20 | B15     |        50 |    1 |       0.80 |          0.74 |    1 |       0.42 |          0.56 |
+| 2020-02-27 | A       |        51 |    0 |       0.80 |          0.74 |    0 |       0.37 |          0.56 |
+| 2020-02-27 | B10     |        51 |    0 |       0.80 |          0.74 |    0 |       0.37 |          0.56 |
+| 2020-03-09 | B15     |        51 |    0 |       0.80 |          0.74 |    0 |       0.37 |          0.56 |
+| 2020-03-12 | B20     |        51 |    1 |       0.79 |          0.74 |    1 |       0.37 |          0.56 |
+| 2020-03-20 | B30     |        51 |    1 |       0.78 |          0.74 |    1 |       0.38 |          0.56 |
+| 2022-02-22 | B10     |        52 |    1 |       0.80 |          0.74 |    0 |       0.39 |          0.56 |
+| 2022-04-29 | B10     |        53 |    0 |       0.76 |          0.74 |    0 |       0.44 |          0.56 |
+| 2022-05-11 | B15     |        53 |    1 |       0.76 |          0.74 |    1 |       0.45 |          0.56 |
+| 2022-05-18 | A       |        53 |    1 |       0.76 |          0.74 |    1 |       0.45 |          0.56 |
+| 2022-06-16 | B20     |        53 |    1 |       0.76 |          0.74 |    1 |       0.47 |          0.56 |
+| 2022-09-16 | B10     |        54 |    1 |       0.67 |          0.74 |    1 |       0.50 |          0.56 |
+| 2022-09-26 | B15     |        54 |    1 |       0.68 |          0.74 |    1 |       0.50 |          0.56 |
+| 2023-10-27 | B10     |        55 |    1 |       0.80 |          0.74 |    1 |       0.60 |          0.56 |
+| 2025-03-13 | B10     |        56 |    1 |       0.80 |          0.74 |    1 |       0.37 |          0.56 |
+| 2025-04-03 | A       |        56 |    1 |       0.80 |          0.74 |    1 |       0.39 |          0.56 |
+| 2025-04-04 | B15     |        56 |    1 |       0.80 |          0.74 |    1 |       0.39 |          0.56 |
+
+**NDX** (30 events)
+
+| Date       | Event   |   Episode |   T1 |   L0 P(T1) |   Const P(T1) |   T2 |   L0 P(T2) |   Const P(T2) |
+|:-----------|:--------|----------:|-----:|-----------:|--------------:|-----:|-----------:|--------------:|
+| 2018-02-08 | B10     |        62 |    1 |       0.80 |          0.52 |    1 |       0.70 |          0.45 |
+| 2018-04-02 | B10     |        63 |    1 |       0.80 |          0.52 |    1 |       0.70 |          0.45 |
+| 2018-10-24 | B10     |        64 |    0 |       0.79 |          0.52 |    0 |       0.69 |          0.45 |
+| 2018-12-17 | B15     |        64 |    1 |       0.73 |          0.52 |    1 |       0.62 |          0.45 |
+| 2018-12-21 | B20     |        64 |    1 |       0.65 |          0.52 |    1 |       0.54 |          0.45 |
+| 2019-06-03 | B10     |        65 |    1 |       0.79 |          0.52 |    1 |       0.69 |          0.45 |
+| 2020-02-27 | B10     |        66 |    0 |       0.76 |          0.52 |    0 |       0.66 |          0.45 |
+| 2020-03-09 | A       |        66 |    0 |       0.69 |          0.52 |    0 |       0.59 |          0.45 |
+| 2020-03-09 | B15     |        66 |    0 |       0.69 |          0.52 |    0 |       0.59 |          0.45 |
+| 2020-03-12 | B20     |        66 |    1 |       0.57 |          0.52 |    1 |       0.47 |          0.45 |
+| 2020-03-16 | B10     |        67 |    1 |       0.53 |          0.52 |    1 |       0.43 |          0.45 |
+| 2020-09-08 | B10     |        68 |    1 |       0.79 |          0.52 |    1 |       0.69 |          0.45 |
+| 2021-03-08 | B10     |        69 |    1 |       0.79 |          0.52 |    1 |       0.69 |          0.45 |
+| 2022-01-20 | B10     |        70 |    0 |       0.80 |          0.52 |    0 |       0.70 |          0.45 |
+| 2022-01-27 | B15     |        70 |    1 |       0.73 |          0.52 |    0 |       0.63 |          0.45 |
+| 2022-03-14 | B20     |        70 |    0 |       0.64 |          0.52 |    0 |       0.54 |          0.45 |
+| 2022-04-22 | B10     |        71 |    0 |       0.67 |          0.52 |    0 |       0.57 |          0.45 |
+| 2022-04-29 | B15     |        71 |    0 |       0.62 |          0.52 |    0 |       0.52 |          0.45 |
+| 2022-05-09 | B20     |        71 |    1 |       0.55 |          0.52 |    1 |       0.45 |          0.45 |
+| 2022-08-31 | B10     |        72 |    0 |       0.56 |          0.52 |    0 |       0.46 |          0.45 |
+| 2022-09-22 | B15     |        72 |    1 |       0.47 |          0.52 |    1 |       0.39 |          0.45 |
+| 2022-10-10 | B20     |        72 |    1 |       0.41 |          0.52 |    1 |       0.34 |          0.45 |
+| 2022-12-27 | B10     |        73 |    1 |       0.40 |          0.52 |    1 |       0.33 |          0.45 |
+| 2023-10-26 | B10     |        74 |    1 |       0.79 |          0.52 |    1 |       0.69 |          0.45 |
+| 2024-08-02 | B10     |        75 |    1 |       0.79 |          0.52 |    1 |       0.69 |          0.45 |
+| 2025-03-10 | B10     |        76 |    0 |       0.78 |          0.52 |    0 |       0.67 |          0.45 |
+| 2025-04-03 | B15     |        76 |    1 |       0.72 |          0.52 |    1 |       0.61 |          0.45 |
+| 2025-04-04 | B20     |        76 |    1 |       0.64 |          0.52 |    1 |       0.53 |          0.45 |
+| 2026-03-27 | B10     |        77 |    1 |       0.79 |          0.52 |      |     nan    |        nan    |
+| 2026-07-29 | B10     |        78 |    1 |       0.79 |          0.52 |      |     nan    |        nan    |
+
+**SOX** (58 events)
+
+| Date       | Event   |   Episode |   T1 |   L0 P(T1) |   Const P(T1) |   T2 |   L0 P(T2) |   Const P(T2) |
+|:-----------|:--------|----------:|-----:|-----------:|--------------:|-----:|-----------:|--------------:|
+| 2018-02-08 | B10     |        97 |    1 |       0.42 |          0.42 |    1 |       0.19 |          0.31 |
+| 2018-03-28 | B10     |        98 |    1 |       0.42 |          0.42 |    1 |       0.20 |          0.31 |
+| 2018-10-10 | B10     |        99 |    0 |       0.16 |          0.42 |    0 |       0.19 |          0.31 |
+| 2018-10-24 | B15     |        99 |    1 |       0.16 |          0.42 |    1 |       0.16 |          0.31 |
+| 2018-10-24 | B20     |        99 |    1 |       0.16 |          0.42 |    1 |       0.16 |          0.31 |
+| 2018-12-19 | B10     |       100 |    1 |       0.23 |          0.42 |    1 |       0.21 |          0.31 |
+| 2018-12-24 | B15     |       100 |    1 |       0.22 |          0.42 |    1 |       0.18 |          0.31 |
+| 2019-05-13 | B10     |       101 |    1 |       0.42 |          0.42 |    1 |       0.20 |          0.31 |
+| 2019-05-20 | B15     |       101 |    1 |       0.41 |          0.42 |    1 |       0.18 |          0.31 |
+| 2019-08-05 | B10     |       102 |    1 |       0.43 |          0.42 |    1 |       0.19 |          0.31 |
+| 2020-02-25 | B10     |       103 |    0 |       0.43 |          0.42 |    0 |       0.19 |          0.31 |
+| 2020-02-27 | B15     |       103 |    0 |       0.43 |          0.42 |    0 |       0.17 |          0.31 |
+| 2020-03-09 | A       |       103 |    0 |       0.21 |          0.42 |    0 |       0.15 |          0.31 |
+| 2020-03-09 | B20     |       103 |    0 |       0.21 |          0.42 |    0 |       0.15 |          0.31 |
+| 2020-03-16 | B10     |       104 |    1 |       0.23 |          0.42 |    1 |       0.18 |          0.31 |
+| 2020-03-16 | B15     |       104 |    1 |       0.23 |          0.42 |    1 |       0.18 |          0.31 |
+| 2020-09-08 | B10     |       105 |    1 |       0.43 |          0.42 |    1 |       0.20 |          0.31 |
+| 2021-03-04 | B10     |       106 |    1 |       0.42 |          0.42 |    1 |       0.19 |          0.31 |
+| 2021-05-10 | B10     |       107 |    1 |       0.40 |          0.42 |    0 |       0.20 |          0.31 |
+| 2022-01-19 | B10     |       108 |    0 |       0.41 |          0.42 |    0 |       0.20 |          0.31 |
+| 2022-01-25 | B15     |       108 |    0 |       0.21 |          0.42 |    0 |       0.17 |          0.31 |
+| 2022-02-23 | B10     |       109 |    0 |       0.22 |          0.42 |    0 |       0.21 |          0.31 |
+| 2022-03-07 | B15     |       109 |    1 |       0.21 |          0.42 |    0 |       0.18 |          0.31 |
+| 2022-04-06 | B10     |       110 |    0 |       0.23 |          0.42 |    0 |       0.20 |          0.31 |
+| 2022-04-11 | B15     |       110 |    0 |       0.23 |          0.42 |    0 |       0.18 |          0.31 |
+| 2022-04-27 | B20     |       110 |    0 |       0.22 |          0.42 |    0 |       0.16 |          0.31 |
+| 2022-06-10 | B10     |       111 |    0 |       0.24 |          0.42 |    0 |       0.22 |          0.31 |
+| 2022-06-13 | B15     |       111 |    1 |       0.24 |          0.42 |    1 |       0.19 |          0.31 |
+| 2022-07-01 | B20     |       111 |    1 |       0.22 |          0.42 |    1 |       0.16 |          0.31 |
+| 2022-08-29 | B10     |       112 |    0 |       0.23 |          0.42 |    0 |       0.22 |          0.31 |
+| 2022-09-02 | B15     |       112 |    0 |       0.23 |          0.42 |    0 |       0.19 |          0.31 |
+| 2022-09-22 | B20     |       112 |    0 |       0.21 |          0.42 |    0 |       0.17 |          0.31 |
+| 2022-12-22 | B10     |       113 |    1 |       0.24 |          0.42 |    1 |       0.23 |          0.31 |
+| 2023-04-25 | B10     |       114 |    1 |       0.46 |          0.42 |    1 |       0.23 |          0.31 |
+| 2023-08-17 | B10     |       115 |    1 |       0.48 |          0.42 |    1 |       0.24 |          0.31 |
+| 2023-10-25 | B15     |       115 |    1 |       0.20 |          0.42 |    1 |       0.20 |          0.31 |
+| 2024-04-17 | B10     |       116 |    1 |       0.40 |          0.42 |    0 |       0.20 |          0.31 |
+| 2024-04-19 | B15     |       116 |    1 |       0.39 |          0.42 |    0 |       0.17 |          0.31 |
+| 2024-07-19 | B10     |       117 |    0 |       0.43 |          0.42 |    0 |       0.20 |          0.31 |
+| 2024-07-25 | B15     |       117 |    0 |       0.42 |          0.42 |    0 |       0.18 |          0.31 |
+| 2024-08-02 | B20     |       117 |    1 |       0.41 |          0.42 |    1 |       0.15 |          0.31 |
+| 2024-09-06 | B10     |       118 |    1 |       0.22 |          0.42 |    1 |       0.19 |          0.31 |
+| 2024-11-15 | B10     |       119 |    1 |       0.21 |          0.42 |    1 |       0.21 |          0.31 |
+| 2025-01-27 | A       |       120 |    0 |       0.24 |          0.42 |    0 |       0.21 |          0.31 |
+| 2025-01-27 | B10     |       120 |    0 |       0.24 |          0.42 |    0 |       0.21 |          0.31 |
+| 2025-03-03 | B15     |       120 |    0 |       0.21 |          0.42 |    0 |       0.18 |          0.31 |
+| 2025-03-11 | B20     |       120 |    0 |       0.21 |          0.42 |    0 |       0.17 |          0.31 |
+| 2025-04-04 | B30     |       120 |    1 |       0.19 |          0.42 |    1 |       0.12 |          0.31 |
+| 2025-04-21 | B10     |       121 |    1 |       0.24 |          0.42 |    1 |       0.22 |          0.31 |
+| 2025-11-18 | B10     |       122 |    1 |       0.42 |          0.42 |    1 |       0.20 |          0.31 |
+| 2025-12-17 | B10     |       123 |    1 |       0.43 |          0.42 |      |     nan    |        nan    |
+| 2026-03-06 | B10     |       124 |    1 |       0.43 |          0.42 |      |     nan    |        nan    |
+| 2026-03-30 | B15     |       124 |    1 |       0.40 |          0.42 |      |     nan    |        nan    |
+| 2026-06-05 | A       |       125 |    0 |       0.44 |          0.42 |      |     nan    |        nan    |
+| 2026-06-05 | B10     |       125 |    0 |       0.44 |          0.42 |      |     nan    |        nan    |
+| 2026-07-02 | B10     |       126 |    0 |       0.43 |          0.42 |      |     nan    |        nan    |
+| 2026-07-07 | B15     |       126 |    0 |       0.42 |          0.42 |      |     nan    |        nan    |
+| 2026-07-17 | B20     |       126 |    0 |       0.41 |          0.42 |      |     nan    |        nan    |
+
+### 3. H5: pre/post-2018 descriptive comparison (D6)
+
+Descriptive only, no inference. Completed episodes only: open episodes are excluded because their trough is not final. T1 is measured at the -10% crossing.
+
+| Asset | Period | Episodes | Median sessions B10 to trough (IQR) | Trough on the B10 day | Median max depth | T1 rate (90% Wilson) |
+|---|---|---|---|---|---|---|
+| SPX | pre-2018 | 47 | 26 (3-56) | 17% | -15.4% | 79% (67-87%), n=47 |
+| SPX | 2018+ | 8 | 17.5 (8-18) | 25% | -17.9% | 63% (35-84%), n=8 |
+| NDX | pre-2018 | 61 | 9 (1-22) | 25% | -15.3% | 62% (52-72%), n=61 |
+| NDX | 2018+ | 17 | 3 (0-21) | 35% | -12.5% | 65% (45-81%), n=17 |
+| SOX | pre-2018 | 94 | 5 (1-14) | 21% | -16.3% | 49% (41-57%), n=94 |
+| SOX | 2018+ | 32 | 4.5 (2-14) | 25% | -15.8% | 63% (48-76%), n=30 |
+
+**Correction to exhibit 6.** That text gave post-2018 medians of 17 / 3.5 / 3 sessions, which included open episodes. Excluding them gives **17.5 / 3 / 4.5**.
+
+**Reading.**
+- **Faster troughs:** visible for SPX and NDX in the medians. **Not for SOX** (5 vs 4.5).
+- **T1 rates:** every 90% interval overlaps across periods. The SOX rise (49% to 63%) is the largest move, but with 30 hold-out episodes it is not distinguishable from noise.
+
+### 4. Data checks (D7)
+
+| Check | Result |
+|---|---|
+| VIX3M start in `MANIFEST.csv` | **2006-07-17** for the raw Yahoo file, which includes back-calculated pre-launch values. MANIFEST does *not* show 2007-12-04 for this file. FRED VXVCLS (the cross-check) starts 2007-12-04. |
+| VIX3M actually used | Processed series starts **2007-12-04** (cut in `src/ingest.py`, asserted in `tests/test_data.py`). The first VIX/VIX3M ratio is 2007-12-04 for all assets; the first H2b signal is 2007-12-18. **0 rows of 2006-07 to 2007-12 data enter any feature.** |
+| Korean-export look-ahead | `kr_yoy` / `kr_d3` are used only in the **H4-total** layers and the H4 incremental check (`h4_incremental.csv`). Not in Layer 0, and not in any live frozen model (L0, H1, H2b, H2c, H3). `events_*.csv` and `live_state.csv` print the value for description only. **Confirmed: the revision look-ahead affects only H4-total.** |
+| Other monthly series | FEDFUNDS, BAA and GS10 also use the latest vintage, but they are not revised in practice. |
+
+### 5. Step 0 rescored (D8)
+
+| Item | Original scoring | Post-hoc rescoring |
+|---|---|---|
+| $500M data-centre loan auction (bids 19 Nov) | Neither flip triggered (no print) | **No clear = failed financing; thesis-side, provisional (single source: Bloomberg 20 Nov, via search snippet).** |
+| Rebound leadership (5 up days) | Incomplete, leaning flush (suppliers +24.7% vs builders +2.1% over 3 up days) | **Inconclusive: 3 up days, 5 required.** |
+
+### 6. Limitations (D9)
+
+- **H1 measured past Fed stance, not policy reversal.** The feature is the lagged 6-month FEDFUNDS change, bucketed at ±50bp, known at t with an m+2 lag. It says nothing about a real-time pivot (a first cut, or the market pricing one) during the drawdown, which is the mechanism usually argued for exhaustion. A null on H1 is not a null on "the Fed put".
+- **A credit x policy interaction is post-hoc and untestable here.** The idea is that credit non-confirmation matters only when policy is easing (or tightening). It was not pre-registered. It would split N_eff of 4-21 into four cells, which is far below the MDE in item 1. It should not be inferred from the H3 or H1 tables.
+- **Power (item 1)** is the binding limitation of the whole study. The pre-registered survival bar sat well below what the sample could detect.

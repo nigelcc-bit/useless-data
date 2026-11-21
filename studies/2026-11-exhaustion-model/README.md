@@ -7,6 +7,7 @@ After a fast equity drawdown, what separates episodes where selling exhausts fro
 - Training verdicts (written before the hold-out): [`results/verdicts_train.md`](results/verdicts_train.md)
 - Kill log: [`results/killed_hypotheses.md`](results/killed_hypotheses.md)
 - Test ledger with BH-adjusted p: [`ledger.csv`](ledger.csv)
+- Post-hoc diagnostics (power/MDE, hold-out N, H5, data checks; deviations D4-D9): `src/posthoc.py`, `results/posthoc/`, REPORT section "Post-hoc diagnostics"
 
 **Result:** 0 of 69 ledger tests survive BH at q = 0.10. No layer beats the price/episode-state
 baseline, and the baseline does not beat a constant base rate in the 2018-2026 hold-out.
@@ -25,6 +26,7 @@ python src/evaluate.py --holdout # hold-out scorecard (already run once; rerunni
 python src/live.py               # live state and frozen predictions; rerun after 2027-02-24 to score
 python src/step0.py              # Step 0 rebound-leadership check
 python src/figures.py
+python src/posthoc.py            # post-hoc diagnostics (D4-D9)
 ```
 
 Re-pulling data changes the vintage; to reproduce the committed results, use the committed `data/raw/`.

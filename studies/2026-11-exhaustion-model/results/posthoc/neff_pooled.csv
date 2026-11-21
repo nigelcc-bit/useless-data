@@ -1,0 +1,3 @@
+target,rows_all_assets,distinct_dates,pooled_n_eff_252,sum_of_per_asset_n_eff,n_eff_SPX,n_eff_NDX,n_eff_SOX
+T1,416,329,21,35,21,10,4
+T2,416,329,21,35,21,10,4

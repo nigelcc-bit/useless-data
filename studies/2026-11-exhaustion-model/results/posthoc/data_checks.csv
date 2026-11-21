@@ -1,0 +1,11 @@
+check,value,note
+VIX3M raw file first date (MANIFEST),2006-07-17,Yahoo includes back-calculated 2006-07-17..2007-12-03 rows
+FRED VXVCLS first date (MANIFEST),2007-12-04,official history start
+VIX3M processed first date (closes.parquet),2007-12-04,cut in src/ingest.py VIX3M_START; enforced by tests/test_data.py
+"First VIX/VIX3M ratio used, per asset",SPX 2007-12-04; NDX 2007-12-04; SOX 2007-12-04,
+"Earliest H2b/H2b095 signal, per asset",SPX 2007-12-18; NDX 2007-12-18; SOX 2007-12-18,H2b frames also filtered to >= 2007-12-04 in evaluate.layer_frame
+Rows of pre-2007-12-04 VIX3M data used anywhere,0,
+Scripts referencing kr_yoy/kr_d3,"evaluate.py, features.py, live.py",features.py builds; evaluate.py uses only in H4total_* layers and h4_incremental; live.py only prints the state value
+Korean exports in Layer 0 features,False,
+Korean exports in any live frozen model,False,"live layers: L0, H1, H2b, H2c, H3"
+Other monthly series vintage,latest,"FEDFUNDS, BAA, GS10 are not revised in practice; Korean exports (OECD MEI, SA) are revised and re-seasonally-adjusted"
