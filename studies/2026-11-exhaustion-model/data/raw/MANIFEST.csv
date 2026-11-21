@@ -1,0 +1,15 @@
+file,source_url,pulled_utc,rows,first,last,sha256
+spx_1950_2026.csv,https://query2.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1=-1325635200&period2=1795332501&interval=1d&events=history,2026-11-21T07:28:22+00:00,24841,1927-12-30,2026-11-20,d9541ae5c11e2befdf85b4746fda1ca3fd4621fc064dd89edce72e6046254849
+ndx_1985_2026.csv,https://query2.finance.yahoo.com/v8/finance/chart/%5ENDX?period1=-1325635200&period2=1795332504&interval=1d&events=history,2026-11-21T07:28:25+00:00,10366,1985-10-01,2026-11-20,03733921898d5e2eb9963b2cf18e1b356f0ef14e7ead78e07482802aba49ccca
+sox_daily_1994_2026.csv,https://query2.finance.yahoo.com/v8/finance/chart/%5ESOX?period1=-1325635200&period2=1795332507&interval=1d&events=history,2026-11-21T07:28:27+00:00,8194,1994-05-04,2026-11-20,41aefc23185707a041c5f77984eeed9620b27ea0b0852524b0eabc7bf7b7a134
+vix_daily_1990_2026.csv,https://query2.finance.yahoo.com/v8/finance/chart/%5EVIX?period1=-1325635200&period2=1795332509&interval=1d&events=history,2026-11-21T07:28:30+00:00,9624,1990-01-02,2026-11-20,9e1fff74cfc3245ef6802ef63f87459ec1d8c4ac7c805011b0295f30d816aa15
+vix3m_daily_2007_2026.csv,https://query2.finance.yahoo.com/v8/finance/chart/%5EVIX3M?period1=-1325635200&period2=1795332512&interval=1d&events=history,2026-11-21T07:28:32+00:00,5121,2006-07-17,2026-11-20,52ee169b6b4850c94b773ae675f1aa27187a69613408315028a53ff0b7894947
+fred_FEDFUNDS.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS,2026-11-21T07:32:56+00:00,868,1954-07-01,2026-10-01,abaf8aac94e837c8a2516b69ee445d8e46ffc1236d932621e4f85771933ca23d
+fred_BAA.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAA,2026-11-21T07:32:58+00:00,1294,1919-01-01,2026-10-01,ac60e01f0138b6cbe180aa338e706111d3322e15e7dfdc491e323935eefb900f
+fred_GS10.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=GS10,2026-11-21T07:32:59+00:00,883,1953-04-01,2026-10-01,c2511a82eb648a0f973e1815993e6f691a61fe6e356ec51fcad62fd435718319
+fred_BAA10Y.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAA10Y,2026-11-21T07:33:00+00:00,10666,1986-01-02,2026-11-19,8c02cb268b0a999b042652292d35fe2a2ba9ec0810c0490889c3ae6a75ea1195
+fred_VIXCLS.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS,2026-11-21T07:33:02+00:00,9623,1990-01-02,2026-11-19,bea0dfc2b5d02ef3852c0bdbc5ae6f8ed551b7a748419b49894071889aae8df2
+fred_VXVCLS.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=VXVCLS,2026-11-21T07:33:03+00:00,4948,2007-12-04,2026-11-19,de7817ba8b5bb73148a780f817b79a0e1ed2553de037ce59907d583f25d5dda8
+fred_NASDAQ100.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100,2026-11-21T07:33:04+00:00,10665,1986-01-02,2026-11-19,61498da35416eabe6d5bb1b577ce76aecd8dbb20d9f76b1a00742738c3465e68
+fred_SP500.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500,2026-11-21T07:33:06+00:00,2609,2016-11-21,2026-11-19,9d1886eaaadc6f386af8a74038bb286bfa0461594c333ec8a7d76b042b9701d5
+fred_XTEXVA01KRM667S.csv,https://fred.stlouisfed.org/graph/fredgraph.csv?id=XTEXVA01KRM667S,2026-11-21T07:33:07+00:00,837,1957-01-01,2026-09-01,c6a41eed6ac6dc2c703cc62d318c1d9685d7a94926695e7b84b35558883624a4
