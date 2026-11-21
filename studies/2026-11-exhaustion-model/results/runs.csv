@@ -1,3 +1,4 @@
 timestamp,script,git_hash
 2026-11-21T07:41:09+00:00,evaluate.py (training) CRASHED in exhibits_train (missing tabulate) after writing ledger.csv; rerun with same seed,488e30f
 2026-11-21T07:46:53+00:00,evaluate.py (training),488e30f
+2026-11-21T07:53:11+00:00,evaluate.py (training),f9ad371
