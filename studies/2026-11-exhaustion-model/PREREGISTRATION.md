@@ -240,4 +240,25 @@ x trend state (above/below 200-session MA).
 
 # Part D. Deviation log
 
-(none yet)
+**D1 (21 Nov 2026, before any outcome statistic was computed; code committed with this entry).**
+Operational clarifications found while writing the code:
+1. *Permutation null for row-augmented layers (H2a, H2b, H2b095).* For these, the layer feature
+   equals the row type, so the whole-episode block permutation of C7 is degenerate (every
+   permutation reproduces the data). The null used instead is "random timing": each signal row
+   is moved to a uniformly drawn session inside the same episode (after B10, before reset, target
+   available, training period), its Layer 0 features and target are recomputed at that session,
+   and both Layer 0 and the layer model are refit. 999 draws, same p formula. Column layers keep
+   the C7 block permutation.
+2. *H4 incremental check, 3-feature cap.* (best-2 Layer 0 + ret63 + feature) has four features,
+   breaching the prompt's cap of 3. The incremental Brier check uses the best **single** Layer 0
+   feature + ret63 + feature vs best single + ret63. The survival test is unchanged (best-2 +
+   feature vs Layer 0).
+3. *Inherited tests use one row per episode.* I1 and I2 use family-A first-shock rows only; I3
+   uses the first event row of each episode, so Fisher's independence assumption is closer to true.
+4. *Second BH pass.* The hold-out is a single Brier comparison per layer (prompt section 6) and
+   produces no p-values, so the training BH pass is the only one; the hold-out is reported as a
+   scorecard.
+5. *Structure seen while building events (not an outcome).* The SPX episode engine records a B10
+   crossing on 20 Nov 2026 (close 6,910.39), i.e. the 5 Nov first shock has already been followed
+   by a -10% swing crossing. NDX has a B15 on 19 Nov; SOX a new episode (B10/B15/B20 on 19-20 Nov)
+   after a rebound reset following its 5 Nov B30.
