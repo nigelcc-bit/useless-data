@@ -274,3 +274,8 @@ it is flagged as such. The verdict text was also changed to say "halves sign not
 one training half has no data (H2b, H2c on SPX), instead of "sign flips"; no verdict changes.
 The first run crashed after writing `ledger.csv` (missing `tabulate` for the markdown exhibits);
 the rerun with the same seed reproduced the ledger exactly before these edits.
+
+**D3 (21 Nov 2026). Hold-out unlock.** Training verdicts committed at `79166f4`
+(`results/verdicts_train.md`). The hold-out (events 2018-01-01 to 2026-11-20) is run once, next,
+by `python src/evaluate.py --holdout`, with models fitted on training rows only and the training
+credit medians. Nothing is refit or reselected after it.
