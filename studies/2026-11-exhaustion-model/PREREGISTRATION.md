@@ -262,3 +262,15 @@ Operational clarifications found while writing the code:
    crossing on 20 Nov 2026 (close 6,910.39), i.e. the 5 Nov first shock has already been followed
    by a -10% swing crossing. NDX has a B15 on 19 Nov; SOX a new episode (B10/B15/B20 on 19-20 Nov)
    after a rebound reset following its 5 Nov B30.
+
+**D2 (21 Nov 2026, after the first training run).** Inherited tests I1 and I2 were coded with the
+distance from the 252-session high measured at the shock close. A -4% shock close can never be
+within 5% of the high unless the prior close was already below it, so I1 had zero qualifying
+events on all three assets. The parent note (Blue Tsunami Flush) lists 1955-09 among its "within 5%"
+events, which is only true on the pre-shock close, so the parent measured distance at t-1.
+**I1b and I2b** (same tests, distance at close t-1) are added to the ledger. I1 and I2 stay in the
+ledger as run. This is a correction of an inherited definition, made after seeing the first run;
+it is flagged as such. The verdict text was also changed to say "halves sign not evaluable" where
+one training half has no data (H2b, H2c on SPX), instead of "sign flips"; no verdict changes.
+The first run crashed after writing `ledger.csv` (missing `tabulate` for the markdown exhibits);
+the rerun with the same seed reproduced the ledger exactly before these edits.

@@ -54,6 +54,7 @@ def daily_frame(asset: str, C, M, B, thresholds: dict) -> tuple[pd.DataFrame, pd
     d["i"] = np.arange(len(idx))
     d["depth"] = close / state["P"] - 1
     d["dist252"] = close / close.rolling(252, min_periods=252).max() - 1
+    d["dist252_prev"] = d["dist252"].shift(1)  # pre-shock distance (D2, inherited tests only)
     d["above200"] = (close > close.rolling(200, min_periods=200).mean()).astype(float)
     d.loc[close.rolling(200, min_periods=200).mean().isna(), "above200"] = np.nan
     d["duration"] = d["i"] - state["Pi"]

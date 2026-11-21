@@ -233,6 +233,11 @@ def inherited(a, rows, target="T1"):
        "First shock within 5% of 252-session high is contained (T1) more often", "Blue Tsunami Flush (6 Nov 2026)")
     fx((A["dist252"] < -0.10).to_numpy(), A, "I2",
        "First shock >10% below 252-session high is contained less often (fell further 10%+)", "Blue Tsunami Flush (6 Nov 2026)")
+    # D2: the parent note measured distance from the high before the shock day (close t-1)
+    fx((A["dist252_prev"] >= -0.05).to_numpy(), A, "I1b",
+       "I1 with pre-shock (t-1) distance from 252-session high, as in the parent note", "Blue Tsunami Flush (6 Nov 2026)")
+    fx((A["dist252_prev"] < -0.10).to_numpy(), A, "I2b",
+       "I2 with pre-shock (t-1) distance from 252-session high, as in the parent note", "Blue Tsunami Flush (6 Nov 2026)")
     f2 = first.dropna(subset=["vix"])
     fx((f2["vix"] >= 35).to_numpy(), f2, "I3",
        "VIX >= 35 at the first event of an episode changes T1 rate", "JPM VIX 35 level via Blue Tsunami desk color")
@@ -368,7 +373,10 @@ def run_training():
         fails = []
         if not r["skill"] >= 0.02: fails.append(f"skill {r['skill']:+.3f}<0.02")
         if not r["n_assets_same_sign"] >= 2: fails.append("sign not shared by 2 of 3 assets")
-        if not (r["sign_h1"] == r["sign_h2"] == np.sign(r["coef"])): fails.append("sign flips across halves")
+        if pd.isna(r["sign_h1"]) or pd.isna(r["sign_h2"]):
+            fails.append("halves sign not evaluable (one half has no data)")
+        elif not (r["sign_h1"] == r["sign_h2"] == np.sign(r["coef"])):
+            fails.append("sign flips across halves")
         if not r["p_bh"] <= 0.10: fails.append(f"BH p {r['p_bh']:.2f}>0.10")
         return "SURVIVES" if not fails else "KILLED: " + "; ".join(fails)
     L["verdict"] = L.apply(verdict, axis=1)
