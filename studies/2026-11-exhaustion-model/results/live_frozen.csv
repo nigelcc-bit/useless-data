@@ -1,0 +1,61 @@
+asset,as_of,target,layer,model,p,train_base_rate,feature_value,train_verdict
+SPX,2026-11-05,T1,L0,depth+dist252+above200,0.9119433327012613,0.7352941176470589,,
+SPX,2026-11-05,T1,H1,depth+dist252+fed6m,0.8122057545099829,,0.0,KILLED: skill +0.015<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.15>0.10
+SPX,2026-11-05,T1,H2b,dist252+above200+is_signal,0.8386223454655011,,0.0,UNDERPOWERED (prior only)
+SPX,2026-11-05,T1,H2c,dist252+above200+vixhi,0.8817620244656782,,1.0,KILLED: skill -0.157<0.02; halves sign not evaluable (one half has no data); BH p 1.00>0.10
+SPX,2026-11-05,T1,H3,depth+dist252+credit_nc,0.9139610340766623,,0.0,KILLED: BH p 0.20>0.10
+SPX,2026-11-05,T2,L0,above200+duration+legs,0.8144769378266352,0.5588235294117647,,
+SPX,2026-11-05,T2,H1,above200+legs+fed6m,0.8183080683201743,,0.0,KILLED: sign flips across halves; BH p 0.28>0.10
+SPX,2026-11-05,T2,H2b,dist252+legs+is_signal,0.5134368720571534,,0.0,UNDERPOWERED (prior only)
+SPX,2026-11-05,T2,H2c,above200+legs+vixhi,0.8316383830951201,,1.0,KILLED: skill -0.115<0.02; sign not shared by 2 of 3 assets; halves sign not evaluable (one half has no data); BH p 1.00>0.10
+SPX,2026-11-05,T2,H3,above200+legs+credit_nc,0.8145451744897811,,0.0,KILLED: skill +0.013<0.02; BH p 1.00>0.10
+SPX,2026-11-20,T1,L0,depth+dist252+above200,0.7974917685916467,0.7352941176470589,,
+SPX,2026-11-20,T1,H1,depth+dist252+fed6m,0.8108053923955211,,0.0,KILLED: skill +0.015<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.15>0.10
+SPX,2026-11-20,T1,H2b,dist252+above200+is_signal,0.8140618892824485,,0.0,UNDERPOWERED (prior only)
+SPX,2026-11-20,T1,H2c,dist252+above200+vixhi,0.8495357359037046,,1.0,KILLED: skill -0.157<0.02; halves sign not evaluable (one half has no data); BH p 1.00>0.10
+SPX,2026-11-20,T1,H3,depth+dist252+credit_nc,0.93279363665623,,0.0,KILLED: BH p 0.20>0.10
+SPX,2026-11-20,T2,L0,above200+duration+legs,0.3918854239463605,0.5588235294117647,,
+SPX,2026-11-20,T2,H1,above200+legs+fed6m,0.4165968806043623,,0.0,KILLED: sign flips across halves; BH p 0.28>0.10
+SPX,2026-11-20,T2,H2b,dist252+legs+is_signal,0.4175648870541681,,0.0,UNDERPOWERED (prior only)
+SPX,2026-11-20,T2,H2c,above200+legs+vixhi,0.2208361783039972,,1.0,KILLED: skill -0.115<0.02; sign not shared by 2 of 3 assets; halves sign not evaluable (one half has no data); BH p 1.00>0.10
+SPX,2026-11-20,T2,H3,above200+legs+credit_nc,0.53065020017251,,0.0,KILLED: skill +0.013<0.02; BH p 1.00>0.10
+NDX,2026-11-05,T1,L0,dist252,0.7443180351280134,0.5210084033613446,,
+NDX,2026-11-05,T1,H1,depth+dist252+fed6m,0.7418051939433655,,0.0,KILLED: skill -0.057<0.02; sign flips across halves; BH p 1.00>0.10
+NDX,2026-11-05,T1,H2b,depth+above200+is_signal,0.5946935394879395,,0.0,UNDERPOWERED (prior only)
+NDX,2026-11-05,T1,H2c,depth+dist252+vixhi,0.8165609485942443,,1.0,KILLED: skill -0.034<0.02; BH p 0.57>0.10
+NDX,2026-11-05,T1,H3,depth+dist252+credit_nc,0.7037447941724969,,0.0,KILLED: skill -0.018<0.02; sign not shared by 2 of 3 assets; BH p 1.00>0.10
+NDX,2026-11-05,T2,L0,dist252,0.6396938452403718,0.44537815126050423,,
+NDX,2026-11-05,T2,H1,depth+dist252+fed6m,0.6384692506114021,,0.0,KILLED: skill -0.027<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.89>0.10
+NDX,2026-11-05,T2,H2b,depth+above200+is_signal,0.551169737894613,,0.0,UNDERPOWERED (prior only)
+NDX,2026-11-05,T2,H2c,dist252+above200+vixhi,0.7915603263261588,,1.0,KILLED: skill -0.037<0.02; sign flips across halves; BH p 0.70>0.10
+NDX,2026-11-05,T2,H3,depth+dist252+credit_nc,0.5660217985472029,,0.0,KILLED: skill +0.014<0.02; sign not shared by 2 of 3 assets; BH p 0.74>0.10
+NDX,2026-11-20,T1,L0,dist252,0.6666362903286603,0.5210084033613446,,
+NDX,2026-11-20,T1,H1,depth+dist252+fed6m,0.6133872955547168,,0.0,KILLED: skill -0.057<0.02; sign flips across halves; BH p 1.00>0.10
+NDX,2026-11-20,T1,H2b,depth+above200+is_signal,0.4566659693168208,,0.0,UNDERPOWERED (prior only)
+NDX,2026-11-20,T1,H2c,depth+dist252+vixhi,0.7143100038584406,,1.0,KILLED: skill -0.034<0.02; BH p 0.57>0.10
+NDX,2026-11-20,T1,H3,depth+dist252+credit_nc,0.5648506578931152,,0.0,KILLED: skill -0.018<0.02; sign not shared by 2 of 3 assets; BH p 1.00>0.10
+NDX,2026-11-20,T2,L0,dist252,0.5610417028835478,0.44537815126050423,,
+NDX,2026-11-20,T2,H1,depth+dist252+fed6m,0.5054760936869687,,0.0,KILLED: skill -0.027<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.89>0.10
+NDX,2026-11-20,T2,H2b,depth+above200+is_signal,0.33886011149836054,,0.0,UNDERPOWERED (prior only)
+NDX,2026-11-20,T2,H2c,dist252+above200+vixhi,0.7187006051263821,,1.0,KILLED: skill -0.037<0.02; sign flips across halves; BH p 0.70>0.10
+NDX,2026-11-20,T2,H3,depth+dist252+credit_nc,0.42472071098600445,,0.0,KILLED: skill +0.014<0.02; sign not shared by 2 of 3 assets; BH p 0.74>0.10
+SOX,2026-11-05,T1,L0,above200+duration+legs,0.21348754101033457,0.4205128205128205,,
+SOX,2026-11-05,T1,H1,above200+legs+fed6m,0.2207482258163128,,0.0,KILLED: skill -0.017<0.02; sign flips across halves; BH p 1.00>0.10
+SOX,2026-11-05,T1,H2b,duration+legs+is_signal,0.023560825877316584,,0.0,KILLED: skill -0.029<0.02; sign flips across halves; BH p 1.00>0.10
+SOX,2026-11-05,T1,H2c,above200+legs+vixhi,0.27203565151853226,,1.0,KILLED: skill -0.012<0.02; sign flips across halves; BH p 0.98>0.10
+SOX,2026-11-05,T1,H3,above200+legs+credit_nc,0.22576095468544502,,0.0,KILLED: skill -0.013<0.02; BH p 1.00>0.10
+SOX,2026-11-05,T2,L0,depth+legs,0.12373985700266615,0.3076923076923077,,
+SOX,2026-11-05,T2,H1,depth+legs+fed6m,0.12576453695066295,,0.0,KILLED: skill -0.009<0.02; sign flips across halves; BH p 0.74>0.10
+SOX,2026-11-05,T2,H2b,duration+legs+is_signal,0.015354423570544366,,0.0,KILLED: skill -0.017<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.89>0.10
+SOX,2026-11-05,T2,H2c,depth+legs+vixhi,0.1364494211410124,,1.0,KILLED: skill -0.004<0.02; sign flips across halves; BH p 0.63>0.10
+SOX,2026-11-05,T2,H3,depth+legs+credit_nc,0.12445810608706812,,0.0,KILLED: skill -0.015<0.02; BH p 1.00>0.10
+SOX,2026-11-20,T1,L0,above200+duration+legs,0.23513795465971093,0.4205128205128205,,
+SOX,2026-11-20,T1,H1,above200+legs+fed6m,0.22578090472638132,,0.0,KILLED: skill -0.017<0.02; sign flips across halves; BH p 1.00>0.10
+SOX,2026-11-20,T1,H2b,duration+legs+is_signal,0.027387875416039396,,0.0,KILLED: skill -0.029<0.02; sign flips across halves; BH p 1.00>0.10
+SOX,2026-11-20,T1,H2c,above200+legs+vixhi,0.2780993397389312,,1.0,KILLED: skill -0.012<0.02; sign flips across halves; BH p 0.98>0.10
+SOX,2026-11-20,T1,H3,above200+legs+credit_nc,0.2311604997077131,,0.0,KILLED: skill -0.013<0.02; BH p 1.00>0.10
+SOX,2026-11-20,T2,L0,depth+legs,0.16522082268067484,0.3076923076923077,,
+SOX,2026-11-20,T2,H1,depth+legs+fed6m,0.16647860249589364,,0.0,KILLED: skill -0.009<0.02; sign flips across halves; BH p 0.74>0.10
+SOX,2026-11-20,T2,H2b,duration+legs+is_signal,0.01884557533697217,,0.0,KILLED: skill -0.017<0.02; sign not shared by 2 of 3 assets; sign flips across halves; BH p 0.89>0.10
+SOX,2026-11-20,T2,H2c,depth+legs+vixhi,0.2114645113156723,,1.0,KILLED: skill -0.004<0.02; sign flips across halves; BH p 0.63>0.10
+SOX,2026-11-20,T2,H3,depth+legs+credit_nc,0.16562854203549607,,0.0,KILLED: skill -0.015<0.02; BH p 1.00>0.10
