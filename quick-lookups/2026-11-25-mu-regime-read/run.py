@@ -312,10 +312,9 @@ def main():
     a3.set_ylabel("beta")
     a3.legend(loc="upper left", fontsize=7, frameon=False)
     P0 = results["P0"]
-    title = (f"MU is in a high-vol stress state (filtered P={P0['p_stress_now_oos']:.2f}), "
-             f"but at {P0['current_spell'][2] if P0['current_spell'] else 0} sessions the spell is "
-             f"{'longer' if (P0['current_spell'] and P0['current_spell'][2] > P0['past_p75']) else 'within'} "
-             f"than past p75 ({P0['past_p75']:.0f})")
+    cur_len = P0["current_spell"][2] if P0["current_spell"] else 0
+    title = (f"MU high-vol state since {P0['last_switch']}: {cur_len} sessions vs past p75 of "
+             f"{P0['past_p75']:.0f} (filtered P(stress) now {P0['p_stress_now_oos']:.2f})")
     fig.suptitle(title, fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "regime_strip.png", dpi=150)

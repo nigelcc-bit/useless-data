@@ -1,0 +1,6 @@
+id,desc,p_now,consec_gt_0.8,spell_len,past_p75
+P0,"2-state, z(r), z(rv21)",1.0,24,326,46.0
+R1,"3-state, z(r), z(rv21)",1.0,18,18,56.0
+R2,"2-state, z(r) only",0.9999930296933479,3,28,8.0
+R3,"2-state, + z(SOXX rv21)",1.0,24,292,63.0
+R4,"2-state, z(r), z(rv10)",1.0,27,28,32.0

@@ -27,4 +27,4 @@ real question, promote it to `studies/` with `scripts/new_study.py`.
 
 | Date | Lookup | Question | Verdict |
 |---|---|---|---|
-| 2026-11-25 | [mu-regime-read](2026-11-25-mu-regime-read/) | Is MU's 2026 selloff a regime change or a flush? (HMM, since 2010) | see RESULT.md |
+| 2026-11-25 | [mu-regime-read](2026-11-25-mu-regime-read/) | Is MU's 2026 selloff a regime change or a flush? (HMM, since 2010) | **WEAK**: vol regime since Aug 2025; selloff leg flush-sized so far |
