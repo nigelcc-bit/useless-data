@@ -51,6 +51,8 @@ def main(argv: list[str] | None = None) -> int:
         text = text.replace("{{STUDY_SLUG}}", slug).replace("{{STUDY_DIR}}", dest.name)
         readme.write_text(text)
     print(dest.relative_to(ROOT))
+    print("Reminder: when results are in, add or update this study's section in FINDINGS.md "
+          "and run python scripts/check_findings.py.")
     return 0
 
 
