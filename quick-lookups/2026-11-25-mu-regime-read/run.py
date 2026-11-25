@@ -18,6 +18,8 @@ from hmmlearn.hmm import GaussianHMM
 from scipy.stats import multivariate_normal
 
 warnings.filterwarnings("ignore")
+import logging
+logging.getLogger("hmmlearn").setLevel(logging.ERROR)
 HERE = Path(__file__).parent
 OUT = HERE / "outputs"
 OUT.mkdir(exist_ok=True)
@@ -287,7 +289,7 @@ def main():
                        "spell_len": curv[2] if curv else 0,
                        "past_p75": float(np.percentile(dv, 75)) if len(dv) else None})
         if vid == "R1":
-            results["R1_recent"] = fv.loc["2026-06-01":].resample("ME").last().round(3).to_dict()
+            results["R1_recent"] = {str(k.date()): v for k, v in fv.loc["2026-06-01":].resample("ME").last().round(3).items()}
 
     # ---------------- chart
     fig, (a1, a2, a3) = plt.subplots(3, 1, figsize=(11, 8), sharex=True,
