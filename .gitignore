@@ -16,3 +16,6 @@ data/raw/**
 
 .DS_Store
 .ipynb_checkpoints/
+
+# quick-lookups: raw payloads stay local
+quick-lookups/*/data/raw/**
