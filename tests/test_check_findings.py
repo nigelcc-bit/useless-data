@@ -21,15 +21,18 @@ FINDING = """\
   type: quant
   region: US
   topic: methods
-  claim: A short plain claim about the result.
+  hypothesis: The signal predicts returns.
   verdict: {verdict}
+  finding: {finding_text}
+  key_stats:
+    - "{stat}"
   confidence: null
   numbers:
     - "{number}"
   source_file: studies/{study}/RESULTS.md
   run_date: 2026-11-20
   valid_until: {valid_until}
-  owner_bot: vera
+  owner: {owner}
   links_to: []
   people: []
 """
@@ -44,9 +47,12 @@ def section(study: str, findings: str, status: str = "complete") -> str:
 
 
 def finding(study="2026-11-alpha", fid="ud-alpha-one", number="t 2.41", verdict="supported",
-            valid_until="null"):
+            valid_until="null", owner="fx-115",
+            finding_text="The signal predicted returns, with a test score of 2.41.",
+            stat="test score 2.41"):
     return FINDING.format(study=study, fid=fid, number=number, verdict=verdict,
-                          valid_until=valid_until)
+                          valid_until=valid_until, owner=owner, finding_text=finding_text,
+                          stat=stat)
 
 
 def make_repo(tmp_path: Path, body: str, studies=("2026-11-alpha",)) -> Path:
@@ -83,14 +89,16 @@ def test_repo_findings_file_passes():
 
 
 def test_missing_number_fails(tmp_path):
-    root = make_repo(tmp_path, section("2026-11-alpha", finding(number="t 3.10")))
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(
+        number="t 3.10", finding_text="The signal predicted returns, score 3.10.", stat="score 3.10")))
     errors, _ = run(root)
     assert any("not found verbatim" in e for e in errors)
     assert cf.main(["--root", str(root)]) == 1
 
 
 def test_rounded_number_fails(tmp_path):
-    root = make_repo(tmp_path, section("2026-11-alpha", finding(number="p 0.02")))
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(
+        number="p 0.02", finding_text="The signal predicted returns.", stat="p-value 0.02")))
     errors, _ = run(root)
     assert any("not found verbatim" in e for e in errors)
 
@@ -175,8 +183,72 @@ def test_missing_disclaimer_fails(tmp_path):
 
 
 @pytest.mark.parametrize("words", [31, 40])
-def test_long_claim_fails(tmp_path, words):
-    bad = finding().replace("A short plain claim about the result.", " ".join(["word"] * words))
+def test_long_finding_fails(tmp_path, words):
+    bad = finding(finding_text=" ".join(["word"] * words))
     root = make_repo(tmp_path, section("2026-11-alpha", bad))
     errors, _ = run(root)
     assert any("words" in e for e in errors)
+
+
+@pytest.mark.parametrize("field", ["hypothesis", "finding", "key_stats", "owner"])
+def test_each_new_field_is_required(tmp_path, field):
+    lines = finding().splitlines(keepends=True)
+    out, skip = [], False
+    for ln in lines:
+        if ln.startswith(f"  {field}:"):
+            skip = True
+            continue
+        if skip and ln.startswith("    - "):
+            continue
+        skip = False
+        out.append(ln)
+    root = make_repo(tmp_path, section("2026-11-alpha", "".join(out)))
+    errors, _ = run(root)
+    assert any("missing field" in e and field in e for e in errors)
+
+
+@pytest.mark.parametrize("owner", ["vera", "tilly", "fx-1150", "FX-115", "bot-115"])
+def test_owner_must_be_bot_id(tmp_path, owner):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(owner=owner)))
+    errors, _ = run(root)
+    assert any("owner" in e for e in errors)
+
+
+@pytest.mark.parametrize("owner", ["fx-117", "cx-042"])
+def test_owner_bot_ids_accepted(tmp_path, owner):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(owner=owner)))
+    errors, _ = run(root)
+    assert errors == []
+
+
+def test_old_field_names_fail(tmp_path):
+    old = finding().replace("  owner: fx-115", "  owner_bot: vera").replace("  hypothesis:", "  claim:")
+    root = make_repo(tmp_path, section("2026-11-alpha", old))
+    errors, _ = run(root)
+    assert any("missing field" in e and "owner" in e and "hypothesis" in e for e in errors)
+
+
+def test_number_in_finding_missing_from_numbers_fails(tmp_path):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(
+        finding_text="The signal predicted returns, with a test score of 2.4.")))
+    errors, _ = run(root)
+    assert any("'2.4'" in e and "not in numbers" in e for e in errors)
+
+
+def test_number_in_key_stats_missing_from_numbers_fails(tmp_path):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(stat="won 7 of 10 times")))
+    errors, _ = run(root)
+    assert any("not in numbers" in e for e in errors)
+
+
+def test_markdown_in_key_stats_fails(tmp_path):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding(stat="test score **2.41**")))
+    errors, _ = run(root)
+    assert any("markdown" in e for e in errors)
+
+
+def test_too_many_key_stats_fails(tmp_path):
+    many = finding().replace('    - "test score 2.41"\n', '    - "test score 2.41"\n' * 4)
+    root = make_repo(tmp_path, section("2026-11-alpha", many))
+    errors, _ = run(root)
+    assert any("key_stats must be" in e for e in errors)

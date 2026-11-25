@@ -6,6 +6,9 @@ Usage:
 
 Exit 1 (errors):
   - a yaml block does not parse, a field is missing, or a value is invalid
+  - owner is not a bot ID (fx-NNN or cx-NNN)
+  - finding is over 30 words
+  - a numeric token in finding or key_stats is missing from numbers
   - an id is duplicated, or a study has more than one section
   - a string in `numbers` is not found verbatim in its `source_file`
   - a study folder (excluding _template) with a RESULTS.md or a README
@@ -27,18 +30,22 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = [
-    "id", "study", "type", "region", "topic", "claim", "verdict", "confidence",
-    "numbers", "source_file", "run_date", "valid_until", "owner_bot", "links_to",
-    "people",
+    "id", "study", "type", "region", "topic", "hypothesis", "verdict", "finding",
+    "key_stats", "confidence", "numbers", "source_file", "run_date", "valid_until",
+    "owner", "links_to", "people",
 ]
 ENUMS = {
     "type": {"quant"},
     "region": {"US", "global"},
     "verdict": {"supported", "killed", "weak", "prior-only", "inconclusive", "interim"},
-    "owner_bot": {"vera", "tilly"},
 }
+OWNER_RE = re.compile(r"^(?:fx|cx)-\d{3}$")
 STATUSES = {"complete", "interim"}
-MAX_CLAIM_WORDS = 30
+MAX_FINDING_WORDS = 30
+MAX_KEY_STATS = 3
+# A numeric token: 1,917 / 0.668 / 2026 / 3 (sign and % are not part of it).
+NUM_TOKEN_RE = re.compile(r"[0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?|[0-9]+(?:\.[0-9]+)?")
+MARKDOWN_RE = re.compile(r"\*\*|__|`|\[[^\]]*\]\(")
 DISCLAIMER = "Nothing here is a trading recommendation"
 
 SECTION_RE = re.compile(r"^## (studies/\S+)\s*$", re.M)
@@ -150,11 +157,29 @@ def check(root: Path, today: dt.date) -> tuple[list[str], list[str]]:
                 errors.append(f"{where}: {key} {f[key]!r} not in {sorted(allowed)}")
         if not isinstance(f["topic"], str) or not f["topic"].strip():
             errors.append(f"{where}: topic must be a non-empty string")
-        claim = f["claim"]
-        if not isinstance(claim, str) or not claim.strip():
-            errors.append(f"{where}: claim must be a non-empty string")
-        elif len(claim.split()) > MAX_CLAIM_WORDS:
-            errors.append(f"{where}: claim has {len(claim.split())} words (max {MAX_CLAIM_WORDS})")
+        if not isinstance(f["owner"], str) or not OWNER_RE.match(f["owner"]):
+            errors.append(f"{where}: owner {f['owner']!r} must be a bot ID like fx-115 (never a name)")
+        hyp = f["hypothesis"]
+        if not isinstance(hyp, str) or not hyp.strip():
+            errors.append(f"{where}: hypothesis must be a non-empty string")
+        finding_text = f["finding"]
+        spoken: list[str] = []
+        if not isinstance(finding_text, str) or not finding_text.strip():
+            errors.append(f"{where}: finding must be a non-empty string")
+        else:
+            spoken.append(finding_text)
+            n_words = len(finding_text.split())
+            if n_words > MAX_FINDING_WORDS:
+                errors.append(f"{where}: finding has {n_words} words (max {MAX_FINDING_WORDS})")
+        stats = f["key_stats"]
+        if (not isinstance(stats, list) or not 1 <= len(stats) <= MAX_KEY_STATS
+                or not all(isinstance(x, str) and x.strip() for x in stats)):
+            errors.append(f"{where}: key_stats must be a list of 1-{MAX_KEY_STATS} non-empty strings")
+        else:
+            spoken.extend(stats)
+        for t in spoken:
+            if MARKDOWN_RE.search(t):
+                errors.append(f"{where}: no markdown allowed in finding or key_stats: {t!r}")
         conf = f["confidence"]
         if conf is not None and not isinstance(conf, (int, float, str)):
             errors.append(f"{where}: confidence must be a number, string or null")
@@ -177,6 +202,11 @@ def check(root: Path, today: dt.date) -> tuple[list[str], list[str]]:
         if not isinstance(nums, list) or not all(isinstance(n, str) and n for n in nums):
             errors.append(f"{where}: numbers must be a list of non-empty strings")
             continue
+        backed = {tok for n in nums for tok in NUM_TOKEN_RE.findall(n)}
+        for t in spoken:
+            for tok in NUM_TOKEN_RE.findall(t):
+                if tok not in backed:
+                    errors.append(f"{where}: number {tok!r} in {t!r} is not in numbers")
         if not isinstance(src, str) or not src.startswith(name + "/"):
             errors.append(f"{where}: source_file {src!r} must be a file inside {name}/")
             continue
