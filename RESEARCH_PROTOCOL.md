@@ -43,3 +43,8 @@ not optional and apply study-by-study.
 9. **No post-hoc thresholds.** A result that survives only after changing
    the window, the universe or the threshold is not a result. Re-open the
    pre-registration instead.
+
+10. **Findings ledger.** A study is not complete until its section in the
+    repo-root `FINDINGS.md` passes `scripts/check_findings.py`. Killed and
+    prior-only results get findings too. Re-running a study replaces its
+    section; it never adds a second one.

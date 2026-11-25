@@ -42,3 +42,40 @@ RESEARCH_PROTOCOL.md  programme rules
 python3 -m pip install -e ".[dev]"
 PYTHONPATH=.:studies/2026-11-flush-or-regime pytest
 ```
+
+## Findings
+
+[`FINDINGS.md`](FINDINGS.md) summarises every study in one machine-readable
+file: one `## studies/<folder>` section per study, a
+`Status: complete | interim | Run: YYYY-MM-DD | Source: <file>` line, and one
+YAML block listing 3-8 findings. Killed and prior-only results are findings
+too.
+
+Every finding has these fields (use `null` where not applicable):
+
+| Field | Meaning |
+|---|---|
+| `id` | `ud-<study-slug>-<short-key>`, unique and stable across re-runs |
+| `study` | `studies/<folder>` |
+| `type` | `quant` |
+| `region` | `US` or `global` |
+| `topic` | e.g. `equities`, `ai-supply-chain`, `rates`, `methods` |
+| `claim` | one plain-English sentence, at most 30 words, results only, no advice |
+| `verdict` | `supported`, `killed`, `weak`, `prior-only`, `inconclusive` or `interim` |
+| `confidence` | the study's own stated confidence, else `null` |
+| `numbers` | strings copied verbatim from `source_file` (no rounding or conversion) |
+| `source_file` | exact path of the file the numbers come from |
+| `run_date` | `YYYY-MM-DD` |
+| `valid_until` | `YYYY-MM-DD` if the result depends on live prices or a scheduled re-check, else `null` |
+| `owner_bot` | `vera` or `tilly` |
+| `links_to` | ids of related findings, including `fw-...` ids in fed-watchers |
+| `people` | `[]` |
+
+**Replace on re-run.** Re-running a study replaces its section; it never
+adds a second one. Ids stay the same so links keep working.
+
+`python scripts/check_findings.py` fails if a block does not parse, a field
+is missing or invalid, an id or section is duplicated, a number is not found
+verbatim in its source file, or a study with a `RESULTS.md` (or a README
+`## Answer` section) has no section. It warns when `valid_until` has passed.
+CI runs it on every push.
