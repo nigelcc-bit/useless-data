@@ -252,3 +252,26 @@ def test_too_many_key_stats_fails(tmp_path):
     root = make_repo(tmp_path, section("2026-11-alpha", many))
     errors, _ = run(root)
     assert any("key_stats must be" in e for e in errors)
+
+
+def test_quick_lookups_section_passes(tmp_path):
+    root = make_repo(tmp_path, section("2026-11-alpha", finding()))
+    q = root / "quick-lookups" / "2026-11-26-beta"
+    q.mkdir(parents=True)
+    (q / "RESULT.md").write_text("Result: t 2.41, p 0.016.\n", encoding="utf-8")
+    qf = finding(fid="ud-beta-one").replace(
+        "study: studies/2026-11-alpha", "study: quick-lookups/2026-11-26-beta").replace(
+        "source_file: studies/2026-11-alpha/RESULTS.md",
+        "source_file: quick-lookups/2026-11-26-beta/RESULT.md")
+    body = (f"## quick-lookups/2026-11-26-beta\n\n"
+            f"Status: interim | Run: 2026-11-26 | Source: quick-lookups/2026-11-26-beta/RESULT.md\n\n"
+            f"```yaml\n{qf}```\n")
+    p = root / "FINDINGS.md"
+    p.write_text(p.read_text() + body, encoding="utf-8")
+    errors, _ = run(root)
+    assert errors == []
+    # the quick-lookups section is its own section, not swallowed by the one above it
+    bad = qf.replace("t 2.41", "t 9.99")
+    p.write_text(p.read_text().replace(qf, bad), encoding="utf-8")
+    errors, _ = run(root)
+    assert any(e.startswith("quick-lookups/2026-11-26-beta / ud-beta-one") for e in errors)

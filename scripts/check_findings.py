@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate FINDINGS.md against the study sources.
 
+Section headings are "## studies/<folder>" or "## quick-lookups/<folder>".
+
 Usage:
     python scripts/check_findings.py [--root PATH] [--today YYYY-MM-DD]
 
@@ -48,7 +50,7 @@ NUM_TOKEN_RE = re.compile(r"[0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?|[0-9]+(?:\.[0-
 MARKDOWN_RE = re.compile(r"\*\*|__|`|\[[^\]]*\]\(")
 DISCLAIMER = "Nothing here is a trading recommendation"
 
-SECTION_RE = re.compile(r"^## (studies/\S+)\s*$", re.M)
+SECTION_RE = re.compile(r"^## ((?:studies|quick-lookups)/\S+)\s*$", re.M)
 STATUS_RE = re.compile(
     r"^Status: (?P<status>\S+) \| Run: (?P<run>\d{4}-\d{2}-\d{2}) \| Source: (?P<source>\S+)\s*$",
     re.M,

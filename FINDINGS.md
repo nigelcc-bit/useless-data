@@ -1,6 +1,6 @@
 # Findings: useless-data
 
-Last updated: 2026-11-25
+Last updated: 2026-11-26
 
 Nothing here is a trading recommendation.
 
@@ -443,5 +443,93 @@ Status: interim | Run: 2026-11-10 | Source: RESULTS.md
   valid_until: null
   owner: fx-115
   links_to: [ud-testing-nasdaq-bear-trap-reclaim-rate]
+  people: []
+```
+
+## quick-lookups/2026-11-26-thanksgiving-week-drawdown
+
+Status: interim | Run: 2026-11-26 | Source: quick-lookups/2026-11-26-thanksgiving-week-drawdown/RESULT.md
+
+```yaml
+- id: ud-thanksgiving-week-drawdown-c1-seasonal
+  study: quick-lookups/2026-11-26-thanksgiving-week-drawdown
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The S&P 500 rises more often in Thanksgiving week than in other four-day stretches.
+  verdict: weak
+  finding: Thanksgiving week rose in most years, more often than ordinary weeks, but the main test narrowly missed the bar once many tests were accounted for.
+  key_stats:
+    - "up in 53 of 76 years, versus 56.6% for other weeks"
+    - "adjusted p-value 0.053, just above 0.05"
+  confidence: 60
+  numbers:
+    - "week up in **53 of 76 years (69.7%)** vs 56.6% for other 4-day windows; raw p 0.022, BH p 0.053"
+    - "the week up-rate's BH p drops below 0.05"
+  source_file: quick-lookups/2026-11-26-thanksgiving-week-drawdown/RESULT.md
+  run_date: 2026-11-26
+  valid_until: 2027-01-04
+  owner: fx-115
+  links_to: [ud-thanksgiving-week-drawdown-c2-decay]
+  people: []
+- id: ud-thanksgiving-week-drawdown-c2-decay
+  study: quick-lookups/2026-11-26-thanksgiving-week-drawdown
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The Thanksgiving-week edge has faded since 1988.
+  verdict: killed
+  finding: Thanksgiving week rose a bit less often after 1988 than before, but the drop is small enough to be chance.
+  key_stats:
+    - "up 73.7% of years in 1950-1987, 65.8% in 1988-2025"
+    - "p-value 0.618"
+  confidence: 70
+  numbers:
+    - "hit rate **73.7% (1950-1987) vs 65.8% (1988-2025)**, Fisher p 0.618"
+  source_file: quick-lookups/2026-11-26-thanksgiving-week-drawdown/RESULT.md
+  run_date: 2026-11-26
+  valid_until: 2027-01-04
+  owner: fx-115
+  links_to: [ud-thanksgiving-week-drawdown-c1-seasonal]
+  people: []
+- id: ud-thanksgiving-week-drawdown-c3-drawdown
+  study: quick-lookups/2026-11-26-thanksgiving-week-drawdown
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: When the S&P 500 enters Thanksgiving week down 10-20% from its high, it is less likely to finish the year above its Black Friday close.
+  verdict: inconclusive
+  finding: In past corrections the market finished the year above Black Friday less often, but with 15 cases the gap may be chance.
+  key_stats:
+    - "year-end up in 6 of 15 correction years, 43 of 60 other years"
+    - "likely range 22.7% to 60.9%"
+  confidence: 55
+  numbers:
+    - "year-end up in **6 of 15 correction years (40.0%)** vs 43 of 60 other years (71.7%); 90% interval 22.7% to 60.9% spans 50%"
+  source_file: quick-lookups/2026-11-26-thanksgiving-week-drawdown/RESULT.md
+  run_date: 2026-11-26
+  valid_until: 2027-01-04
+  owner: fx-115
+  links_to: [ud-flush-or-regime-h1-semis-further-drop]
+  people: []
+- id: ud-thanksgiving-week-drawdown-c4-liquidity
+  study: quick-lookups/2026-11-26-thanksgiving-week-drawdown
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The S&P 500 moves less on Black Friday than on a normal trading day.
+  verdict: weak
+  finding: Black Friday moves were about as large as on a normal day; earlier and later decades pointed opposite ways.
+  key_stats:
+    - "typical Black Friday move 0.92 times a normal day"
+    - "p-value 0.880"
+  confidence: 50
+  numbers:
+    - "median absolute move **0.92x** a normal day, Mann-Whitney p 0.880; halves disagree"
+  source_file: quick-lookups/2026-11-26-thanksgiving-week-drawdown/RESULT.md
+  run_date: 2026-11-26
+  valid_until: 2027-01-04
+  owner: fx-115
+  links_to: []
   people: []
 ```
