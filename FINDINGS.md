@@ -12,6 +12,36 @@ second one. Every finding uses the schema in [README.md](README.md#findings).
 `finding` or `key_stats` appears in `numbers`, and `scripts/check_findings.py`
 enforces both.
 
+## quick-lookups/2026-11-25-mu-regime-read
+
+Status: complete | Run: 2026-11-25 | Source: quick-lookups/2026-11-25-mu-regime-read/RESULT.md
+
+```yaml
+- id: ud-mu-regime-read-regime-change
+  study: quick-lookups/2026-11-25-mu-regime-read
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: Micron's 2026 selloff is a lasting regime change rather than a short flush.
+  verdict: weak
+  finding: Micron entered a jumpy, high-volatility phase in August 2025, during its rally. The 2026 selloff itself has so far lasted no longer than a normal shakeout.
+  key_stats:
+    - "high-volatility phase 326 trading days old"
+    - "selloff phase 18 trading days old, past spells usually under 56"
+  confidence: 60
+  numbers:
+    - "VERDICT: WEAK | confidence 60%"
+    - "**326** (since 2025-08-11)"
+    - "the June 2026 peak"
+    - "only **18 sessions**, below the past p75 of 56"
+  source_file: quick-lookups/2026-11-25-mu-regime-read/RESULT.md
+  run_date: 2026-11-25
+  valid_until: 2027-02-15
+  owner: fx-115
+  links_to: []
+  people: []
+```
+
 ## studies/2026-11-flush-or-regime
 
 Status: complete | Run: 2026-11-12 | Source: RESULTS.md

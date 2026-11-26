@@ -1,0 +1,84 @@
+{
+  "P0": {
+    "best_ll": -9258.926393563204,
+    "converged_starts": 20,
+    "starts": 20,
+    "occupancy": [
+      0.34294167295584405,
+      0.6570583270441549
+    ],
+    "states": {
+      "stress": {
+        "mean_daily_logret_pct": 0.10409677230182297,
+        "mean_rv_ann_pct": 65.96650955321182,
+        "occupancy": 0.34294167295584405,
+        "stay_prob": 0.980606764626204,
+        "implied_mean_duration_days": 51.56437184025481
+      },
+      "calm": {
+        "mean_daily_logret_pct": 0.09297893860315719,
+        "mean_rv_ann_pct": 37.88464466070247,
+        "occupancy": 0.6570583270441549,
+        "stay_prob": 0.9895267254651999,
+        "implied_mean_duration_days": 95.48112165657935
+      }
+    },
+    "p_stress_now_oos": 1.0,
+    "p_stress_now_fullfit_filtered": 1.0,
+    "p_stress_now_smoothed": 1.0,
+    "stability_p_now": {
+      "min": 1.0,
+      "max": 1.0,
+      "share_above_0.5": 1.0
+    },
+    "consecutive_sessions_p_gt_0.8": 24,
+    "last_switch": "2025-08-11",
+    "days_since_switch": 325,
+    "current_spell": [
+      "2025-08-11",
+      "2026-11-24",
+      326
+    ],
+    "past_spells_n": 33,
+    "past_median": 26.0,
+    "past_median_ci90": [
+      22.950000000000017,
+      32.0
+    ],
+    "past_p75": 46.0,
+    "past_max": 242,
+    "current_spell_pct_rank": 1.0,
+    "lookahead_disagree_days": 525,
+    "lookahead_n": 3496,
+    "bt_filtered": {
+      "cagr_log": 0.17967173643905823,
+      "sharpe": 0.6570753794446106,
+      "time_in_mkt": 0.4788329519450801
+    },
+    "bt_smoothed": {
+      "cagr_log": 0.2356030743266441,
+      "sharpe": 0.7513722250229162,
+      "time_in_mkt": 0.6290045766590389
+    },
+    "bt_buyhold": {
+      "cagr_log": 0.3332975540986616,
+      "sharpe": 0.6566713228310607
+    }
+  },
+  "kalman": {
+    "beta_now": 1.310889208316331,
+    "band": 0.1304284640678597,
+    "roll63_now": 1.225996564875868,
+    "beta_median_2010_2025": 1.376909257415306,
+    "beta_at_peak_2026_06_25": 1.485389680179871,
+    "R": 0.0004962836492848489
+  },
+  "R1_recent": {
+    "2026-06-30": 1.0,
+    "2026-07-31": 1.0,
+    "2026-08-31": 0.97,
+    "2026-09-30": 0.004,
+    "2026-10-31": 0.862,
+    "2026-11-30": 1.0
+  }
+}

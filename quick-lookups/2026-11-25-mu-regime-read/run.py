@@ -18,6 +18,8 @@ from hmmlearn.hmm import GaussianHMM
 from scipy.stats import multivariate_normal
 
 warnings.filterwarnings("ignore")
+import logging
+logging.getLogger("hmmlearn").setLevel(logging.ERROR)
 HERE = Path(__file__).parent
 OUT = HERE / "outputs"
 OUT.mkdir(exist_ok=True)
@@ -287,7 +289,7 @@ def main():
                        "spell_len": curv[2] if curv else 0,
                        "past_p75": float(np.percentile(dv, 75)) if len(dv) else None})
         if vid == "R1":
-            results["R1_recent"] = fv.loc["2026-06-01":].resample("ME").last().round(3).to_dict()
+            results["R1_recent"] = {str(k.date()): v for k, v in fv.loc["2026-06-01":].resample("ME").last().round(3).items()}
 
     # ---------------- chart
     fig, (a1, a2, a3) = plt.subplots(3, 1, figsize=(11, 8), sharex=True,
@@ -310,10 +312,9 @@ def main():
     a3.set_ylabel("beta")
     a3.legend(loc="upper left", fontsize=7, frameon=False)
     P0 = results["P0"]
-    title = (f"MU is in a high-vol stress state (filtered P={P0['p_stress_now_oos']:.2f}), "
-             f"but at {P0['current_spell'][2] if P0['current_spell'] else 0} sessions the spell is "
-             f"{'longer' if (P0['current_spell'] and P0['current_spell'][2] > P0['past_p75']) else 'within'} "
-             f"than past p75 ({P0['past_p75']:.0f})")
+    cur_len = P0["current_spell"][2] if P0["current_spell"] else 0
+    title = (f"MU high-vol state since {P0['last_switch']}: {cur_len} sessions vs past p75 of "
+             f"{P0['past_p75']:.0f} (filtered P(stress) now {P0['p_stress_now_oos']:.2f})")
     fig.suptitle(title, fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "regime_strip.png", dpi=150)
