@@ -1,0 +1,83 @@
+{
+  "data": {
+    "gspc_first": "1950-01-03",
+    "gspc_last": "2026-11-25",
+    "ndx_first": "1985-10-01",
+    "ndx_last": "2026-11-25",
+    "gspc_test_years": [
+      1950,
+      2025,
+      76
+    ],
+    "c3_years": [
+      1951,
+      2025,
+      75
+    ],
+    "ndx_years": [
+      1986,
+      2025,
+      40
+    ],
+    "week_days_counts": {
+      "4.0": 75,
+      "3.0": 1
+    },
+    "control_fridays": 888,
+    "control_dd_fridays": 137
+  },
+  "week_descriptive": {
+    "hit": 0.6973684210526315,
+    "median": 0.008740120331010903,
+    "mean": 0.007112043158156163,
+    "n": 76,
+    "half1_hit": 0.7368421052631579,
+    "half2_hit": 0.6578947368421053,
+    "half1_median": 0.011851882586545126,
+    "half2_median": 0.004521019168910123
+  },
+  "c3_other_years_n": 60,
+  "verdicts": {
+    "C1": {
+      "verdict": "WEAK",
+      "alt_reading": "WEAK",
+      "same_sign_halves": true,
+      "raw_p": 0.0222,
+      "bh_p": 0.05272500000000001
+    },
+    "C2": {
+      "verdict": "KILLED",
+      "alt_reading": "KILLED",
+      "same_sign_halves": true,
+      "raw_p": 0.6180822797421014,
+      "bh_p": 0.6907978420647015
+    },
+    "C3": {
+      "verdict": "INCONCLUSIVE",
+      "alt_reading": "INCONCLUSIVE",
+      "same_sign_halves": true,
+      "raw_p": 0.03279879975702619,
+      "bh_p": 0.056652472307590684
+    },
+    "C4": {
+      "verdict": "WEAK",
+      "alt_reading": "KILLED",
+      "same_sign_halves": false,
+      "raw_p": 0.8800823766760095,
+      "bh_p": 0.928975842046899
+    }
+  },
+  "setup_2026_gspc": {
+    "f0": "2026-11-20",
+    "wb": "2026-11-25",
+    "dd_entry": -0.11619748720568679,
+    "wtd_f0_to_wb": 0.03941740524751891,
+    "in_10_20_correction": true
+  },
+  "setup_2026_ndx": {
+    "f0": "2026-11-20",
+    "dd_entry": -0.1984177824271316,
+    "wtd_f0_to_wb": 0.0406696518520171
+  },
+  "trials": 19
+}
