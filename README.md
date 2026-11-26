@@ -42,3 +42,48 @@ RESEARCH_PROTOCOL.md  programme rules
 python3 -m pip install -e ".[dev]"
 PYTHONPATH=.:studies/2026-11-flush-or-regime pytest
 ```
+
+## Findings
+
+[`FINDINGS.md`](FINDINGS.md) summarises every study in one machine-readable
+file: one `## studies/<folder>` section per study, a
+`Status: complete | interim | Run: YYYY-MM-DD | Source: <file>` line, and one
+YAML block listing 3-8 findings. Killed and prior-only results are findings
+too.
+
+Every finding has these fields (use `null` where not applicable). Read
+`hypothesis`, `verdict` and `finding` aloud together: they must make sense as
+a trio. Example: hypothesis "The 10-year yield broke away from the 2-year
+yield in 2026", verdict `killed`, finding "The 10-year and 2-year yields moved
+together about as closely as in a normal year."
+
+| Field | Meaning |
+|---|---|
+| `id` | `ud-<study-slug>-<short-key>`, unique and stable across re-runs |
+| `study` | `studies/<folder>` |
+| `type` | `quant` |
+| `region` | `US` or `global` |
+| `topic` | e.g. `equities`, `ai-supply-chain`, `rates`, `methods` |
+| `hypothesis` | the statement that was **tested**, phrased positively (e.g. "The 10-year yield broke away from the 2-year yield in 2026") |
+| `verdict` | `supported`, `killed`, `weak`, `prior-only`, `inconclusive` or `interim`; always refers to the hypothesis |
+| `finding` | what was actually concluded, one plain-English sentence for a non-expert, at most 30 words, results only, no advice. The only text a consumer speaks |
+| `key_stats` | 1-3 short, labelled, speakable stats (e.g. "R-squared 0.668, typical for a year"); no jargon labels or markdown |
+| `confidence` | the study's own stated confidence, else `null` |
+| `numbers` | strings copied verbatim from `source_file` (no rounding or conversion; markdown such as `**` may stay). Every number in `finding` and `key_stats` must appear here |
+| `source_file` | exact path of the file the numbers come from |
+| `run_date` | `YYYY-MM-DD` |
+| `valid_until` | `YYYY-MM-DD` if the result depends on live prices or a scheduled re-check, else `null` |
+| `owner` | bot ID, never a name: `fx-NNN` (or `cx-NNN`) |
+| `links_to` | ids of related findings, including `fw-...` ids in fed-watchers |
+| `people` | `[]` |
+
+**Replace on re-run.** Re-running a study replaces its section; it never
+adds a second one. Ids stay the same so links keep working.
+
+`python scripts/check_findings.py` fails if a block does not parse, a field
+is missing or invalid, `owner` is not a bot ID, `finding` is over 30 words,
+`key_stats` has markdown or more than 3 entries, an id or section is
+duplicated, a number is not found verbatim in its source file, a number
+spoken in `finding` or `key_stats` is missing from `numbers`, or a study
+with a `RESULTS.md` (or a README `## Answer` section) has no section. It warns when `valid_until` has passed.
+CI runs it on every push.
