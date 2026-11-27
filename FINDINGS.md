@@ -1,6 +1,6 @@
 # Findings: useless-data
 
-Last updated: 2026-11-26
+Last updated: 2026-11-27
 
 Nothing here is a trading recommendation.
 
@@ -561,5 +561,117 @@ Status: interim | Run: 2026-11-26 | Source: quick-lookups/2026-11-26-thanksgivin
   valid_until: 2027-01-04
   owner: fx-115
   links_to: []
+  people: []
+```
+
+## quick-lookups/2026-11-27-token-pricing
+
+Status: complete | Run: 2026-11-27 | Source: quick-lookups/2026-11-27-token-pricing/RESULT.md
+
+```yaml
+- id: ud-token-pricing-crack
+  study: quick-lookups/2026-11-27-token-pricing
+  type: quant
+  region: US
+  topic: ai-pricing
+  hypothesis: Falling AI token prices are a crack in the AI revenue thesis, with business spending not keeping up as prices fall.
+  verdict: killed
+  finding: Not on the pre-registered tests, since spending still outran price cuts, but a reviewer found two test flaws favouring that result and reads it as weak.
+  key_stats:
+    - "token prices down 43% and spend up 20% over the latest 13 weeks"
+    - "reviewer reading weak, about 55% confidence"
+  confidence: 45
+  numbers:
+    - "price -43%, volume +108%, spend +20%"
+    - "latest 13 weeks"
+    - "Reviewer reading: WEAK, about 55% confidence."
+  source_file: quick-lookups/2026-11-27-token-pricing/RESULT.md
+  run_date: 2026-11-27
+  valid_until: 2027-01-10
+  owner: fx-115
+  links_to: [ud-token-pricing-anthropic-elasticity, ud-token-pricing-mix, ud-token-pricing-revenue-per-compute]
+  people: []
+- id: ud-token-pricing-anthropic-elasticity
+  study: quick-lookups/2026-11-27-token-pricing
+  type: quant
+  region: US
+  topic: ai-pricing
+  hypothesis: Spending on Anthropic's models still rises faster than its token prices fall.
+  verdict: weak
+  finding: Only just, since Anthropic's spend grew 5.9% over 13 weeks while its prices fell, and that margin has shrunk every week for two months.
+  key_stats:
+    - "Anthropic token spend up 5.9% over 13 weeks"
+    - "Anthropic price-sensitivity reading of 1.10, close to the tipping point"
+  confidence: null
+  numbers:
+    - "13-week spend growth **+5.9%**"
+    - "1.10"
+  source_file: quick-lookups/2026-11-27-token-pricing/RESULT.md
+  run_date: 2026-11-27
+  valid_until: 2027-01-10
+  owner: fx-115
+  links_to: [ud-token-pricing-crack]
+  people: []
+- id: ud-token-pricing-mix
+  study: quick-lookups/2026-11-27-token-pricing
+  type: quant
+  region: US
+  topic: ai-pricing
+  hypothesis: Average token prices fell mostly because customers switched to cheaper models, not because prices were cut.
+  verdict: weak
+  finding: It depends on definitions, since the same model versions did not get cheaper, but newer versions in each tier cost far less, so tier for tier prices fell 65%.
+  key_stats:
+    - "same-version prices up 2% since the March peak"
+    - "tier-for-tier prices down 65% since the March peak"
+  confidence: null
+  numbers:
+    - "Like-for-like **+2%**"
+    - "Like-for-like **-65%**"
+  source_file: quick-lookups/2026-11-27-token-pricing/RESULT.md
+  run_date: 2026-11-27
+  valid_until: null
+  owner: fx-115
+  links_to: [ud-token-pricing-crack]
+  people: []
+- id: ud-token-pricing-share-vs-price
+  study: quick-lookups/2026-11-27-token-pricing
+  type: quant
+  region: US
+  topic: ai-pricing
+  hypothesis: Anthropic's share of business AI token spend does not respond to its price relative to OpenAI.
+  verdict: prior-only
+  finding: Too little data to test, since Anthropic's share tends to slip when it gets relatively pricier, but the sample equals about 5.8 independent points.
+  key_stats:
+    - "effective sample of only 5.8 independent data points"
+  confidence: null
+  numbers:
+    - "effective n = 5.8"
+  source_file: quick-lookups/2026-11-27-token-pricing/RESULT.md
+  run_date: 2026-11-27
+  valid_until: null
+  owner: fx-115
+  links_to: []
+  people: []
+- id: ud-token-pricing-revenue-per-compute
+  study: quick-lookups/2026-11-27-token-pricing
+  type: quant
+  region: US
+  topic: ai-pricing
+  hypothesis: Anthropic's revenue per dollar of compute is falling.
+  verdict: killed
+  finding: Not versus the start of 2026, but revenue per compute dollar fell 17% in the latest quarter, from 2.08 to 1.72, which the reviewer counts as falling.
+  key_stats:
+    - "revenue per compute dollar of 1.40 in Q1 2026, 2.08 in Q2 and 1.72 in Q3"
+    - "compute margin proxy down 10.1 points in the latest quarter"
+  confidence: null
+  numbers:
+    - "**1.40** (Q1 2026), **2.08** (Q2), **1.72** (Q3)"
+    - "revenue per compute dollar fell **17%**, from **2.08** to **1.72**"
+    - "the compute margin proxy fell **10.1pp**"
+  source_file: quick-lookups/2026-11-27-token-pricing/RESULT.md
+  run_date: 2026-11-27
+  valid_until: null
+  owner: fx-115
+  links_to: [ud-token-pricing-crack]
   people: []
 ```

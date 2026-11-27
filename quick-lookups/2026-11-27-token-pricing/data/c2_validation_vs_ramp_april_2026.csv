@@ -1,0 +1,7 @@
+model,derived_model,published,derived_april_mean,weeks,pct_error
+GPT-5-nano,GPT-5 Nano,0.0700,,0,
+Claude Haiku 4.5,Claude Haiku 4.5,0.4000,0.4093,4,0.0231
+Claude Sonnet 4.6,Claude Sonnet 4.6,0.6200,0.8502,4,0.3714
+Claude Opus 4.6,Claude Opus 4.6,1.0000,1.1258,4,0.1258
+GPT-5.5,GPT-5.5,1.4200,,0,
+GPT-4o,GPT-4o,2.3100,,0,

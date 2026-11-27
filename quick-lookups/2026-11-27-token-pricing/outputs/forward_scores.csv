@@ -1,0 +1,2 @@
+scored_utc,as_of,capture_date,ramp_dir,last_week,forward_weeks,c1_longest_run,c1_current_run,c1_hit,e_anthropic_latest,e_combined_latest,c2_tier_lfl_share,c2_tier_ln_uv,c2_same_version_lfl_share,c2_flagged_models,q4_revenue,q4_compute,q4_rpc,q4_margin_proxy,q3_rpc,q3_margin_proxy,c4_hit,report,report_filed,status
+2026-11-27T12:37:00Z,2026-11-27,2026-11-27,data/raw/04_ramp_ai_index_data,2026-11-15,0,0,0,False,-1.1005,-1.3261,,,,,,,,,1.7192,0.4183,,,,interim (before first scoring week 2027-01-10)

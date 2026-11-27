@@ -1,0 +1,781 @@
+{
+ "latest_week": "2026-11-15",
+ "c1_start": "2025-02-16",
+ "c1_crosscheck_median_abs_gap_Combined": 0.02041,
+ "c1_crosscheck_median_abs_gap_Anthropic": 0.031412,
+ "c1_crosscheck_median_abs_gap_OpenAI": 0.023582,
+ "c1_Combined": {
+  "latest_e": -1.32606,
+  "latest_abs_e": 1.32606,
+  "dlnP": -0.553795,
+  "dlnV": 0.734366,
+  "dlnS": 0.180571,
+  "reading": "Jevons (|e|>1, spend up)",
+  "windows": 67,
+  "price_falling_windows": 51,
+  "jevons_windows": 51,
+  "crack_windows": 0,
+  "longest_crack_run": 0,
+  "current_crack_run": 0,
+  "crack_rule_8wk_met_now": false,
+  "crack_rule_8wk_ever": false
+ },
+ "c1_Anthropic": {
+  "latest_e": -1.100514,
+  "latest_abs_e": 1.100514,
+  "dlnP": -0.570572,
+  "dlnV": 0.627923,
+  "dlnS": 0.05735,
+  "reading": "Jevons (|e|>1, spend up)",
+  "windows": 67,
+  "price_falling_windows": 48,
+  "jevons_windows": 48,
+  "crack_windows": 0,
+  "longest_crack_run": 0,
+  "current_crack_run": 0,
+  "crack_rule_8wk_met_now": false,
+  "crack_rule_8wk_ever": false
+ },
+ "c1_OpenAI": {
+  "latest_e": -1.75594,
+  "latest_abs_e": 1.75594,
+  "dlnP": -0.52196,
+  "dlnV": 0.91653,
+  "dlnS": 0.39457,
+  "reading": "Jevons (|e|>1, spend up)",
+  "windows": 67,
+  "price_falling_windows": 39,
+  "jevons_windows": 39,
+  "crack_windows": 0,
+  "longest_crack_run": 0,
+  "current_crack_run": 0,
+  "crack_rule_8wk_met_now": false,
+  "crack_rule_8wk_ever": false
+ },
+ "c1_rob_start_2026": {
+  "latest_e": -1.32606,
+  "dlnP": -0.553795
+ },
+ "c1_nonoverlap": {
+  "c": 4,
+  "n": 4,
+  "post_mean": 0.833333,
+  "lo90": 0.54928,
+  "hi90": 0.989794,
+  "p_gt_half": 0.96875
+ },
+ "c2_base_week": "2026-03-01",
+ "c2_base_blended": 1.16,
+ "c2_latest_blended": 0.45,
+ "c2_ramp_blended_pct_change": -0.612069,
+ "c2_march_daily_peak": {
+  "date": "2026-03-01",
+  "value": 1.16,
+  "pct_to_latest_daily": -0.603448,
+  "latest_daily_date": "2026-11-17"
+ },
+ "c2": {
+  "Combined|combined March peak": {
+   "lab": "Combined",
+   "base": "2026-03-01",
+   "ln_unit_value": -1.19333,
+   "pct_unit_value": -0.69679,
+   "ln_fisher": 0.018351,
+   "pct_fisher": 0.01852,
+   "ln_mix": -1.211681,
+   "like_for_like_share": -0.015378,
+   "mix_share": 1.015378,
+   "ln_ramp_blended": -0.946928,
+   "pct_ramp_blended": -0.612069,
+   "covered_token_share_base": 73.8,
+   "covered_token_share_latest": 87.6
+  },
+  "Combined|own-lab March peak": {
+   "lab": "Combined",
+   "base": "2026-03-01",
+   "ln_unit_value": -1.19333,
+   "pct_unit_value": -0.69679,
+   "ln_fisher": 0.018351,
+   "pct_fisher": 0.01852,
+   "ln_mix": -1.211681,
+   "like_for_like_share": -0.015378,
+   "mix_share": 1.015378,
+   "ln_ramp_blended": -0.946928,
+   "pct_ramp_blended": -0.612069,
+   "covered_token_share_base": 73.8,
+   "covered_token_share_latest": 87.6
+  },
+  "Anthropic|combined March peak": {
+   "lab": "Anthropic",
+   "base": "2026-03-01",
+   "ln_unit_value": -1.178982,
+   "pct_unit_value": -0.692408,
+   "ln_fisher": 0.064116,
+   "pct_fisher": 0.066216,
+   "ln_mix": -1.243097,
+   "like_for_like_share": -0.054382,
+   "mix_share": 1.054382,
+   "ln_ramp_blended": -1.05779,
+   "pct_ramp_blended": -0.652778,
+   "covered_token_share_base": 59.6,
+   "covered_token_share_latest": 53.9
+  },
+  "Anthropic|own-lab March peak": {
+   "lab": "Anthropic",
+   "base": "2026-03-01",
+   "ln_unit_value": -1.178982,
+   "pct_unit_value": -0.692408,
+   "ln_fisher": 0.064116,
+   "pct_fisher": 0.066216,
+   "ln_mix": -1.243097,
+   "like_for_like_share": -0.054382,
+   "mix_share": 1.054382,
+   "ln_ramp_blended": -1.05779,
+   "pct_ramp_blended": -0.652778,
+   "covered_token_share_base": 59.6,
+   "covered_token_share_latest": 53.9
+  },
+  "OpenAI|combined March peak": {
+   "lab": "OpenAI",
+   "base": "2026-03-01",
+   "ln_unit_value": -1.114129,
+   "pct_unit_value": -0.671799,
+   "ln_fisher": -0.056133,
+   "pct_fisher": -0.054586,
+   "ln_mix": -1.057996,
+   "like_for_like_share": 0.050383,
+   "mix_share": 0.949617,
+   "ln_ramp_blended": -0.625094,
+   "pct_ramp_blended": -0.464789,
+   "covered_token_share_base": 14.2,
+   "covered_token_share_latest": 33.7
+  },
+  "OpenAI|own-lab March peak": {
+   "lab": "OpenAI",
+   "base": "2026-03-15",
+   "ln_unit_value": -0.926316,
+   "pct_unit_value": -0.60399,
+   "ln_fisher": 0.086629,
+   "pct_fisher": 0.090492,
+   "ln_mix": -1.012946,
+   "like_for_like_share": -0.09352,
+   "mix_share": 1.09352,
+   "ln_ramp_blended": -0.706219,
+   "pct_ramp_blended": -0.506494,
+   "covered_token_share_base": 18.4,
+   "covered_token_share_latest": 33.7
+  }
+ },
+ "c2_validation": [
+  {
+   "model": "GPT-5-nano",
+   "derived_model": "GPT-5 Nano",
+   "published": 0.07,
+   "derived_april_mean": null,
+   "weeks": 0,
+   "pct_error": null
+  },
+  {
+   "model": "Claude Haiku 4.5",
+   "derived_model": "Claude Haiku 4.5",
+   "published": 0.4,
+   "derived_april_mean": 0.40925,
+   "weeks": 4,
+   "pct_error": 0.023125
+  },
+  {
+   "model": "Claude Sonnet 4.6",
+   "derived_model": "Claude Sonnet 4.6",
+   "published": 0.62,
+   "derived_april_mean": 0.85025,
+   "weeks": 4,
+   "pct_error": 0.371371
+  },
+  {
+   "model": "Claude Opus 4.6",
+   "derived_model": "Claude Opus 4.6",
+   "published": 1.0,
+   "derived_april_mean": 1.12575,
+   "weeks": 4,
+   "pct_error": 0.12575
+  },
+  {
+   "model": "GPT-5.5",
+   "derived_model": "GPT-5.5",
+   "published": 1.42,
+   "derived_april_mean": null,
+   "weeks": 0,
+   "pct_error": null
+  },
+  {
+   "model": "GPT-4o",
+   "derived_model": "GPT-4o",
+   "published": 2.31,
+   "derived_april_mean": null,
+   "weeks": 0,
+   "pct_error": null
+  }
+ ],
+ "c2_list_prices": {
+  "Anthropic": {
+   "base_snapshot": "2026-03-01",
+   "latest_snapshot": "2026-11-01",
+   "models_base": 12,
+   "models_latest": 20,
+   "matched": [
+    "claude opus 4.6",
+    "claude opus 4.5",
+    "claude opus 4.1",
+    "claude opus 4",
+    "claude sonnet 4.6",
+    "claude sonnet 4.5",
+    "claude sonnet 4",
+    "claude haiku 4.5",
+    "claude haiku 3.5"
+   ],
+   "fixed_version_input_ratio": 1.0,
+   "fixed_version_output_ratio": 1.0
+  },
+  "OpenAI": {
+   "base_snapshot": "2026-03-04",
+   "latest_snapshot": "2026-11-01",
+   "models_base": 25,
+   "models_latest": 4,
+   "matched": [],
+   "fixed_version_input_ratio": null,
+   "fixed_version_output_ratio": null
+  }
+ },
+ "c2_tier_successors": [
+  {
+   "lab": "Anthropic",
+   "tier": "opus",
+   "base_model": "claude opus 4.6",
+   "base_input": 5.0,
+   "base_output": 25.0,
+   "latest_model": "claude opus 5.5",
+   "latest_input": 4.0,
+   "latest_output": 20.0
+  },
+  {
+   "lab": "Anthropic",
+   "tier": "sonnet",
+   "base_model": "claude sonnet 4.6",
+   "base_input": 3.0,
+   "base_output": 15.0,
+   "latest_model": "claude sonnet 5.5",
+   "latest_input": 2.0,
+   "latest_output": 10.0
+  },
+  {
+   "lab": "Anthropic",
+   "tier": "haiku",
+   "base_model": "claude haiku 4.5",
+   "base_input": 1.0,
+   "base_output": 5.0,
+   "latest_model": "claude haiku 5.5",
+   "latest_input": 0.1,
+   "latest_output": 0.5
+  },
+  {
+   "lab": "OpenAI",
+   "tier": "first-listed flagship",
+   "base_model": "gpt-5.2",
+   "base_input": 0.875,
+   "base_output": 7.0,
+   "latest_model": "gpt-6-astra",
+   "latest_input": 10.0,
+   "latest_output": 50.0
+  }
+ ],
+ "c2x_tier_linked": {
+  "Combined": {
+   "ln_unit_value": -1.19333,
+   "ln_tier_fisher": -1.041425,
+   "pct_tier_fisher": -0.647049,
+   "like_for_like_share": 0.872705,
+   "mix_share": 0.127295
+  },
+  "Anthropic": {
+   "ln_unit_value": -1.178982,
+   "ln_tier_fisher": -1.275457,
+   "pct_tier_fisher": -0.720697,
+   "like_for_like_share": 1.081829,
+   "mix_share": -0.081829
+  },
+  "OpenAI": {
+   "ln_unit_value": -1.114129,
+   "ln_tier_fisher": -0.422997,
+   "pct_tier_fisher": -0.34492,
+   "like_for_like_share": 0.379666,
+   "mix_share": 0.620334
+  }
+ },
+ "c2x_tier_map": [
+  [
+   "Claude Fable 5",
+   "claude-fable"
+  ],
+  [
+   "Claude Fable 5.1",
+   "claude-fable"
+  ],
+  [
+   "Claude Fable 5.2",
+   "claude-fable"
+  ],
+  [
+   "Claude 3.5 Haiku",
+   "claude-haiku"
+  ],
+  [
+   "Claude Haiku 4.5",
+   "claude-haiku"
+  ],
+  [
+   "Claude Opus 4.1",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 4.5 (2025 11 01)",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 4.5",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 4.6",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 4.7",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 4.8",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 5",
+   "claude-opus"
+  ],
+  [
+   "Claude Opus 5.5",
+   "claude-opus"
+  ],
+  [
+   "Claude 3.5 Sonnet",
+   "claude-sonnet"
+  ],
+  [
+   "Claude 3.7 Sonnet",
+   "claude-sonnet"
+  ],
+  [
+   "Claude Sonnet 4",
+   "claude-sonnet"
+  ],
+  [
+   "Claude Sonnet 4.5",
+   "claude-sonnet"
+  ],
+  [
+   "Claude Sonnet 4.6",
+   "claude-sonnet"
+  ],
+  [
+   "Claude Sonnet 5",
+   "claude-sonnet"
+  ],
+  [
+   "Claude Sonnet 5.5",
+   "claude-sonnet"
+  ],
+  [
+   "GPT-6 Astra",
+   "gpt-astra"
+  ],
+  [
+   "GPT-4o",
+   "gpt-base"
+  ],
+  [
+   "GPT-4.1",
+   "gpt-base"
+  ],
+  [
+   "GPT-5",
+   "gpt-base"
+  ],
+  [
+   "GPT-5.1",
+   "gpt-base"
+  ],
+  [
+   "GPT-5.2",
+   "gpt-base"
+  ],
+  [
+   "GPT-5.4",
+   "gpt-base"
+  ],
+  [
+   "GPT-5.5",
+   "gpt-base"
+  ],
+  [
+   "GPT-5 Codex",
+   "gpt-codex"
+  ],
+  [
+   "GPT-5.1 Codex",
+   "gpt-codex"
+  ],
+  [
+   "GPT-5.2 Codex",
+   "gpt-codex"
+  ],
+  [
+   "GPT-5.3 Codex",
+   "gpt-codex"
+  ],
+  [
+   "GPT-5.6 Luna",
+   "gpt-luna"
+  ],
+  [
+   "GPT 6 Luna",
+   "gpt-luna"
+  ],
+  [
+   "GPT-4o Mini",
+   "gpt-mini"
+  ],
+  [
+   "o4 Mini",
+   "gpt-mini"
+  ],
+  [
+   "GPT-4.1 Mini",
+   "gpt-mini"
+  ],
+  [
+   "GPT-5 Mini",
+   "gpt-mini"
+  ],
+  [
+   "GPT-5.4 Mini",
+   "gpt-mini"
+  ],
+  [
+   "GPT-5.6 Sol",
+   "gpt-sol"
+  ],
+  [
+   "GPT 6 Sol",
+   "gpt-sol"
+  ],
+  [
+   "GPT 6.1 Sol",
+   "gpt-sol"
+  ],
+  [
+   "GPT-5.6 Terra",
+   "gpt-terra"
+  ],
+  [
+   "GPT 6.1 Terra",
+   "gpt-terra"
+  ],
+  [
+   "Grok 4.7",
+   "grok 4.7"
+  ],
+  [
+   "o3",
+   "o-series"
+  ]
+ ],
+ "c3_levels": {
+  "label": "levels, 4-week",
+  "n": 23,
+  "slope_ols": -13.381889,
+  "se_nw": 7.962758,
+  "p_nw": 0.092848,
+  "nw_lag": 2,
+  "boot90": [
+   -26.798043,
+   2.098296
+  ],
+  "rho_resid": 0.597683,
+  "n_eff": 5.791697,
+  "slope_t": -13.341284,
+  "se_t": 6.558752,
+  "p_t": 0.054765,
+  "nu": 199.999988,
+  "lr_t_vs_gauss": -0.059311,
+  "hill_5pct": [
+   32.987023,
+   1
+  ],
+  "hill_10pct": [
+   31.886568,
+   2
+  ],
+  "lowest_weight_periods": [
+   "2025-04-06",
+   "2025-07-27",
+   "2025-06-29",
+   "2026-03-08",
+   "2025-08-24"
+  ],
+  "coef_move": 0.003034,
+  "tail_audit_label": "HOLDS",
+  "hypothesis_killed": false,
+  "r2": 0.152681
+ },
+ "c3_diffs": {
+  "label": "first differences, 4-week",
+  "n": 22,
+  "slope_ols": -6.027924,
+  "se_nw": 9.540985,
+  "p_nw": 0.527522,
+  "nw_lag": 2,
+  "boot90": [
+   -18.301774,
+   23.782391
+  ],
+  "rho_resid": -0.179566,
+  "n_eff": 31.630146,
+  "slope_t": -9.021744,
+  "se_t": 5.062854,
+  "p_t": 0.089948,
+  "nu": 2.871806,
+  "lr_t_vs_gauss": 3.761488,
+  "hill_5pct": [
+   2.029204,
+   1
+  ],
+  "hill_10pct": [
+   2.395939,
+   2
+  ],
+  "lowest_weight_periods": [
+   "2025-05-04",
+   "2026-03-08",
+   "2025-06-29",
+   "2026-01-11",
+   "2025-10-19"
+  ],
+  "coef_move": 0.496659,
+  "tail_audit_label": "WEAK",
+  "hypothesis_killed": false,
+  "r2": 0.043842
+ },
+ "c3_weekly_sd_pp": 4.38496,
+ "c3_weekly_sd_pp_2026": 2.663066,
+ "c3_examples": [
+  {
+   "example": "51.3% to 60.5%",
+   "found": false,
+   "note": "values not present in current-vintage weekly data; stated move scored vs weekly noise",
+   "change_pp": 9.2,
+   "sd_pp_full": 4.352119,
+   "sd_pp_2026": 2.556205,
+   "z_full": 2.113913,
+   "z_2026": 3.599085,
+   "inside_noise_full": false,
+   "inside_noise_2026": false
+  },
+  {
+   "example": "53.2% to 49.3%",
+   "found": false,
+   "note": "values not present in current-vintage weekly data; stated move scored vs weekly noise",
+   "change_pp": -3.9,
+   "sd_pp_full": 4.352119,
+   "sd_pp_2026": 2.556205,
+   "z_full": -0.896115,
+   "z_2026": -1.525699,
+   "inside_noise_full": true,
+   "inside_noise_2026": true
+  }
+ ],
+ "c4": {
+  "table": [
+   {
+    "quarter": "Q1 2025",
+    "revenue_musd": 376.0,
+    "compute_infra_musd": 944.0,
+    "revenue_per_compute_dollar": 0.398305,
+    "compute_margin_proxy": -1.510638
+   },
+   {
+    "quarter": "Q2 2025",
+    "revenue_musd": 787.0,
+    "compute_infra_musd": 1390.0,
+    "revenue_per_compute_dollar": 0.566187,
+    "compute_margin_proxy": -0.766201
+   },
+   {
+    "quarter": "Q3 2025",
+    "revenue_musd": 1382.0,
+    "compute_infra_musd": 2047.0,
+    "revenue_per_compute_dollar": 0.675134,
+    "compute_margin_proxy": -0.481187
+   },
+   {
+    "quarter": "Q4 2025",
+    "revenue_musd": 2040.0,
+    "compute_infra_musd": 2945.0,
+    "revenue_per_compute_dollar": 0.692699,
+    "compute_margin_proxy": -0.443627
+   },
+   {
+    "quarter": "Q1 2026",
+    "revenue_musd": 4731.0,
+    "compute_infra_musd": 3387.0,
+    "revenue_per_compute_dollar": 1.396811,
+    "compute_margin_proxy": 0.284084
+   },
+   {
+    "quarter": "Q2 2026",
+    "revenue_musd": 11555.0,
+    "compute_infra_musd": 5558.0,
+    "revenue_per_compute_dollar": 2.078985,
+    "compute_margin_proxy": 0.518996
+   },
+   {
+    "quarter": "Q3 2026",
+    "revenue_musd": 16956.0,
+    "compute_infra_musd": 9863.0,
+    "revenue_per_compute_dollar": 1.719152,
+    "compute_margin_proxy": 0.418318
+   }
+  ],
+  "rpc_trend_q1_to_q3_2026": "stable or rising",
+  "margin_trend_q1_to_q3_2026": "stable or rising",
+  "rpc_q2_to_q3_2026_change": -0.173081,
+  "margin_q2_to_q3_2026_change_pp": -10.067811,
+  "price_cut_600_share_of_increase": 0.111091,
+  "price_cut_70_share_of_increase": 0.106383,
+  "rev_increase_q2_q3_2026": 5401.0,
+  "rev_increase_q3_q4_2025": 658.0
+ },
+ "c4_policy_violation_revenue_pct": [
+  5,
+  7
+ ],
+ "c5": {
+  "first_week": "2025-12-01",
+  "first_open_share": 0.270617,
+  "last_week": "2026-11-23",
+  "last_open_share": 0.771095,
+  "ramp_ao_token_share_start": 100.0,
+  "ramp_ao_token_share_latest": 97.5
+ },
+ "revision_c1": [
+  {
+   "vintage": "Oct 2026 letter (qWoIn v1)",
+   "week": "2026-10-11",
+   "e_vintage": -2.941138,
+   "reading_vintage": "Jevons",
+   "e_current": -2.105673,
+   "reading_current": "Jevons",
+   "flip": false
+  },
+  {
+   "vintage": "Nov 2026 letter (7VRXW v3)",
+   "week": "2026-11-01",
+   "e_vintage": -1.708118,
+   "reading_vintage": "Jevons",
+   "e_current": -1.472995,
+   "reading_current": "Jevons",
+   "flip": false
+  }
+ ],
+ "revision_c3": [
+  {
+   "vintage": "Sep 2026 letter (0lGNa v2)",
+   "n": 8,
+   "slope_vintage": 15.659368,
+   "p_vintage": 0.001962,
+   "killed_vintage": false,
+   "slope_current_same_blocks": 5.569399,
+   "p_current_same_blocks": 0.210822,
+   "killed_current_same_blocks": false,
+   "killed_full_sample": false,
+   "flip": false,
+   "mean_abs_ln_rel_price_gap": 0.147503
+  },
+  {
+   "vintage": "Oct 2026 letter (DUO9V v3)",
+   "n": 9,
+   "slope_vintage": 3.980302,
+   "p_vintage": 0.590146,
+   "killed_vintage": false,
+   "slope_current_same_blocks": 7.210918,
+   "p_current_same_blocks": 0.184984,
+   "killed_current_same_blocks": false,
+   "killed_full_sample": false,
+   "flip": false,
+   "mean_abs_ln_rel_price_gap": 0.238695
+  }
+ ],
+ "verdict": {
+  "label": "KILLED",
+  "c1_abs_e": 1.32606,
+  "c1_price_falling": true,
+  "c4_rpc_trend": "stable or rising",
+  "c4_margin_trend": "stable or rising",
+  "c2_like_for_like_share": -0.015378,
+  "c2_mix_share": 1.015378,
+  "revision_flip": false,
+  "conditions_holds": [
+   false,
+   false,
+   false
+  ],
+  "conditions_killed": [
+   true,
+   true,
+   true
+  ]
+ },
+ "verdict_sensitivity_tier_linked": {
+  "label": "WEAK",
+  "like_for_like_share": 0.872705
+ },
+ "c1_trend_last8": {
+  "Combined": [
+   -2.627,
+   -2.423,
+   -2.106,
+   -1.838,
+   -1.606,
+   -1.473,
+   -1.377,
+   -1.326
+  ],
+  "Anthropic": [
+   -2.15,
+   -1.998,
+   -1.763,
+   -1.59,
+   -1.396,
+   -1.244,
+   -1.15,
+   -1.101
+  ],
+  "OpenAI": [
+   -4.067,
+   -3.541,
+   -2.878,
+   -2.322,
+   -1.998,
+   -1.91,
+   -1.804,
+   -1.756
+  ]
+ }
+}

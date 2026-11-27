@@ -19,3 +19,4 @@ data/raw/**
 
 # quick-lookups: raw payloads stay local
 quick-lookups/*/data/raw/**
+quick-lookups/*/data/raw_forward/**

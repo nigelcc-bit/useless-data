@@ -29,3 +29,4 @@ real question, promote it to `studies/` with `scripts/new_study.py`.
 |---|---|---|---|
 | 2026-11-25 | [mu-regime-read](2026-11-25-mu-regime-read/) | Is MU's 2026 selloff a regime change or a flush? (HMM, since 2010) | **WEAK**: vol regime since Aug 2025; selloff leg flush-sized so far |
 | 2026-11-26 | [thanksgiving-week-drawdown](2026-11-26-thanksgiving-week-drawdown/) | Do Thanksgiving-week seasonals hold, and does entering in a 10-20% correction change the outlook? (S&P 500 1950-2025) | C1 **WEAK**, C2 **KILLED**, C3 **INCONCLUSIVE**, C4 **WEAK**; interim until 2027-01-04 re-run |
+| 2026-11-27 | [token-pricing](2026-11-27-token-pricing/) | Are falling AI token prices a crack in the AI revenue thesis, or Jevons-style elastic demand? How much is mix? (Ramp AI Index, Anthropic 424B4) | **KILLED** (pre-registered, 45%); reviewer reading **WEAK** (~55%) after two spec flaws; forward test scored from 2027-01-10 |

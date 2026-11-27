@@ -1,0 +1,4 @@
+scored_utc,test,variant,result
+2026-11-27T12:37:00Z,C1,"forward crack run (Anthropic AND Combined |e|<1, price falling)","longest 0, current 0, weeks 0"
+2026-11-27T12:37:00Z,C2,tier-linked Fisher from 2026-11-15,None
+2026-11-27T12:37:00Z,C2,same-version Fisher from 2026-11-15 (secondary),None
