@@ -171,3 +171,22 @@ Read quarter on quarter, the C4 kill leg fails and the HOLDS leg ("falling") is 
 With the legs split, the pre-registered rule's "anything else" branch gives WEAK.
 
 **Conflict of interest.** Claude, which Anthropic makes, ran this study about Anthropic's pricing power. Both flaws pushed toward the verdict favourable to Anthropic (KILLED). That is why they are written up here in full and why a forward test with the corrected specs is pre-registered in `FORWARD_PREREG.md`.
+
+## Forward test (pre-registered 2026-11-27)
+
+`FORWARD_PREREG.md` (commit 096fa39, pushed before the scoring script existed) re-tests the claim on **new data only**, with the corrected C2 (tier-linked) and C4 (quarter on quarter) specs:
+- **C1:** Anthropic and combined \|e\| < 1 with the price falling, for 8 consecutive weeks after 15 Nov 2026. First scored at the week ending 2027-01-10.
+- **C4:** Q4 2026 revenue per compute dollar below 1.7192 **and** compute margin proxy below 41.83%, from Anthropic's first report covering Q4 2026 (filing date unverified).
+- **Verdict:** HOLDS if both hit, KILLED if neither hits by the Q4 report, otherwise WEAK.
+
+Scoring script: `score_forward.py` appends to `outputs/forward_scores.csv` and `outputs/forward_trials.csv`.
+- **Self-check:** `--self-check` rebuilds the pack's derived per-model prices exactly (838 of 838 rows, median error 0.02%).
+- **Baseline (2026-11-27):** 0 forward weeks, status interim.
+
+To score later:
+
+```
+python score_forward.py --ramp-dir data/raw_forward/<capture-date>/04_ramp_ai_index_data --capture-date <capture-date>
+```
+
+When the Q4 report is filed, add `--q4-revenue`, `--q4-compute`, `--report-filed` and `--report-name`.
