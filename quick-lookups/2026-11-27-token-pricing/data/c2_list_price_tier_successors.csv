@@ -1,0 +1,5 @@
+lab,tier,base_model,base_input,base_output,latest_model,latest_input,latest_output
+Anthropic,opus,claude opus 4.6,5.0,25.0,claude opus 5.5,4.0,20.0
+Anthropic,sonnet,claude sonnet 4.6,3.0,15.0,claude sonnet 5.5,2.0,10.0
+Anthropic,haiku,claude haiku 4.5,1.0,5.0,claude haiku 5.5,0.1,0.5
+OpenAI,first-listed flagship,gpt-5.2,0.875,7.0,gpt-6-astra,10.0,50.0

@@ -1,0 +1,55 @@
+trial_id,test,variant,statistic,n,result,timestamp
+1,C1,"cross-check implied vs Ramp blended price, Combined",median |log gap| per 4-week block,22,0.020,2026-11-27T11:00:47Z
+2,C1,"cross-check implied vs Ramp blended price, Anthropic",median |log gap| per 4-week block,22,0.031,2026-11-27T11:00:47Z
+3,C1,"cross-check implied vs Ramp blended price, OpenAI",median |log gap| per 4-week block,22,0.024,2026-11-27T11:00:47Z
+4,C1,"latest 13-week realised elasticity, Combined",e = dlnV/dlnP,1,"e=-1.33; Jevons (|e|>1, spend up)",2026-11-27T11:00:47Z
+5,C1,"crack rule (|e|<1, price falling, >=8 consecutive weeks), Combined",longest run / current run,67,0 / 0,2026-11-27T11:00:47Z
+6,C1,"latest 13-week realised elasticity, Anthropic",e = dlnV/dlnP,1,"e=-1.10; Jevons (|e|>1, spend up)",2026-11-27T11:00:47Z
+7,C1,"crack rule (|e|<1, price falling, >=8 consecutive weeks), Anthropic",longest run / current run,67,0 / 0,2026-11-27T11:00:47Z
+8,C1,"latest 13-week realised elasticity, OpenAI",e = dlnV/dlnP,1,"e=-1.76; Jevons (|e|>1, spend up)",2026-11-27T11:00:47Z
+9,C1,"crack rule (|e|<1, price falling, >=8 consecutive weeks), OpenAI",longest run / current run,67,0 / 0,2026-11-27T11:00:47Z
+10,C1,"robustness: sample start 2026-01-11, Combined",latest e,20,-1.33,2026-11-27T11:00:47Z
+11,C1,"small-sample-truth: non-overlapping 13-week windows (price falling) with |e|>1, Combined","c/n, Beta(1,1) posterior",4,4/4; mean 0.83; 90% 0.55-0.99,2026-11-27T11:00:47Z
+12,C2,"Fisher like-for-like vs mix, Combined, base combined March peak (2026-03-01)",share of log fall: like-for-like / mix,1,LfL -2% / mix 102%,2026-11-27T11:00:47Z
+13,C2,"Fisher like-for-like vs mix, Combined, base own-lab March peak (2026-03-01)",share of log fall: like-for-like / mix,1,LfL -2% / mix 102%,2026-11-27T11:00:47Z
+14,C2,"Fisher like-for-like vs mix, Anthropic, base combined March peak (2026-03-01)",share of log fall: like-for-like / mix,1,LfL -5% / mix 105%,2026-11-27T11:00:47Z
+15,C2,"Fisher like-for-like vs mix, Anthropic, base own-lab March peak (2026-03-01)",share of log fall: like-for-like / mix,1,LfL -5% / mix 105%,2026-11-27T11:00:48Z
+16,C2,"Fisher like-for-like vs mix, OpenAI, base combined March peak (2026-03-01)",share of log fall: like-for-like / mix,1,LfL 5% / mix 95%,2026-11-27T11:00:48Z
+17,C2,"Fisher like-for-like vs mix, OpenAI, base own-lab March peak (2026-03-15)",share of log fall: like-for-like / mix,1,LfL -9% / mix 109%,2026-11-27T11:00:48Z
+18,C2,"validation derived vs published April 2026, GPT-5-nano",pct error,0,not in derived file,2026-11-27T11:00:48Z
+19,C2,"validation derived vs published April 2026, Claude Haiku 4.5",pct error,4,+2%,2026-11-27T11:00:48Z
+20,C2,"validation derived vs published April 2026, Claude Sonnet 4.6",pct error,4,+37%,2026-11-27T11:00:48Z
+21,C2,"validation derived vs published April 2026, Claude Opus 4.6",pct error,4,+13%,2026-11-27T11:00:48Z
+22,C2,"validation derived vs published April 2026, GPT-5.5",pct error,0,not in derived file,2026-11-27T11:00:48Z
+23,C2,"validation derived vs published April 2026, GPT-4o",pct error,0,not in derived file,2026-11-27T11:00:48Z
+24,C2,"list-price index at fixed versions, Anthropic (2026-03-01 vs 2026-11-01)",geomean ratio input/output; matched models,9,"input 1.0, output 1.0; matched ['claude opus 4.6', 'claude opus 4.5', 'claude opus 4.1', 'claude opus 4', 'claude sonnet 4.6', 'claude sonnet 4.5', 'claude sonnet 4', 'claude haiku 4.5', 'claude haiku 3.5']",2026-11-27T11:00:48Z
+25,C2,"list-price index at fixed versions, OpenAI (2026-03-04 vs 2026-11-01)",geomean ratio input/output; matched models,0,"input None, output None; matched []",2026-11-27T11:00:48Z
+26,C2,"list-price tier successor (descriptive), Anthropic opus",base vs latest input/output,1,claude opus 4.6 5.0/25.0 -> claude opus 5.5 4.0/20.0,2026-11-27T11:00:48Z
+27,C2,"list-price tier successor (descriptive), Anthropic sonnet",base vs latest input/output,1,claude sonnet 4.6 3.0/15.0 -> claude sonnet 5.5 2.0/10.0,2026-11-27T11:00:48Z
+28,C2,"list-price tier successor (descriptive), Anthropic haiku",base vs latest input/output,1,claude haiku 4.5 1.0/5.0 -> claude haiku 5.5 0.1/0.5,2026-11-27T11:00:48Z
+29,C2,"list-price tier successor (descriptive), OpenAI first-listed flagship",base vs latest input/output,1,gpt-5.2 0.875/7.0 -> gpt-6-astra 10.0/50.0,2026-11-27T11:00:48Z
+30,C2x (exploratory),"tier-linked Fisher (successors = same product), Combined",share of log fall: like-for-like / mix,1,LfL 87% / mix 13%,2026-11-27T11:00:48Z
+31,C2x (exploratory),"tier-linked Fisher (successors = same product), Anthropic",share of log fall: like-for-like / mix,1,LfL 108% / mix -8%,2026-11-27T11:00:49Z
+32,C2x (exploratory),"tier-linked Fisher (successors = same product), OpenAI",share of log fall: like-for-like / mix,1,LfL 38% / mix 62%,2026-11-27T11:00:49Z
+33,C3,"OLS-NW share on ln(P_A/P_O), levels, 4-week","slope (pp per log point), p, n_eff",23,"-13.38, p=0.093, n_eff=5.8",2026-11-27T11:00:49Z
+34,C3,"block bootstrap 90% CI, levels, 4-week",slope CI,23,"[-26.80, 2.10]",2026-11-27T11:00:49Z
+35,C3,"tail-audit t-fit, levels, 4-week","slope, p, nu",23,"-13.34, p=0.055, nu=200.0; HOLDS",2026-11-27T11:00:49Z
+36,C3,"OLS-NW share on ln(P_A/P_O), first differences, 4-week","slope (pp per log point), p, n_eff",22,"-6.03, p=0.528, n_eff=31.6",2026-11-27T11:00:50Z
+37,C3,"block bootstrap 90% CI, first differences, 4-week",slope CI,22,"[-18.30, 23.78]",2026-11-27T11:00:50Z
+38,C3,"tail-audit t-fit, first differences, 4-week","slope, p, nu",22,"-9.02, p=0.090, nu=2.9; WEAK",2026-11-27T11:00:50Z
+39,C3,example jump 51.3% to 60.5% (not in current data; stated size vs noise),"z vs weekly SD of Anthropic share, full / 2026",0,z=2.11 / 3.60,2026-11-27T11:00:50Z
+40,C3,example jump 53.2% to 49.3% (not in current data; stated size vs noise),"z vs weekly SD of Anthropic share, full / 2026",0,z=-0.90 / -1.53,2026-11-27T11:00:50Z
+41,C4,"revenue per compute dollar, Q1 2026 vs Q3 2026 (pre-registered rule)",ratio Q3/Q1,3,1.397 -> 1.719: stable or rising,2026-11-27T11:00:50Z
+42,C4,"compute margin proxy, Q1 2026 vs Q3 2026 (pre-registered rule)",pp change,3,28.4% -> 41.8%: stable or rising,2026-11-27T11:00:50Z
+43,C4,"revenue per compute dollar, Q2 to Q3 2026 (reported alongside)",pct change,2,-17.3%,2026-11-27T11:00:50Z
+44,C4,"compute margin proxy, Q2 to Q3 2026 (reported alongside)",pp change,2,-10.1pp,2026-11-27T11:00:50Z
+45,C4,$600M price cut as share of Q2->Q3 2026 revenue increase,ratio,1,11.1%,2026-11-27T11:00:50Z
+46,C4,$70M price cut as share of Q3->Q4 2025 revenue increase,ratio,1,10.6%,2026-11-27T11:00:50Z
+47,C5,OpenRouter open-weight share of tokens (descriptive),first vs last week,52,27.1% -> 77.1%,2026-11-27T11:00:50Z
+48,C5,Ramp OpenAI+Anthropic token-volume share (descriptive),same window,1,100.0% -> 97.5%,2026-11-27T11:00:50Z
+49,Revision,"C1 13-week e at vintage last week, Oct 2026 letter (qWoIn v1)",vintage vs current,1,-2.94 (Jevons) vs -2.11 (Jevons),2026-11-27T11:00:50Z
+50,Revision,"C1 13-week e at vintage last week, Nov 2026 letter (7VRXW v3)",vintage vs current,1,-1.71 (Jevons) vs -1.47 (Jevons),2026-11-27T11:00:50Z
+51,Revision,"C3 on vintage prices, Sep 2026 letter (0lGNa v2)","slope, p, killed?",8,"15.66, p=0.002, killed=False",2026-11-27T11:00:51Z
+52,Revision,"C3 on vintage prices, Oct 2026 letter (DUO9V v3)","slope, p, killed?",9,"3.98, p=0.590, killed=False",2026-11-27T11:00:52Z
+53,Verdict,pre-registered rule,HOLDS/KILLED/WEAK conditions,1,KILLED,2026-11-27T11:00:52Z
+54,Verdict,sensitivity: C2 replaced by tier-linked index (exploratory),label,1,WEAK,2026-11-27T11:00:52Z

@@ -1,0 +1,62 @@
+lab,snapshot,model,input,output
+Anthropic,2026-03-01,claude opus 4.6,5.0,25.0
+Anthropic,2026-03-01,claude opus 4.5,5.0,25.0
+Anthropic,2026-03-01,claude opus 4.1,15.0,75.0
+Anthropic,2026-03-01,claude opus 4,15.0,75.0
+Anthropic,2026-03-01,claude sonnet 4.6,3.0,15.0
+Anthropic,2026-03-01,claude sonnet 4.5,3.0,15.0
+Anthropic,2026-03-01,claude sonnet 4,3.0,15.0
+Anthropic,2026-03-01,claude sonnet 3.7,3.0,15.0
+Anthropic,2026-03-01,claude haiku 4.5,1.0,5.0
+Anthropic,2026-03-01,claude haiku 3.5,0.8,4.0
+Anthropic,2026-03-01,claude opus 3,15.0,75.0
+Anthropic,2026-03-01,claude haiku 3,0.25,1.25
+Anthropic,2026-11-01,claude fable 5.1,10.0,50.0
+Anthropic,2026-11-01,claude opus 5.5,4.0,20.0
+Anthropic,2026-11-01,claude sonnet 5.5,2.0,10.0
+Anthropic,2026-11-01,claude haiku 5.5,0.1,0.5
+Anthropic,2026-11-01,claude mythos 5.1,10.0,50.0
+Anthropic,2026-11-01,claude fable 5,10.0,50.0
+Anthropic,2026-11-01,claude mythos 5,10.0,50.0
+Anthropic,2026-11-01,claude opus 5,5.0,25.0
+Anthropic,2026-11-01,claude opus 4.8,5.0,25.0
+Anthropic,2026-11-01,claude opus 4.7,5.0,25.0
+Anthropic,2026-11-01,claude opus 4.6,5.0,25.0
+Anthropic,2026-11-01,claude opus 4.5,5.0,25.0
+Anthropic,2026-11-01,claude opus 4.1,15.0,75.0
+Anthropic,2026-11-01,claude opus 4,15.0,75.0
+Anthropic,2026-11-01,claude sonnet 5,2.0,10.0
+Anthropic,2026-11-01,claude sonnet 4.6,3.0,15.0
+Anthropic,2026-11-01,claude sonnet 4.5,3.0,15.0
+Anthropic,2026-11-01,claude sonnet 4,3.0,15.0
+Anthropic,2026-11-01,claude haiku 4.5,1.0,5.0
+Anthropic,2026-11-01,claude haiku 3.5,0.8,4.0
+OpenAI,2026-03-04,gpt-5.2,0.875,7.0
+OpenAI,2026-03-04,gpt-5.1,0.625,5.0
+OpenAI,2026-03-04,gpt-5,0.625,5.0
+OpenAI,2026-03-04,gpt-5-mini,0.125,1.0
+OpenAI,2026-03-04,gpt-5-nano,0.025,0.2
+OpenAI,2026-03-04,gpt-5.2-pro,10.5,84.0
+OpenAI,2026-03-04,gpt-5-pro,7.5,60.0
+OpenAI,2026-03-04,gpt-4.1,1.0,4.0
+OpenAI,2026-03-04,gpt-4.1-mini,0.2,0.8
+OpenAI,2026-03-04,gpt-4.1-nano,0.05,0.2
+OpenAI,2026-03-04,gpt-4o,1.25,5.0
+OpenAI,2026-03-04,gpt-4o-2024-05-13,2.5,7.5
+OpenAI,2026-03-04,gpt-4o-mini,0.075,0.3
+OpenAI,2026-03-04,o1,7.5,30.0
+OpenAI,2026-03-04,o1-pro,75.0,300.0
+OpenAI,2026-03-04,o3-pro,10.0,40.0
+OpenAI,2026-03-04,o3,1.0,4.0
+OpenAI,2026-03-04,o3-deep-research,5.0,20.0
+OpenAI,2026-03-04,o4-mini,0.55,2.2
+OpenAI,2026-03-04,o4-mini-deep-research,1.0,4.0
+OpenAI,2026-03-04,o3-mini,0.55,2.2
+OpenAI,2026-03-04,o1-mini,0.55,2.2
+OpenAI,2026-03-04,gpt-image-1.5,2.5,5.0
+OpenAI,2026-03-04,gpt-image-1,2.5,
+OpenAI,2026-03-04,gpt-image-1-mini,1.0,
+OpenAI,2026-11-01,gpt-6-astra,10.0,50.0
+OpenAI,2026-11-01,gpt-6.1-sol,2.0,10.0
+OpenAI,2026-11-01,gpt-6.1-terra,1.0,5.0
+OpenAI,2026-11-01,gpt-6-luna,0.1,0.5
