@@ -148,3 +148,26 @@ The study was first written in fed-watchers, without access to this repo's `quic
 - `data/*.csv`: processed tables, by test (c1 to c4, c2x exploratory)
 - `outputs/trials.csv`: all 54 trials; `outputs/results.json`: every number above
 - `outputs/chart_*.png`: four charts
+
+## Reviewer note (2026-11-27)
+
+Added after the result. It does **not** change the pre-registered verdict above (KILLED, 45%), which stands as the record of what the frozen rule produced.
+
+**C2 spec flaw.** The pre-registered like-for-like measure is a same-version index: it compares each model only with itself. It cannot see price cuts delivered through cheaper successor models, and the S-1 says that is how Anthropic's cuts happened: "price reductions introduced as part of new model versions and contractual discounts". Every Anthropic tier's successor is listed below its predecessor (Opus $5/$25 to $4/$20, Sonnet $3/$15 to $2/$10, Haiku $1/$5 to $0.10/$0.50). So the kill leg "mix >= 50% of the fall" was met **largely by construction**. The same-version index showed +2% while the tier-linked index showed -65% (87% like-for-like).
+
+**C4 wording flaw.** "Falling over the last two quarters" was operationalised as Q3 2026 vs Q1 2026, which reads as stable or rising. Quarter on quarter, Q2 to Q3 2026:
+- revenue per compute dollar fell **17%**, from **2.08** to **1.72**;
+- the compute margin proxy fell **10.1pp**, from 51.9% to 41.8%.
+
+Read quarter on quarter, the C4 kill leg fails and the HOLDS leg ("falling") is met.
+
+**C3** is a prior only under protocol rule 6 (effective N 5.8) and plays no part in the verdict rule.
+
+**Reviewer reading: WEAK, about 55% confidence.**
+- **C1:** spend still outran price cuts in the latest window (combined \|e\| 1.33). That points away from a crack, but Anthropic's \|e\| (1.10) is near the line and falling.
+- **Corrected C2:** like-for-like at the tier level is 87%, which points to commoditisation.
+- **Corrected C4:** quarter on quarter, the latest quarter is falling.
+
+With the legs split, the pre-registered rule's "anything else" branch gives WEAK.
+
+**Conflict of interest.** Claude, which Anthropic makes, ran this study about Anthropic's pricing power. Both flaws pushed toward the verdict favourable to Anthropic (KILLED). That is why they are written up here in full and why a forward test with the corrected specs is pre-registered in `FORWARD_PREREG.md`.
