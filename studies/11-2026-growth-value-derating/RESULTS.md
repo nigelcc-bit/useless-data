@@ -16,7 +16,7 @@ Decision cells were filled 2026-11-28, after each test ran. The rule text is unc
 ## 1. Verdict box
 
 ```
-VERDICT: B HOLDS (inflated estimates over earnings catch-up) | confidence 60%
+VERDICT: B HOLDS (inflated estimates over earnings catch-up) | confidence 50% (was 60%; revised 28 Nov 2026 post-results, see section 9)
 Claim: the 2026 Growth P/E de-rating is earnings-driven, and the earnings are not backed by cash
 Method: log identity dln(PE) = dln(Price) - dln(EPS) split into legs (Phase 1); top-15 cash conversion vs revisions (Phase 2A)
 Data: Yardeni digitised fwd P/E + S&P DJI index levels (weekly, 2024-01 to 2026-11-27), SEC XBRL cash flows for the top-15 IVW names, Yahoo consensus snapshot 2026-11-28 | Trials counted: 30
@@ -28,7 +28,7 @@ Data: Yardeni digitised fwd P/E + S&P DJI index levels (weekly, 2024-01 to 2026-
 
 **One sentence:** the Growth discount is not a price collapse but a jump in forward earnings estimates, and the biggest names' cash conversion has not kept up with those earnings.
 
-Confidence is 60%. Phase 1 is robust: no variant flips it. Phase 2A clears its thresholds under both aggregations, but its strongest rival (heavy AI investment that is real, not inflated) cannot be ruled out with these metrics. See section 9.
+Confidence was 60% at first writing and is **50%** after the post-results interpretation note in section 9: the Phase 2A metric cannot separate B from heavy real investment. Phase 1 is robust: no variant flips it. Phase 2A clears its thresholds under both aggregations, but its strongest rival (heavy AI investment that is real, not inflated) cannot be ruled out with these metrics. See section 9.
 
 ## 2. Question and pre-registered hypotheses
 
@@ -152,9 +152,30 @@ Phase 2A's B verdict also holds on the ratio-of-sums aggregation (-23.3pp, 3.45x
 
 **Rival explanation for Phase 1:** the forward-EPS window roll. As the 12-month forward window moves into 2027, a strong expected growth year enters mechanically. Part of the 95.5% EPS leg may be that roll, not new optimism. The pack does not separate the roll from estimate revisions. The 90-day FY1 change (+5.3% for Growth vs +1.4% for Value) shows revisions did contribute.
 
+### Interpretation note (28 Nov 2026, post-results)
+
+Written after the results. It changes no verdict or rule: the pre-registered rule still returns **B supported**.
+
+**The decisive metric cannot separate B from investment.** FCF-minus-SBC / NI mechanically falls when capex rises, so a large drop is what both B (inflated earnings) and heavy real investment would produce. Passing the rule therefore does not show that earnings are inflated.
+
+**Operating cash still roughly backs earnings.**
+- **Primary measure:** weighted OCF / NI moved from **1.21 to 1.14**, still above 1.
+- **Dollar-weighted robustness measure:** this falls from 1.13 to **0.96** (0.99 excluding JPM, whose bank OCF is not meaningful). On that view operating cash only about matches profits.
+- **Below 1 in the latest four quarters:** Alphabet (0.76) and Nvidia (0.70).
+- **Operating cash grew at the biggest spenders,** trailing four quarters vs a year earlier: Microsoft **+33%**, Alphabet **+19%**, Meta **+24%**, Amazon **+29%**.
+
+**Capex grew much faster.** Microsoft **+97%** and Alphabet **+105%** roughly doubled; Meta rose **+67%** and Amazon **+79%**. Across the 13 top names that report capex (excluding JPM), capex rose **78%** in aggregate (67% as a weighted mean) against operating cash up **40%**.
+
+**Supported reading.** Earnings are cash-backed at the operating level but are being reinvested at about **3x** depreciation (2.98x weighted). The forward risk is depreciation drag as that capex reaches the income statement, and the return on AI investment. **Current accounting inflation is not shown by this evidence.**
+
+**Data note.** Nvidia's latest quarter in the SEC feed is **July 2026** (fiscal quarter ending 2026-07-26). Its October 2026 quarter was not yet available, so its trailing figures lag the other names by one quarter.
+
+**Why confidence is lowered from 60% to 50%.** The B verdict rests on one metric that falls under both B and its main rival. The one piece of evidence that does separate them, operating cash relative to profits, points toward the investment reading on the primary measure and is ambiguous on the robustness measure. With no accruals or estimate-accuracy data in the pack, the rule's result is closer to a coin toss than first stated.
+
 ## 10. Next step and repo path
 
 - **January 2027:** rerun `run_all.py` against a refreshed pack after the 21 Dec reconstitution. Compare the P/E ordering and the composition leg; replace the FINDINGS section.
+- **Follow-up test of the depreciation drag,** once the Q4 2026 filings and the 21 Dec 2026 reconstitution are in. It will be pre-registered before the data is loaded. It compares, for the top Growth names, the path of capex / depreciation against consensus EPS growth for 2027-28: does rising depreciation from the 2025-26 capex outrun the earnings growth the estimates assume?
 - **Testing the investment-phase rival needs extra data:** a fixed-membership EPS recompute (end-2025 constituent EPS) and a tech/hyperscaler credit spread (bond-level TRACE).
 - **Repo path:** `studies/11-2026-growth-value-derating/`. Rerun with:
 

@@ -11,7 +11,7 @@ Slug: `growth-value-derating`
 - **The de-rating came from earnings, not prices.** The Growth forward P/E fell from 29.32x (31 Oct 2025) to 17.10x (27 Nov 2026). Rising forward earnings explain **95.5%** of that drop, and the Growth index price barely moved.
 - **The reconstitution didn't cause it.** The Dec 2025 reconstitution explains only **5.7%**, and no robustness variant changes that classification.
 - **Growth crossed below Value** mainly because its earnings estimates rose faster: 66% of the gap, with 23% from Value's stronger prices.
-- **The earnings aren't fully backed by cash.** Among the top 15 Growth names, free cash flow after stock-based pay fell from **61.0% to 39.9%** of net income in a year, and capex ran at **2.98x** depreciation. The pre-registered rule therefore supports **B (inflated estimates)** over A (a cash-backed catch-up), at 60% confidence.
+- **The earnings aren't fully backed by cash.** Among the top 15 Growth names, free cash flow after stock-based pay fell from **61.0% to 39.9%** of net income in a year, and capex ran at **2.98x** depreciation. The pre-registered rule therefore supports **B (inflated estimates)** over A (a cash-backed catch-up). Confidence is 50%, revised from 60% on 28 Nov 2026: operating cash still roughly covers profits (weighted OCF / NI 1.21 to 1.14) while capex rose sharply, so the evidence shows heavy reinvestment, not proven inflated earnings (RESULTS.md section 9).
 - **The main rival is an AI investment phase:** the earnings are real but heavily reinvested. The rule cannot exclude it.
 - **The rates branch (C vs D) was not run,** because Phase 1 did not select it.
 

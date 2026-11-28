@@ -749,15 +749,17 @@ Status: complete | Run: 2026-11-28 | Source: studies/11-2026-growth-value-derati
   topic: equities
   hypothesis: The earnings behind the Growth de-rating are inflated, with the biggest Growth companies' cash flow not keeping up with their reported profits.
   verdict: supported
-  finding: Supported by the pre-set test, since top Growth firms' free cash after stock pay fell from 61.0% to 39.9% of profits while capex ran at 2.98 times depreciation.
+  finding: The pre-set test passed because free cash after investment fell, but operating cash still roughly covers profits, so this signals heavy spending, not proven inflated earnings.
   key_stats:
     - "free cash after stock pay down 21.1 points, to 39.9% of profits"
+    - "operating cash 1.14 times profits, from 1.21"
     - "capex at 2.98 times depreciation"
-  confidence: 60
+  confidence: 50
   numbers:
     - "**61.0%** to **39.9%**"
     - "-21.1pp"
     - "capex ran at **2.98x** depreciation"
+    - "1.21 to 1.14"
   source_file: studies/11-2026-growth-value-derating/RESULTS.md
   run_date: 2026-11-28
   valid_until: 2027-01-08
