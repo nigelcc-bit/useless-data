@@ -1,0 +1,173 @@
+{
+ "weights_pct": {
+  "AAPL": 8.1,
+  "AMD": 2.07,
+  "AMZN": 3.97,
+  "AVGO": 4.47,
+  "BRK.B": 3.37,
+  "GOOGL": 9.02,
+  "JPM": 1.79,
+  "LLY": 3.48,
+  "META": 4.2,
+  "MSFT": 11.36,
+  "MU": 2.12,
+  "NVDA": 11.28,
+  "TSLA": 2.07,
+  "V": 1.24
+ },
+ "metrics": {
+  "capex_to_ocf": {
+   "latest": 0.47109533332053694,
+   "year_earlier": 0.3668090769337615,
+   "change": 0.10428625638677541,
+   "n": 13,
+   "names": [
+    "AAPL",
+    "AMD",
+    "AMZN",
+    "AVGO",
+    "BRK.B",
+    "GOOGL",
+    "LLY",
+    "META",
+    "MSFT",
+    "MU",
+    "NVDA",
+    "TSLA",
+    "V"
+   ],
+   "prior_only": false
+  },
+  "fcf_sbc_to_ni": {
+   "latest": 0.3989087355650527,
+   "year_earlier": 0.6096481896644321,
+   "change": -0.21073945409937944,
+   "n": 12,
+   "names": [
+    "AAPL",
+    "AMD",
+    "AMZN",
+    "AVGO",
+    "GOOGL",
+    "LLY",
+    "META",
+    "MSFT",
+    "MU",
+    "NVDA",
+    "TSLA",
+    "V"
+   ],
+   "prior_only": false
+  },
+  "capex_to_dep": {
+   "latest": 2.9777379463114757,
+   "year_earlier": 2.3685418255064286,
+   "change": 0.6091961208050471,
+   "n": 13,
+   "names": [
+    "AAPL",
+    "AMD",
+    "AMZN",
+    "AVGO",
+    "BRK.B",
+    "GOOGL",
+    "LLY",
+    "META",
+    "MSFT",
+    "MU",
+    "NVDA",
+    "TSLA",
+    "V"
+   ],
+   "prior_only": false
+  },
+  "ocf_to_ni": {
+   "latest": 1.1367831141566407,
+   "year_earlier": 1.2114549166108108,
+   "change": -0.07467180245417016,
+   "n": 14,
+   "names": [
+    "AAPL",
+    "AMD",
+    "AMZN",
+    "AVGO",
+    "BRK.B",
+    "GOOGL",
+    "JPM",
+    "LLY",
+    "META",
+    "MSFT",
+    "MU",
+    "NVDA",
+    "TSLA",
+    "V"
+   ],
+   "prior_only": false
+  }
+ },
+ "robust_ratio_of_sums": {
+  "fcf_sbc_to_ni": {
+   "latest": 0.3460292195482254,
+   "year_earlier": 0.5792318046218573,
+   "change": -0.2332025850736319
+  },
+  "capex_to_dep": {
+   "latest": 3.44610582370584,
+   "year_earlier": 2.5971816668649748,
+   "change": 0.8489241568408654
+  },
+  "capex_to_ocf": {
+   "latest": 0.5491691780149023,
+   "year_earlier": 0.40948458941767124,
+   "change": 0.13968458859723104
+  },
+  "ocf_to_ni": {
+   "latest": 0.9551976901319019,
+   "year_earlier": 1.1309227884788517,
+   "change": -0.17572509834694983
+  }
+ },
+ "breadth_snapshot": {
+  "growth": {
+   "n_names": 153.0,
+   "weight_coverage": 1.0,
+   "up30_count": 1538.0,
+   "down30_count": 898.0,
+   "breadth_count_(up-dn)/(up+dn)": 0.263,
+   "breadth_capweighted": 0.409,
+   "capw_share_FY1_up_vs_90d": 0.709,
+   "capw_FY1_EPS_chg_90d_pct": 5.25,
+   "capw_FY1_EPS_chg_30d_pct": 1.62
+  },
+  "value": {
+   "n_names": 434.0,
+   "weight_coverage": 0.999,
+   "up30_count": 2828.0,
+   "down30_count": 2419.0,
+   "breadth_count_(up-dn)/(up+dn)": 0.078,
+   "breadth_capweighted": 0.075,
+   "capw_share_FY1_up_vs_90d": 0.588,
+   "capw_FY1_EPS_chg_90d_pct": 1.36,
+   "capw_FY1_EPS_chg_30d_pct": -0.19
+  }
+ },
+ "growth_breadth_net_positive": true,
+ "fy1_90d": {
+  "growth": {
+   "chg": 0.053303167691040695,
+   "n": 151,
+   "weight_covered": 96.53999999999999
+  },
+  "value": {
+   "chg": 0.014243288115289273,
+   "n": 428,
+   "weight_covered": 99.31
+  }
+ },
+ "verdict": "B supported",
+ "rule_inputs": {
+  "fcf_sbc_to_ni_change_pp": -21.073945409937945,
+  "capex_to_dep_latest": 2.9777379463114757,
+  "breadth_net_positive": true
+ }
+}

@@ -1,0 +1,5 @@
+test_id,hypothesis,description,status,raw_p,bh_p,effect,n,notes,raw_p_num,family
+P1,P1,Phase 1 classification of the Growth P/E drop,earnings-driven,,,"EPS 95.5%, PRICE -2.9%",56,flips under: none,,
+E,E,Composition (Dec 2025 reconstitution) > 30% of the drop,KILLED,,,COMPOSITION 5.7%,4,,,
+A,A,Earnings catch-up: FCF-minus-SBC/NI change >= -10pp and breadth net positive,KILLED,,,-21.1pp,12,,,
+B,B,Inflated estimates: FCF-minus-SBC/NI down > 15pp and capex/dep > 2.0,CONFIRMED,,,"-21.1pp, capex/dep 2.98",12,,,

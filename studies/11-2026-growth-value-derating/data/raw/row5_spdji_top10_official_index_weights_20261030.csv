@@ -1,0 +1,21 @@
+index,as_of,ticker,name,weight_pct,sector
+S&P 500 Growth,"Oct 30, 2026",NVDA,Nvidia Corp,14.209,Information Technology
+S&P 500 Growth,"Oct 30, 2026",MSFT,Microsoft Corp,11.12,Information Technology
+S&P 500 Growth,"Oct 30, 2026",AAPL,Apple Inc.,7.216,Information Technology
+S&P 500 Growth,"Oct 30, 2026",GOOGL,Alphabet Inc A,4.712,Communication Services
+S&P 500 Growth,"Oct 30, 2026",AVGO,Broadcom Inc,4.451,Information Technology
+S&P 500 Growth,"Oct 30, 2026",META,"Meta Platforms, Inc. Class A",3.891,Communication Services
+S&P 500 Growth,"Oct 30, 2026",GOOG,Alphabet Inc C,3.794,Communication Services
+S&P 500 Growth,"Oct 30, 2026",AMZN,Amazon.com Inc,3.588,Consumer Discretionary
+S&P 500 Growth,"Oct 30, 2026",LLY,Eli Lilly & Co,3.254,Health Care
+S&P 500 Growth,"Oct 30, 2026",BRK.B,Berkshire Hathaway B,2.899,Financials
+S&P 500 Value,"Oct 30, 2026",AAPL,Apple Inc.,8.266,Information Technology
+S&P 500 Value,"Oct 30, 2026",AMZN,Amazon.com Inc,3.645,Consumer Discretionary
+S&P 500 Value,"Oct 30, 2026",XOM,ExxonMobil Holdings Corporation,2.531,Energy
+S&P 500 Value,"Oct 30, 2026",WMT,Walmart Inc.,1.809,Consumer Staples
+S&P 500 Value,"Oct 30, 2026",CVX,Chevron Corp,1.529,Energy
+S&P 500 Value,"Oct 30, 2026",COST,Costco Wholesale Corp,1.476,Consumer Staples
+S&P 500 Value,"Oct 30, 2026",TSLA,"Tesla, Inc",1.407,Consumer Discretionary
+S&P 500 Value,"Oct 30, 2026",PG,Procter & Gamble,1.234,Consumer Staples
+S&P 500 Value,"Oct 30, 2026",MRK,Merck & Co Inc,1.213,Health Care
+S&P 500 Value,"Oct 30, 2026",UNH,Unitedhealth Group Inc,1.201,Health Care

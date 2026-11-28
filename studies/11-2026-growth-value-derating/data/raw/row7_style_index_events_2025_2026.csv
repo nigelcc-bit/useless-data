@@ -1,0 +1,9 @@
+date,event,status,source
+2025-11-07,Last pre-reconstitution IVW holdings snapshot found (Wayback Machine capture 2025-11-10),confirmed,web.archive.org capture of iShares IVW holdings file
+2025-12-19,Third Friday of December 2025: annual style reconstitution reference/rebalance day (S&P convention is third Friday of December),inferred from methodology convention; no primary S&P DJI announcement with the exact date retrieved,indexologyblog.com tag page (third Friday in December) + S&P DJI blog 2026-01-15
+2025-12-22,Dec 2025 reconstitution effective before the open (Monday after third Friday),inferred; not confirmed from a primary notice,convention
+2026-01-15,S&P DJI blog: Dec 2025 rebalance complete; S&P 500 Growth IT weight up about 7.5pp to nearly half; Energy absent from Growth (first time since May 2002); turnover lower than the prior three rebalances,confirmed,https://www.indexologyblog.com/2026/01/15/inside-the-annual-style-indices-rebalance-methodology-process-and-outcomes/
+2026-08-28,S&P DJI opens consultation on Growth and Value factors framework,confirmed,row7_docs/1484798_sp-us-style-consult-20260828.pdf
+2026-10-23,Consultation results: Growth factors drop 12-month momentum (keep 3y EPS change/price and 3y sales/share growth); Value factors become intangibles-adjusted B/P + blended trailing/forward E/P + S/P + FCF/P (FCF/P excluded for Real Estate and most Financials),confirmed,row7_docs/1485643_sp-us-style-results-20261023.pdf
+2026-12-04,Pro-forma files with the new framework first visible to clients,confirmed (scheduled),row7_docs/1485643_sp-us-style-results-20261023.pdf
+2026-12-21,Dec 2026 annual reconstitution under the new framework effective before the open (Monday),confirmed (scheduled),row7_docs/1485643_sp-us-style-results-20261023.pdf

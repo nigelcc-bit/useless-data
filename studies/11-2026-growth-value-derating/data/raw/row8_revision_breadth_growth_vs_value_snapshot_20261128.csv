@@ -1,0 +1,10 @@
+metric,growth,value
+n_names,153.0,434.0
+weight_coverage,1.0,0.999
+up30_count,1538.0,2828.0
+down30_count,898.0,2419.0
+breadth_count_(up-dn)/(up+dn),0.263,0.078
+breadth_capweighted,0.409,0.075
+capw_share_FY1_up_vs_90d,0.709,0.588
+capw_FY1_EPS_chg_90d_pct,5.25,1.36
+capw_FY1_EPS_chg_30d_pct,1.62,-0.19
