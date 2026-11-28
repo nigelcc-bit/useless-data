@@ -1,0 +1,13 @@
+# Mirrors the root pyproject.toml dependencies plus the [dev] extra.
+pandas>=2.2
+numpy>=2.0
+scipy>=1.13
+statsmodels>=0.14
+pyyaml>=6.0
+matplotlib>=3.9
+requests>=2.32
+pyarrow>=17.0
+yfinance>=0.2.40
+pytest>=8.0
+linearmodels>=6.0
+arch>=7.0
