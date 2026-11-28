@@ -1,6 +1,6 @@
 # Findings: useless-data
 
-Last updated: 2026-11-27
+Last updated: 2026-11-28
 
 Nothing here is a trading recommendation.
 
@@ -673,5 +673,114 @@ Status: complete | Run: 2026-11-27 | Source: quick-lookups/2026-11-27-token-pric
   valid_until: null
   owner: fx-115
   links_to: [ud-token-pricing-crack]
+  people: []
+```
+
+## studies/11-2026-growth-value-derating
+
+Status: complete | Run: 2026-11-28 | Source: studies/11-2026-growth-value-derating/RESULTS.md
+
+```yaml
+- id: ud-growth-value-derating-earnings-driven
+  study: studies/11-2026-growth-value-derating
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The 2026 fall in the S&P 500 Growth forward P/E was driven by rising forward earnings rather than falling prices.
+  verdict: supported
+  finding: Yes, rising earnings forecasts explain 95.5% of the drop from 29.32 to 17.10 times earnings, while Growth stock prices barely moved.
+  key_stats:
+    - "rising earnings explain 95.5% of the P/E drop"
+    - "P/E down from 29.32 to 17.10 between 31 Oct 2025 and 27 Nov 2026"
+  confidence: null
+  numbers:
+    - "account for **95.5%** of the Growth P/E drop from **29.32x** (31 Oct 2025) to **17.10x** (27 Nov 2026)"
+  source_file: studies/11-2026-growth-value-derating/RESULTS.md
+  run_date: 2026-11-28
+  valid_until: 2027-01-08
+  owner: fx-115
+  links_to: [ud-growth-value-derating-reshuffle-artefact, ud-growth-value-derating-crossing, ud-growth-value-derating-inflated-estimates]
+  people: []
+- id: ud-growth-value-derating-reshuffle-artefact
+  study: studies/11-2026-growth-value-derating
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The December 2025 index reshuffle is a material cause of the Growth P/E drop.
+  verdict: killed
+  finding: No, the reshuffle accounts for only 5.7% of the drop, and no alternative window or start date pushes it near the 30% bar.
+  key_stats:
+    - "reshuffle share 5.7% of the drop, 10.1% at most across variants"
+  confidence: null
+  numbers:
+    - "COMPOSITION **5.7%**; 5.1% to 10.1% across variants"
+    - "COMPOSITION > 30%"
+  source_file: studies/11-2026-growth-value-derating/RESULTS.md
+  run_date: 2026-11-28
+  valid_until: 2027-01-08
+  owner: fx-115
+  links_to: [ud-growth-value-derating-earnings-driven]
+  people: []
+- id: ud-growth-value-derating-crossing
+  study: studies/11-2026-growth-value-derating
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: Growth fell below Value on P/E mainly because Growth earnings estimates rose faster, not because Growth prices fell.
+  verdict: supported
+  finding: Mostly, faster Growth earnings growth explains 66% of the gap that closed, and Value's stronger prices explain 23%.
+  key_stats:
+    - "faster Growth earnings growth explains 66% of the gap"
+    - "Value's stronger prices explain 23% of the gap"
+  confidence: null
+  numbers:
+    - "**66%** from faster Growth EPS growth"
+    - "**23%** from Value's price outperforming"
+  source_file: studies/11-2026-growth-value-derating/RESULTS.md
+  run_date: 2026-11-28
+  valid_until: 2027-01-08
+  owner: fx-115
+  links_to: [ud-growth-value-derating-earnings-driven]
+  people: []
+- id: ud-growth-value-derating-inflated-estimates
+  study: studies/11-2026-growth-value-derating
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: The earnings behind the Growth de-rating are inflated, with the biggest Growth companies' cash flow not keeping up with their reported profits.
+  verdict: supported
+  finding: Supported by the pre-set test, since top Growth firms' free cash after stock pay fell from 61.0% to 39.9% of profits while capex ran at 2.98 times depreciation.
+  key_stats:
+    - "free cash after stock pay down 21.1 points, to 39.9% of profits"
+    - "capex at 2.98 times depreciation"
+  confidence: 60
+  numbers:
+    - "**61.0%** to **39.9%**"
+    - "-21.1pp"
+    - "capex ran at **2.98x** depreciation"
+  source_file: studies/11-2026-growth-value-derating/RESULTS.md
+  run_date: 2026-11-28
+  valid_until: 2027-01-08
+  owner: fx-115
+  links_to: [ud-growth-value-derating-cash-backed-catch-up]
+  people: []
+- id: ud-growth-value-derating-cash-backed-catch-up
+  study: studies/11-2026-growth-value-derating
+  type: quant
+  region: US
+  topic: equities
+  hypothesis: Growth's earnings catch-up is backed by cash, with cash conversion holding up and estimate revisions positive.
+  verdict: killed
+  finding: No, revisions were positive, but cash conversion fell 21.1 points, well past the 10-point limit set for this benign reading.
+  key_stats:
+    - "cash conversion down 21.1 points against a 10-point limit"
+  confidence: null
+  numbers:
+    - "-21.1pp against a floor of -10pp"
+  source_file: studies/11-2026-growth-value-derating/RESULTS.md
+  run_date: 2026-11-28
+  valid_until: 2027-01-08
+  owner: fx-115
+  links_to: [ud-growth-value-derating-inflated-estimates]
   people: []
 ```
