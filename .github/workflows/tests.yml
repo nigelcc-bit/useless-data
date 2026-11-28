@@ -24,6 +24,63 @@ jobs:
       - name: Run tests
         run: pytest -q
 
+  flush-or-regime-study:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: studies/2026-11-flush-or-regime
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: studies/2026-11-flush-or-regime/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+
+  fed-path-study:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: studies/11-2026-fed-path-vs-term-premium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: studies/11-2026-fed-path-vs-term-premium/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+
+  bandwidth-study:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: studies/11-2026-bandwidth-false-discovery
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: studies/11-2026-bandwidth-false-discovery/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+
   findings-check:
     runs-on: ubuntu-latest
     steps:
