@@ -1,0 +1,226 @@
+{
+ "peak": "2025-10-31",
+ "peak_pe": 29.32,
+ "second_peak": "2025-07-25",
+ "second_peak_pe": 28.37,
+ "end": "2026-11-27",
+ "eps_a_last_week": "2026-11-06",
+ "variants": {
+  "primary (EPS b)": {
+   "growth": {
+    "total_lp": -0.5391914135098363,
+    "price_lp": 0.015587167102495414,
+    "eps_lp": -0.5150480906574204,
+    "comp_lp": -0.03077196969008522,
+    "resid_lp": -0.00895852026482613,
+    "price_share": -0.028908411209725357,
+    "eps_share": 0.9552230947164824,
+    "comp_share": 0.057070585545450005,
+    "resid_share": 0.016614730947793,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 29.32,
+    "pe_end": 17.1
+   },
+   "value": {
+    "total_lp": -0.07357077095896036,
+    "price_lp": 0.12452111697525847,
+    "eps_lp": -0.20779023981289502,
+    "comp_lp": 0.0027210802388668576,
+    "resid_lp": 0.006977271639809324,
+    "price_share": -1.6925351651502945,
+    "eps_share": 2.824358601988902,
+    "comp_share": -0.036985887240256664,
+    "resid_share": -0.09483754959835099,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 18.61,
+    "pe_end": 17.29
+   },
+   "classification": "earnings-driven",
+   "artefact_material": false,
+   "g_minus_v_lp": {
+    "total": -0.465620642550876,
+    "price": -0.10893394987276306,
+    "eps": -0.3072578508445254,
+    "comp": -0.03349304992895208,
+    "resid": -0.015935791904635455
+   }
+  },
+  "EPS method (a)": {
+   "growth": {
+    "total_lp": -0.5391914135098363,
+    "price_lp": 0.015587167102495414,
+    "eps_lp": -0.5044072031085678,
+    "comp_lp": -0.03077196969008522,
+    "resid_lp": -0.01959940781367875,
+    "price_share": -0.028908411209725357,
+    "eps_share": 0.9354881967150726,
+    "comp_share": 0.057070585545450005,
+    "resid_share": 0.03634962894920284,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 29.32,
+    "pe_end": 17.1
+   },
+   "value": {
+    "total_lp": -0.07357077095896036,
+    "price_lp": 0.12452111697525847,
+    "eps_lp": -0.20392030094232094,
+    "comp_lp": 0.0027210802388668576,
+    "resid_lp": 0.0031073327692352493,
+    "price_share": -1.6925351651502945,
+    "eps_share": 2.7717570209516067,
+    "comp_share": -0.036985887240256664,
+    "resid_share": -0.042235968561055284,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 18.61,
+    "pe_end": 17.29
+   },
+   "classification": "earnings-driven",
+   "artefact_material": false,
+   "g_minus_v_lp": {
+    "total": -0.465620642550876,
+    "price": -0.10893394987276306,
+    "eps": -0.30048690216624685,
+    "comp": -0.03349304992895208,
+    "resid": -0.022706740582913998
+   }
+  },
+  "recon window +1 week": {
+   "growth": {
+    "total_lp": -0.5391914135098363,
+    "price_lp": -0.012374714092636907,
+    "eps_lp": -0.49133211749166605,
+    "comp_lp": -0.05448794285584002,
+    "resid_lp": 0.019003360930306634,
+    "price_share": 0.022950502887433607,
+    "eps_share": 0.9112387645295891,
+    "comp_share": 0.10105491573234411,
+    "resid_share": -0.03524418314936679,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 29.32,
+    "pe_end": 17.1
+   },
+   "value": {
+    "total_lp": -0.07357077095896036,
+    "price_lp": 0.1102125586819751,
+    "eps_lp": -0.2041375406327095,
+    "comp_lp": -0.0009316189413195453,
+    "resid_lp": 0.02128582993309358,
+    "price_share": -1.498048168388156,
+    "eps_share": 2.774709819835687,
+    "comp_share": 0.012662894912970613,
+    "resid_share": -0.2893245463605017,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 18.61,
+    "pe_end": 17.29
+   },
+   "classification": "earnings-driven",
+   "artefact_material": false,
+   "g_minus_v_lp": {
+    "total": -0.465620642550876,
+    "price": -0.12258727277461201,
+    "eps": -0.28719457685895655,
+    "comp": -0.053556323914520476,
+    "resid": -0.0022824690027869465
+   }
+  },
+  "recon window -1 week": {
+   "growth": {
+    "total_lp": -0.5391914135098363,
+    "price_lp": -0.0049923819113733,
+    "eps_lp": -0.5181344290946566,
+    "comp_lp": -0.027685631252849063,
+    "resid_lp": 0.011621028749042583,
+    "price_share": 0.009259015975190832,
+    "eps_share": 0.9609471073025616,
+    "comp_share": 0.05134657295937076,
+    "resid_share": -0.02155269623712319,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 29.32,
+    "pe_end": 17.1
+   },
+   "value": {
+    "total_lp": -0.07357077095896036,
+    "price_lp": 0.11947651213746635,
+    "eps_lp": -0.20432257033439072,
+    "comp_lp": -0.0007465892396374407,
+    "resid_lp": 0.012021876477601445,
+    "price_share": -1.6239671078628952,
+    "eps_share": 2.7772248091346903,
+    "comp_share": 0.010147905613955127,
+    "resid_share": -0.1634056068857502,
+    "recon_weeks_in_window": 4,
+    "weeks": 56,
+    "pe_start": 18.61,
+    "pe_end": 17.29
+   },
+   "classification": "earnings-driven",
+   "artefact_material": false,
+   "g_minus_v_lp": {
+    "total": -0.465620642550876,
+    "price": -0.12446889404883965,
+    "eps": -0.31381185876026585,
+    "comp": -0.026939042013211623,
+    "resid": -0.00040084772855886186
+   }
+  },
+  "start at 2nd-highest local peak": {
+   "growth": {
+    "total_lp": -0.5062537853121456,
+    "price_lp": 0.10737112074442656,
+    "eps_lp": -0.5738944161016608,
+    "comp_lp": -0.03077196969008522,
+    "resid_lp": -0.00895852026482613,
+    "price_share": -0.21208951687783184,
+    "eps_share": 1.133610123522947,
+    "comp_share": 0.060783683170115684,
+    "resid_share": 0.017695710184769273,
+    "recon_weeks_in_window": 4,
+    "weeks": 70,
+    "pe_start": 28.37,
+    "pe_end": 17.1
+   },
+   "value": {
+    "total_lp": -0.06276569554978728,
+    "price_lp": 0.16482173050966864,
+    "eps_lp": -0.23728577793813166,
+    "comp_lp": 0.0027210802388668576,
+    "resid_lp": 0.00697727163980888,
+    "price_share": -2.625984290717021,
+    "eps_share": 3.780501050130334,
+    "comp_share": -0.043352984700192325,
+    "resid_share": -0.11116377471312076,
+    "recon_weeks_in_window": 4,
+    "weeks": 70,
+    "pe_start": 18.41,
+    "pe_end": 17.29
+   },
+   "classification": "earnings-driven",
+   "artefact_material": false,
+   "g_minus_v_lp": {
+    "total": -0.4434880897623583,
+    "price": -0.05745060976524208,
+    "eps": -0.33660863816352915,
+    "comp": -0.03349304992895208,
+    "resid": -0.01593579190463501
+   }
+  }
+ },
+ "classification": "earnings-driven",
+ "artefact_material": false,
+ "branches": [
+  "2A"
+ ],
+ "flips": {
+  "EPS method (a)": false,
+  "recon window +1 week": false,
+  "recon window -1 week": false,
+  "start at 2nd-highest local peak": false
+ }
+}

@@ -1,0 +1,31 @@
+trial_id,phase,test,variant,statistic,n,result,timestamp
+1,1,Growth legs,primary (EPS b),PRICE / EPS / COMP / RESID share of log P/E drop,56,-2.9% / 95.5% / 5.7% / 1.7% -> earnings-driven,2026-11-28T08:00:08Z
+2,1,Value legs (control),primary (EPS b),PRICE / EPS / COMP / RESID share of log P/E change,56,-169.3% / 282.4% / -3.7% / -9.5%,2026-11-28T08:00:08Z
+3,1,"Growth minus Value, log points",primary (EPS b),total / price / eps / comp / resid,56,-0.466 / -0.109 / -0.307 / -0.033 / -0.016,2026-11-28T08:00:08Z
+4,1,Growth legs,EPS method (a),PRICE / EPS / COMP / RESID share of log P/E drop,56,-2.9% / 93.5% / 5.7% / 3.6% -> earnings-driven,2026-11-28T08:00:08Z
+5,1,Value legs (control),EPS method (a),PRICE / EPS / COMP / RESID share of log P/E change,56,-169.3% / 277.2% / -3.7% / -4.2%,2026-11-28T08:00:08Z
+6,1,"Growth minus Value, log points",EPS method (a),total / price / eps / comp / resid,56,-0.466 / -0.109 / -0.300 / -0.033 / -0.023,2026-11-28T08:00:08Z
+7,1,Growth legs,recon window +1 week,PRICE / EPS / COMP / RESID share of log P/E drop,56,2.3% / 91.1% / 10.1% / -3.5% -> earnings-driven,2026-11-28T08:00:08Z
+8,1,Value legs (control),recon window +1 week,PRICE / EPS / COMP / RESID share of log P/E change,56,-149.8% / 277.5% / 1.3% / -28.9%,2026-11-28T08:00:08Z
+9,1,"Growth minus Value, log points",recon window +1 week,total / price / eps / comp / resid,56,-0.466 / -0.123 / -0.287 / -0.054 / -0.002,2026-11-28T08:00:08Z
+10,1,Growth legs,recon window -1 week,PRICE / EPS / COMP / RESID share of log P/E drop,56,0.9% / 96.1% / 5.1% / -2.2% -> earnings-driven,2026-11-28T08:00:08Z
+11,1,Value legs (control),recon window -1 week,PRICE / EPS / COMP / RESID share of log P/E change,56,-162.4% / 277.7% / 1.0% / -16.3%,2026-11-28T08:00:08Z
+12,1,"Growth minus Value, log points",recon window -1 week,total / price / eps / comp / resid,56,-0.466 / -0.124 / -0.314 / -0.027 / -0.000,2026-11-28T08:00:08Z
+13,1,Growth legs,start at 2nd-highest local peak,PRICE / EPS / COMP / RESID share of log P/E drop,70,-21.2% / 113.4% / 6.1% / 1.8% -> earnings-driven,2026-11-28T08:00:08Z
+14,1,Value legs (control),start at 2nd-highest local peak,PRICE / EPS / COMP / RESID share of log P/E change,70,-262.6% / 378.1% / -4.3% / -11.1%,2026-11-28T08:00:08Z
+15,1,"Growth minus Value, log points",start at 2nd-highest local peak,total / price / eps / comp / resid,70,-0.443 / -0.057 / -0.337 / -0.033 / -0.016,2026-11-28T08:00:08Z
+16,2A,capex_to_ocf (weighted mean of company ratios),primary,latest / year earlier / change,13,0.471 / 0.367 / +0.104,2026-11-28T08:00:09Z
+17,2A,fcf_sbc_to_ni (weighted mean of company ratios),primary,latest / year earlier / change,12,0.399 / 0.610 / -0.211,2026-11-28T08:00:09Z
+18,2A,capex_to_dep (weighted mean of company ratios),primary,latest / year earlier / change,13,2.978 / 2.369 / +0.609,2026-11-28T08:00:09Z
+19,2A,ocf_to_ni (weighted mean of company ratios),primary,latest / year earlier / change,14,1.137 / 1.211 / -0.075,2026-11-28T08:00:09Z
+20,2A,fcf_sbc_to_ni (ratio of weighted sums),robustness,latest / year earlier / change,12,0.346 / 0.579 / -0.233,2026-11-28T08:00:09Z
+21,2A,capex_to_dep (ratio of weighted sums),robustness,latest / year earlier / change,13,3.446 / 2.597 / +0.849,2026-11-28T08:00:09Z
+22,2A,capex_to_ocf (ratio of weighted sums),robustness,latest / year earlier / change,13,0.549 / 0.409 / +0.140,2026-11-28T08:00:09Z
+23,2A,ocf_to_ni (ratio of weighted sums),robustness,latest / year earlier / change,14,0.955 / 1.131 / -0.176,2026-11-28T08:00:09Z
+24,2A,revision breadth snapshot (row8),Growth up30 vs down30,count,153,"up 1538, down 898",2026-11-28T08:00:09Z
+25,2A,FY1 consensus change over 90 days (row9),growth,weight-weighted mean,151,+5.33%,2026-11-28T08:00:09Z
+26,2A,FY1 consensus change over 90 days (row9),value,weight-weighted mean,428,+1.42%,2026-11-28T08:00:09Z
+27,2A,A vs B verdict rule,primary,FCF-SBC/NI change pp; capex/dep latest; breadth,12,-21.1pp; 2.98; net positive=True -> B supported,2026-11-28T08:00:09Z
+28,2B,Phase 2B,not run,,0,not selected by Phase 1 rule,2026-11-28T08:00:09Z
+29,credit,"BAMLC0A0CM change, peak week to last week (descriptive)",,pp,2,0.80 -> 0.99 (+0.19),2026-11-28T08:00:10Z
+30,credit,"BAA10Y change, peak week to last week (descriptive)",,pp,2,1.69 -> 1.61 (-0.08),2026-11-28T08:00:10Z

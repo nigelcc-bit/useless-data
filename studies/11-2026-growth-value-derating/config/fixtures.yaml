@@ -1,0 +1,40 @@
+# Data integrity (hashes of the 28 Nov 2026 pack as committed) and values documented in data/raw/README_datapack.md.
+# The documented values were verified by the pack author against Yardeni's chart legend and iShares holdings files;
+# they were NOT independently re-verified in this session. Never adjust. If src/common.check_fixtures() cannot
+# reproduce them, the pipeline stops.
+
+files:
+  row1_yardeni_fwd_pe_growth_value_weekly_2024_now.csv:
+    sha256: 236748a14c67af8750f78072b3d08afb14c83813ccb30546aa3a4c7f26632dc9
+  row2_fwd_eps_growth_value_weekly_2024_now.csv:
+    sha256: 8ed271279c418778330829d5f302c28ad8228ef2206750a0bd1f34721f270035
+  row3_sp500_growth_value_price_index_daily_2024_now.csv:
+    sha256: 0ff1ab459291c8b31324e6939da0f08bbf0268218a8495e70b4d081371de80c6
+  row4_fred_DFII10_DGS10_daily_2024_now.csv:
+    sha256: 4272b87991a237c4c77a77c3650add3c3cdd534aaa61d144c2d8fe0a6941c602
+  row5_IVW_top15_weights_end2025_vs_now.csv:
+    sha256: 6511d066a547545ef52096216a701a50c086599c3796777db562dcfefa6e4c14
+  row5_IVW_holdings_20251107_wayback.csv:
+    sha256: f11b6c561144793a18833ea0853a5a8c0e13e41a333d9000aa985881be85f9d9
+  row5_IVW_holdings_20251231.csv:
+    sha256: 4af2f28d0a9c03b77c53c7d7d143c3b6207c412452a05efd957f2370695be1ec
+  row5_IVW_holdings_20261125.csv:
+    sha256: 7ee9b465fe2f93a7178509bee35076ace1443c3911e426c376ccb89d11c744c4
+  row5_IVE_holdings_20261125.csv:
+    sha256: 685ffe65818d7885b6978a4cd38f4d3a1dbf1fb0391c48b6c6bb32d5005369bd
+  row6_top15_quarterly_cashflows_SEC_XBRL_USDm.csv:
+    sha256: e1fefdfcfcc2d8e9739c2baedf83f90cae223c429167b947073060e594b5de58
+  row8_revision_breadth_growth_vs_value_snapshot_20261128.csv:
+    sha256: 8a54751cf72f5c9b26dbb96f48d64d2596bc3a90da13c3a2e5ed7131965eaafa
+  row9_constituent_consensus_eps_yahoo_snapshot_20261128.csv:
+    sha256: 431b92337afd7c9e889b4e18b3930c46155d6a516732a65bf9353f5dfd712b37
+  row10_fallback_fred_IG_spreads_weekly_2025_now.csv:
+    sha256: 9aadbc4b50f52066387d7ef4b79b789adab6a6f7f2edc401b957f4ad93c18e5a
+
+pe_end:
+  - {week: 2026-11-27, series: growth, value: 17.10}
+  - {week: 2026-11-27, series: value, value: 17.29}
+
+ivw_names:
+  pre_2025_11_07: 216
+  post_2025_12_31: 139
